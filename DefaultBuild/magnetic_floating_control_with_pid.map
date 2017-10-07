@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.07.00 )             07-Oct-2017 16:18:36
+Renesas Optimizing Linker (W2.07.00 )             07-Oct-2017 16:42:54
 
 *** Options ***
 
@@ -39,7 +39,6 @@ Renesas Optimizing Linker (W2.07.00 )             07-Oct-2017 16:18:36
 -input=DefaultBuild\tasks.obj
 -input=DefaultBuild\timers.obj
 -input=DefaultBuild\main_apl.obj
--input=DefaultBuild\UserSetting.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
 -vect=_undefined_interrupt_source_isr
@@ -52,60 +51,10 @@ Renesas Optimizing Linker (W2.07.00 )             07-Oct-2017 16:18:36
 
 *** Error information ***
 
-*** Mapping List ***
-
-SECTION                            START      END         SIZE   ALIGN
-B_1
-                                  00000004  0000b42b      b428   1
-R_1
-                                  0000b42c  0000b47b        50   1
-B_2
-                                  0000b47c  0000b483         8   2
-R_2
-                                  0000b484  0000b484         0   1
-B
-                                  0000b484  0000bd13       890   4
-R
-                                  0000bd14  0000be4b       138   4
-SU
-                                  0000be4c  0000ce4b      1000   4
-SI
-                                  0000ce4c  0000d24b       400   4
-$ADDR_C_120040
-                                  00120040  00120043         4   1
-$ADDR_C_120048
-                                  00120048  0012004b         4   1
-$ADDR_C_120050
-                                  00120050  0012006f        20   1
-C_1
-                                  ffc00100  ffc00100         0   1
-C_2
-                                  ffc00100  ffc00105         6   2
-C
-                                  ffc00108  ffc0017f        78   4
-C$DSEC
-                                  ffc00180  ffc001a3        24   4
-C$BSEC
-                                  ffc001a4  ffc001bb        18   4
-C$VECT
-                                  ffc001bc  ffc005bb       400   4
-D_1
-                                  ffc005bc  ffc0060b        50   1
-D_2
-                                  ffc0060c  ffc0060c         0   1
-D
-                                  ffc0060c  ffc00743       138   4
-P
-                                  ffc00744  ffc057ef      50ac   1
-W_1
-                                  ffc057f0  ffc057f0         0   1
-W_2
-                                  ffc057f0  ffc057f0         0   1
-W
-                                  ffc057f0  ffc057f0         0   1
-L
-                                  ffc057f0  ffc0585f        70   4
-EXCEPTVECT
-                                  ffffff80  fffffffb        7c   4
-RESETVECT
-                                  fffffffc  ffffffff         4   4
+E0562310:Undefined external symbol "_vAssertCalled" referenced in "DefaultBuild\heap_1.obj"
+E0562310:Undefined external symbol "_vAssertCalled" referenced in "DefaultBuild\port.obj"
+E0562310:Undefined external symbol "_vAssertCalled" referenced in "DefaultBuild\event_groups.obj"
+E0562310:Undefined external symbol "_vAssertCalled" referenced in "DefaultBuild\queue.obj"
+E0562310:Undefined external symbol "_vAssertCalled" referenced in "DefaultBuild\tasks.obj"
+E0562310:Undefined external symbol "_vAssertCalled" referenced in "DefaultBuild\timers.obj"
+E0562310:Undefined external symbol "_vApplicationSetupTimerInterrupt" referenced in "DefaultBuild\port.obj"

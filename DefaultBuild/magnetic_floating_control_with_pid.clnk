@@ -34,7 +34,6 @@
 -input=DefaultBuild\tasks.obj
 -input=DefaultBuild\timers.obj
 -input=DefaultBuild\main_apl.obj
--input=DefaultBuild\UserSetting.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
 -vect=_undefined_interrupt_source_isr
