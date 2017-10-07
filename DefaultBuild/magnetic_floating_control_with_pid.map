@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.07.00 )             07-Oct-2017 12:25:31
+Renesas Optimizing Linker (W2.07.00 )             07-Oct-2017 16:18:36
 
 *** Options ***
 
@@ -39,6 +39,7 @@ Renesas Optimizing Linker (W2.07.00 )             07-Oct-2017 12:25:31
 -input=DefaultBuild\tasks.obj
 -input=DefaultBuild\timers.obj
 -input=DefaultBuild\main_apl.obj
+-input=DefaultBuild\UserSetting.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
 -vect=_undefined_interrupt_source_isr
@@ -95,15 +96,15 @@ D_2
 D
                                   ffc0060c  ffc00743       138   4
 P
-                                  ffc00744  ffc05837      50f4   1
+                                  ffc00744  ffc057ef      50ac   1
 W_1
-                                  ffc05838  ffc05838         0   1
+                                  ffc057f0  ffc057f0         0   1
 W_2
-                                  ffc05838  ffc05838         0   1
+                                  ffc057f0  ffc057f0         0   1
 W
-                                  ffc05838  ffc05838         0   1
+                                  ffc057f0  ffc057f0         0   1
 L
-                                  ffc05838  ffc058b3        7c   4
+                                  ffc057f0  ffc0585f        70   4
 EXCEPTVECT
                                   ffffff80  fffffffb        7c   4
 RESETVECT

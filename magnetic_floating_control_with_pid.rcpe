@@ -126,6 +126,7 @@
           <Path>FreeRTOS\portable\port.c</Path>
           <Path>FreeRTOS\portable\port_asm.src</Path>
           <Path>FreeRTOS\portable\portmacro.h</Path>
+          <Path>FreeRTOS\portable\UserSetting.c</Path>
         </Category>
         <Path>FreeRTOS\croutine.c</Path>
         <Path>FreeRTOS\event_groups.c</Path>
@@ -249,6 +250,7 @@
           <Path>DefaultBuild\tasks.obj</Path>
           <Path>DefaultBuild\timers.obj</Path>
           <Path>DefaultBuild\main_apl.obj</Path>
+          <Path>DefaultBuild\UserSetting.obj</Path>
         </LinkOrder>
         <CommonOptions>
           <IncludePathForC>.</IncludePathForC>

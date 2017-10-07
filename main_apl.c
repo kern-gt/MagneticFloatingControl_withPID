@@ -73,8 +73,8 @@ void MainApplication(void)
 	/*タスク生成*/
 	xTaskCreate(vTask1,"Task1",100,NULL,1,NULL);
 	xTaskCreate(vTask2,"Task2",100,NULL,1,NULL);
-	xTaskCreate(vTask3,"Task3",100,NULL,1,NULL);
-	xTaskCreate(vTask4,"Task4",100,NULL,1,NULL);
+	//xTaskCreate(vTask3,"Task3",100,NULL,1,NULL);
+	//xTaskCreate(vTask4,"Task4",100,NULL,1,NULL);
 	
 	/* タスクスケジューラ起動*/
 	vTaskStartScheduler();
