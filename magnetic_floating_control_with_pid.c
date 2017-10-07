@@ -11,6 +11,7 @@
 //#include "typedefine.h"
 #include "iodefine.h"
 #include "main_apl.h"
+
 #ifdef __cplusplus
 //#include <ios>                        // Remove the comment when you use ios
 //_SINT ios_base::Init::init_cnt;       // Remove the comment when you use ios
