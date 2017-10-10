@@ -21,45 +21,34 @@
 #include "FreeRTOS/task.h"
 #include "FreeRTOS/queue.h"
 
+/* アプリケーション */
+#include "oled.h"
+
 /**----------------------------------------------------------------------------
 <<自ファイルのヘッダ>>
 -----------------------------------------------------------------------------**/
 #include "main_apl.h"
 
 /***タスク定義*******************************************************************/
-void vTask1(void *pvParameters)
+void LedBlink2Hz(void *pvParameters)
 {
 	while(1) {
 		PORTD.PODR.BIT.B0 = ~PORTD.PODR.BIT.B0;
-		vTaskDelay(125/portTICK_PERIOD_MS);
-	}
-}
-
-void vTask2(void *pvParameters)
-{
-	while(1) {
-		PORTD.PODR.BIT.B1 = ~PORTD.PODR.BIT.B1;
 		vTaskDelay(250/portTICK_PERIOD_MS);
 	}
 }
 
-void vTask3(void *pvParameters)
+void LedBlink1Hz(void *pvParameters)
 {
 	while(1) {
-		PORTD.PODR.BIT.B2 = ~PORTD.PODR.BIT.B2;
+		PORTD.PODR.BIT.B1 = ~PORTD.PODR.BIT.B1;
 		vTaskDelay(500/portTICK_PERIOD_MS);
 	}
 }
 
-void vTask4(void *pvParameters)
-{
-	while(1) {
-		PORTD.PODR.BIT.B3 = ~PORTD.PODR.BIT.B3;
-		vTaskDelay(1000/portTICK_PERIOD_MS);
-	}
+void vTask3(void *pvParameters){
+	DrawTask();
 }
-
-
 
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　： MainApplication
@@ -71,9 +60,9 @@ void vTask4(void *pvParameters)
 void MainApplication(void)
 {
 	/*タスク生成*/
-	xTaskCreate(vTask1,"Task1",100,NULL,1,NULL);
-	xTaskCreate(vTask2,"Task2",100,NULL,1,NULL);
-	//xTaskCreate(vTask3,"Task3",100,NULL,1,NULL);
+	//xTaskCreate(LedBlink2Hz,"LedBlink2Hz",100,NULL,2,NULL);
+	//xTaskCreate(LedBlink1Hz,"LedBlink1Hz",100,NULL,2,NULL);
+	xTaskCreate(vTask3,"Task3",100,NULL,1,NULL);
 	//xTaskCreate(vTask4,"Task4",100,NULL,1,NULL);
 	
 	/* タスクスケジューラ起動*/

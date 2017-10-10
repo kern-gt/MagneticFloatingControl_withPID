@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : General header file for DTC peripheral.
-* Creation Date: 2017-10-04
+* Creation Date: 2017-10-08
 ***********************************************************************************************************************/
 
 #ifndef DTC_H

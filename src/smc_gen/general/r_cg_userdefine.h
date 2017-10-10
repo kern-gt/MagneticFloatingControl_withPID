@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : User header file for code generation.
-* Creation Date: 2017-10-04
+* Creation Date: 2017-10-08
 ***********************************************************************************************************************/
 
 #ifndef CG_USER_DEF_H
@@ -32,6 +32,7 @@
 Includes
 ***********************************************************************************************************************/
 /* Start user code for include. Do not edit comment generated here */
+#include "userdefine.h"
 /* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************

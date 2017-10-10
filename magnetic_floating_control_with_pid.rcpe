@@ -14,6 +14,11 @@
           <Path>src\smc_gen\Config_PORT\Config_PORT.h</Path>
           <Path>src\smc_gen\Config_PORT\Config_PORT_user.c</Path>
         </Category>
+        <Category Name="Config_RIIC0">
+          <Path>src\smc_gen\Config_RIIC0\Config_RIIC0.c</Path>
+          <Path>src\smc_gen\Config_RIIC0\Config_RIIC0.h</Path>
+          <Path>src\smc_gen\Config_RIIC0\Config_RIIC0_user.c</Path>
+        </Category>
         <Category Name="general">
           <Path>src\smc_gen\general\r_cg_bsc.h</Path>
           <Path>src\smc_gen\general\r_cg_cac.h</Path>
@@ -151,7 +156,15 @@
       </Category>
       <Path>main_apl.c</Path>
       <Path>main_apl.h</Path>
-      <Path>typedefine.h</Path>
+      <Category Name="src">
+        <Category Name="OLED_driver">
+          <Path>src\user_src\oled_driver\draw_data.h</Path>
+          <Path>src\user_src\oled_driver\oled.c</Path>
+          <Path>src\user_src\oled_driver\oled.h</Path>
+          <Path>src\user_src\oled_driver\oled_in.h</Path>
+        </Category>
+        <Path>src\user_src\userdefine.h</Path>
+      </Category>
     </Files>
     <Device Series="RX">R5F564MLDxFP</Device>
     <BuildOptions Name="CC-RX" Version="V2.07.00">
@@ -163,6 +176,11 @@
           <Option>-isa=rxv2</Option>
           <Option>-fpu</Option>
           <Option>-lang=c99</Option>
+          <Option>-include=src\user_src</Option>
+          <Option>-include=src\user_src\oled_driver</Option>
+          <Option>-include=src\user_src\lcd_driver</Option>
+          <Option>-include=src\lcd_driver</Option>
+          <Option>-include=src\smc_gen\Config_RIIC0</Option>
           <Option>-include=.</Option>
           <Option>-include=FreeRTOS</Option>
           <Option>-include=FreeRTOS\portable</Option>
@@ -216,8 +234,22 @@
         </LibraryGenerateOptions>
         <LinkOrder>
           <Path>DefaultBuild\magnetic_floating_control_with_pid.obj</Path>
+          <Path>DefaultBuild\ApplicationHook.obj</Path>
+          <Path>DefaultBuild\heap_1.obj</Path>
+          <Path>DefaultBuild\port.obj</Path>
+          <Path>DefaultBuild\port_asm.obj</Path>
+          <Path>DefaultBuild\croutine.obj</Path>
+          <Path>DefaultBuild\event_groups.obj</Path>
+          <Path>DefaultBuild\list.obj</Path>
+          <Path>DefaultBuild\queue.obj</Path>
+          <Path>DefaultBuild\tasks.obj</Path>
+          <Path>DefaultBuild\timers.obj</Path>
+          <Path>DefaultBuild\main_apl.obj</Path>
+          <Path>DefaultBuild\UserSetting.obj</Path>
           <Path>DefaultBuild\Config_PORT.obj</Path>
           <Path>DefaultBuild\Config_PORT_user.obj</Path>
+          <Path>DefaultBuild\Config_RIIC0.obj</Path>
+          <Path>DefaultBuild\Config_RIIC0_user.obj</Path>
           <Path>DefaultBuild\r_cg_dmac_user.obj</Path>
           <Path>DefaultBuild\r_cg_hardware_setup.obj</Path>
           <Path>DefaultBuild\r_smc_cgc.obj</Path>
@@ -239,20 +271,14 @@
           <Path>DefaultBuild\mcu_locks.obj</Path>
           <Path>DefaultBuild\mcu_mapped_interrupts.obj</Path>
           <Path>DefaultBuild\Pin.obj</Path>
-          <Path>DefaultBuild\ApplicationHook.obj</Path>
-          <Path>DefaultBuild\heap_1.obj</Path>
-          <Path>DefaultBuild\port.obj</Path>
-          <Path>DefaultBuild\port_asm.obj</Path>
-          <Path>DefaultBuild\croutine.obj</Path>
-          <Path>DefaultBuild\event_groups.obj</Path>
-          <Path>DefaultBuild\list.obj</Path>
-          <Path>DefaultBuild\queue.obj</Path>
-          <Path>DefaultBuild\tasks.obj</Path>
-          <Path>DefaultBuild\timers.obj</Path>
-          <Path>DefaultBuild\main_apl.obj</Path>
-          <Path>DefaultBuild\UserSetting.obj</Path>
+          <Path>DefaultBuild\oled.obj</Path>
         </LinkOrder>
         <CommonOptions>
+          <IncludePathForC>src\user_src</IncludePathForC>
+          <IncludePathForC>src\user_src\oled_driver</IncludePathForC>
+          <IncludePathForC>src\user_src\lcd_driver</IncludePathForC>
+          <IncludePathForC>src\lcd_driver</IncludePathForC>
+          <IncludePathForC>src\smc_gen\Config_RIIC0</IncludePathForC>
           <IncludePathForC>.</IncludePathForC>
           <IncludePathForC>FreeRTOS</IncludePathForC>
           <IncludePathForC>FreeRTOS\portable</IncludePathForC>

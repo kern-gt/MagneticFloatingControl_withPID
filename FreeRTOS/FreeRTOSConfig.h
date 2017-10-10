@@ -71,8 +71,9 @@
 #define FREERTOS_CONFIG_H
 
 /* Prevent Renesas headers redefining some stdint.h types. */
-#define __TYPEDEF__	1
-
+#ifndef __TYPEDEF__
+	#define __TYPEDEF__	1
+#endif
 /*-----------------------------------------------------------
  * Application specific definitions.
  *

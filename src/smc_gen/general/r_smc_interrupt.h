@@ -22,7 +22,7 @@
 * Version      : 1.1.0
 * Device(s)    : R5F564MLDxFP
 * Description  : This file implements interrupt setting.
-* Creation Date: 2017-10-04
+* Creation Date: 2017-10-08
 ***********************************************************************************************************************/
 
 #ifndef SMC_INTERRUPT_H
@@ -85,8 +85,8 @@ Macro definitions
 #define ICU_SSI1_SSIRTI1_PRIORITY                  _0F_ICU_PRIORITY_LEVEL15
 #define ICU_SRC_IDEI_PRIORITY                      _0F_ICU_PRIORITY_LEVEL15
 #define ICU_SRC_ODFI_PRIORITY                      _0F_ICU_PRIORITY_LEVEL15
-#define ICU_RIIC0_RXI0_PRIORITY                    _0F_ICU_PRIORITY_LEVEL15
-#define ICU_RIIC0_TXI0_PRIORITY                    _0F_ICU_PRIORITY_LEVEL15
+#define ICU_RIIC0_RXI0_PRIORITY                    _07_ICU_PRIORITY_LEVEL7
+#define ICU_RIIC0_TXI0_PRIORITY                    _07_ICU_PRIORITY_LEVEL7
 #define ICU_RIIC2_RXI2_PRIORITY                    _0F_ICU_PRIORITY_LEVEL15
 #define ICU_RIIC2_TXI2_PRIORITY                    _0F_ICU_PRIORITY_LEVEL15
 #define ICU_SCI0_RXI0_PRIORITY                     _0F_ICU_PRIORITY_LEVEL15
@@ -138,7 +138,7 @@ Macro definitions
 #define ICU_SCIF10_TXIF10_PRIORITY                 _0F_ICU_PRIORITY_LEVEL15
 #define ICU_ICU_GROUPBE0_PRIORITY                  _0F_ICU_PRIORITY_LEVEL15
 #define ICU_ICU_GROUPBL0_PRIORITY                  _0F_ICU_PRIORITY_LEVEL15
-#define ICU_ICU_GROUPBL1_PRIORITY                  _0F_ICU_PRIORITY_LEVEL15
+#define ICU_ICU_GROUPBL1_PRIORITY                  _07_ICU_PRIORITY_LEVEL7
 #define ICU_ICU_GROUPAL0_PRIORITY                  _0F_ICU_PRIORITY_LEVEL15
 #define ICU_ICU_GROUPAL1_PRIORITY                  _0F_ICU_PRIORITY_LEVEL15
 #define ICU_SCIF11_RXIF11_PRIORITY                 _0F_ICU_PRIORITY_LEVEL15
