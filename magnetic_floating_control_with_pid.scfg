@@ -203,6 +203,251 @@
 <Item current="MHz" id="cacilsclk.unitTxt"/>
 <Item current="true" id="cacilsclk.Disabled"/>
 </tool>
+<tool id="Pins" version="1.0.0.0">
+<pinItem allocation="2" direction="None" id="EMLE" locked="false" status="512"/>
+<pinItem allocation="11" direction="None" id="XTAL" locked="false" status="0"/>
+<pinItem allocation="85" direction="None" id="PD1" locked="false" status="0"/>
+<pinItem allocation="86" direction="None" id="PD0" locked="false" status="0"/>
+<pinItem allocation="83" direction="None" id="PD3" locked="false" status="0"/>
+<pinItem allocation="84" direction="None" id="PD2" locked="false" status="0"/>
+<pinItem allocation="81" direction="None" id="PD5" locked="false" status="0"/>
+<pinItem allocation="82" direction="None" id="PD4" locked="false" status="0"/>
+<pinItem allocation="79" direction="None" id="PD7" locked="false" status="0"/>
+<pinItem allocation="80" direction="None" id="PD6" locked="false" status="0"/>
+<pinItem allocation="19" direction="None" id="TMS" locked="false" status="512"/>
+<pinItem allocation="13" direction="None" id="EXTAL" locked="false" status="0"/>
+<pinItem allocation="7" direction="None" id="FINED" locked="false" status="512"/>
+<pinItem allocation="16" direction="None" id="TRST#" locked="false" status="512"/>
+<pinItem allocation="10" direction="None" id="RES#" locked="false" status="512"/>
+<pinItem allocation="21" direction="None" id="TCK" locked="false" status="512"/>
+<pinItem allocation="20" direction="None" id="TDI" locked="false" status="512"/>
+<pinItem allocation="22" direction="None" id="TDO" locked="false" status="512"/>
+<pinItem allocation="33" direction="None" id="SDA0" locked="false" status="0"/>
+<pinItem allocation="34" direction="None" id="SCL0" locked="false" status="0"/>
+</tool>
+<tool id="Interrupt">
+<Item id="BSC_BUSERR" priority="15"/>
+<Item id="RAM_RAMERR" priority="15"/>
+<Item id="FCU_FIFERR" priority="15"/>
+<Item id="FCU_FRDYI" priority="15"/>
+<Item id="ICU_SWINT2" priority="15"/>
+<Item id="ICU_SWINT" priority="15"/>
+<Item id="CMT0_CMI0" priority="15"/>
+<Item id="CMT1_CMI1" priority="15"/>
+<Item id="CMTW0_CMWI0" priority="15"/>
+<Item id="CMTW1_CMWI1" priority="15"/>
+<Item id="USBA_D0FIFO2" priority="15"/>
+<Item id="USBA_D1FIFO2" priority="15"/>
+<Item id="USB0_D0FIFO0" priority="15"/>
+<Item id="USB0_D1FIFO0" priority="15"/>
+<Item id="RSPI0_SPRI0" priority="15"/>
+<Item id="RSPI0_SPTI0" priority="15"/>
+<Item id="QSPI_SPRI" priority="15"/>
+<Item id="QSPI_SPTI" priority="15"/>
+<Item id="SDHI_SBFAI" priority="15"/>
+<Item id="MMCIF_MBFAI" priority="15"/>
+<Item id="SSI0_SSITXI0" priority="15"/>
+<Item id="SSI0_SSIRXI0" priority="15"/>
+<Item id="SSI1_SSIRTI1" priority="15"/>
+<Item id="SRC_IDEI" priority="15"/>
+<Item id="SRC_ODFI" priority="15"/>
+<Item id="RIIC0_RXI0" priority="7"/>
+<Item id="RIIC0_TXI0" priority="7"/>
+<Item id="RIIC2_RXI2" priority="15"/>
+<Item id="RIIC2_TXI2" priority="15"/>
+<Item id="SCI0_RXI0" priority="15"/>
+<Item id="SCI0_TXI0" priority="15"/>
+<Item id="SCI1_RXI1" priority="15"/>
+<Item id="SCI1_TXI1" priority="15"/>
+<Item id="SCI2_RXI2" priority="15"/>
+<Item id="SCI2_TXI2" priority="15"/>
+<Item id="ICU_IRQ0" priority="15"/>
+<Item id="ICU_IRQ1" priority="15"/>
+<Item id="ICU_IRQ2" priority="15"/>
+<Item id="ICU_IRQ3" priority="15"/>
+<Item id="ICU_IRQ4" priority="15"/>
+<Item id="ICU_IRQ5" priority="15"/>
+<Item id="ICU_IRQ6" priority="15"/>
+<Item id="ICU_IRQ7" priority="15"/>
+<Item id="ICU_IRQ8" priority="15"/>
+<Item id="ICU_IRQ9" priority="15"/>
+<Item id="ICU_IRQ10" priority="15"/>
+<Item id="ICU_IRQ11" priority="15"/>
+<Item id="ICU_IRQ12" priority="15"/>
+<Item id="ICU_IRQ13" priority="15"/>
+<Item id="ICU_IRQ14" priority="15"/>
+<Item id="ICU_IRQ15" priority="15"/>
+<Item id="SCI3_RXI3" priority="15"/>
+<Item id="SCI3_TXI3" priority="15"/>
+<Item id="SCI4_RXI4" priority="15"/>
+<Item id="SCI4_TXI4" priority="15"/>
+<Item id="SCI5_RXI5" priority="15"/>
+<Item id="SCI5_TXI5" priority="15"/>
+<Item id="SCI6_RXI6" priority="15"/>
+<Item id="SCI6_TXI6" priority="15"/>
+<Item id="LVD1_LVD1" priority="15"/>
+<Item id="LVD2_LVD2" priority="15"/>
+<Item id="USB0_USBR0" priority="15"/>
+<Item id="RTC_ALM" priority="15"/>
+<Item id="RTC_PRD" priority="15"/>
+<Item id="USBA_USBAR" priority="15"/>
+<Item id="IWDT_IWUNI" priority="15"/>
+<Item id="WDT_WUNI" priority="15"/>
+<Item id="PDC_PCDFI" priority="15"/>
+<Item id="SCI7_RXI7" priority="15"/>
+<Item id="SCI7_TXI7" priority="15"/>
+<Item id="SCIF8_RXIF8" priority="15"/>
+<Item id="SCIF8_TXIF8" priority="15"/>
+<Item id="SCIF9_RXIF9" priority="15"/>
+<Item id="SCIF9_TXIF9" priority="15"/>
+<Item id="SCIF10_RXIF10" priority="15"/>
+<Item id="SCIF10_TXIF10" priority="15"/>
+<Item id="BE0" priority="15"/>
+<Item id="BL0" priority="15"/>
+<Item id="BL1" priority="7"/>
+<Item id="AL0" priority="15"/>
+<Item id="AL1" priority="15"/>
+<Item id="SCIF11_RXIF11" priority="15"/>
+<Item id="SCIF11_TXIF11" priority="15"/>
+<Item id="SCI12_RXI12" priority="15"/>
+<Item id="SCI12_TXI12" priority="15"/>
+<Item id="DMAC_DMAC0I" priority="15"/>
+<Item id="DMAC_DMAC1I" priority="15"/>
+<Item id="DMAC_DMAC2I" priority="15"/>
+<Item id="DMAC_DMAC3I" priority="15"/>
+<Item id="DMAC_DMAC74I" priority="15"/>
+<Item id="OST_OSTDI" priority="15"/>
+<Item id="EXDMAC_EXDMAC0I" priority="15"/>
+<Item id="EXDMAC_EXDMAC1I" priority="15"/>
+<Item defaultVect="128" id="CMT2_CMI2" priority="15"/>
+<Item defaultVect="129" id="CMT3_CMI3" priority="15"/>
+<Item defaultVect="130" id="TPU0_TGI0A" priority="15"/>
+<Item defaultVect="131" id="TPU0_TGI0B" priority="15"/>
+<Item defaultVect="132" id="TPU0_TGI0C" priority="15"/>
+<Item defaultVect="133" id="TPU0_TGI0D" priority="15"/>
+<Item defaultVect="134" id="TPU0_TCI0V" priority="15"/>
+<Item defaultVect="135" id="TPU1_TGI1B" priority="15"/>
+<Item defaultVect="136" id="TPU1_TCI1V" priority="15"/>
+<Item defaultVect="137" id="TPU1_TCI1U" priority="15"/>
+<Item defaultVect="138" id="TPU2_TGI2A" priority="15"/>
+<Item defaultVect="139" id="TPU2_TGI2B" priority="15"/>
+<Item defaultVect="140" id="TPU2_TCI2V" priority="15"/>
+<Item defaultVect="141" id="TPU2_TCI2U" priority="15"/>
+<Item defaultVect="142" id="TPU3_TGI3A" priority="15"/>
+<Item defaultVect="143" id="TPU3_TGI3B" priority="15"/>
+<Item defaultVect="144" id="TPU1_TGI1A" priority="15"/>
+<Item defaultVect="145" id="TPU3_TGI3C" priority="15"/>
+<Item defaultVect="146" id="TMR0_CMIA0" priority="15"/>
+<Item defaultVect="147" id="TMR0_CMIB0" priority="15"/>
+<Item defaultVect="148" id="TMR0_OVI0" priority="15"/>
+<Item defaultVect="149" id="TMR1_CMIA1" priority="15"/>
+<Item defaultVect="150" id="TMR1_CMIB1" priority="15"/>
+<Item defaultVect="151" id="TMR1_OVI1" priority="15"/>
+<Item defaultVect="152" id="TMR2_CMIA2" priority="15"/>
+<Item defaultVect="153" id="TMR2_CMIB2" priority="15"/>
+<Item defaultVect="154" id="TMR2_OVI2" priority="15"/>
+<Item defaultVect="155" id="TMR3_CMIA3" priority="15"/>
+<Item defaultVect="156" id="TMR3_CMIB3" priority="15"/>
+<Item defaultVect="157" id="TMR3_OVI3" priority="15"/>
+<Item defaultVect="158" id="TPU3_TGI3D" priority="15"/>
+<Item defaultVect="159" id="TPU3_TCI3V" priority="15"/>
+<Item defaultVect="160" id="TPU4_TGI4A" priority="15"/>
+<Item defaultVect="161" id="TPU4_TGI4B" priority="15"/>
+<Item defaultVect="162" id="TPU4_TCI4V" priority="15"/>
+<Item defaultVect="163" id="TPU4_TCI4U" priority="15"/>
+<Item defaultVect="164" id="TPU5_TGI5A" priority="15"/>
+<Item defaultVect="165" id="TPU5_TGI5B" priority="15"/>
+<Item defaultVect="166" id="TPU5_TCI5V" priority="15"/>
+<Item defaultVect="167" id="TPU5_TCI5U" priority="15"/>
+<Item defaultVect="168" id="CMTW0_IC0I0" priority="15"/>
+<Item defaultVect="169" id="CMTW0_IC1I0" priority="15"/>
+<Item defaultVect="170" id="CMTW0_OC0I0" priority="15"/>
+<Item defaultVect="171" id="CMTW0_OC1I0" priority="15"/>
+<Item defaultVect="172" id="CMTW1_IC0I1" priority="15"/>
+<Item defaultVect="173" id="CMTW1_IC1I1" priority="15"/>
+<Item defaultVect="174" id="CMTW1_OC0I1" priority="15"/>
+<Item defaultVect="175" id="CMTW1_OC1I1" priority="15"/>
+<Item defaultVect="176" id="RTC_CUP" priority="15"/>
+<Item defaultVect="177" id="CAN0_RXF0" priority="15"/>
+<Item defaultVect="178" id="CAN0_TXF0" priority="15"/>
+<Item defaultVect="179" id="CAN0_RXM0" priority="15"/>
+<Item defaultVect="180" id="CAN0_TXM0" priority="15"/>
+<Item defaultVect="181" id="CAN1_RXF1" priority="15"/>
+<Item defaultVect="182" id="CAN1_TXF1" priority="15"/>
+<Item defaultVect="183" id="CAN1_RXM1" priority="15"/>
+<Item defaultVect="184" id="CAN1_TXM1" priority="15"/>
+<Item defaultVect="185" id="CAN2_RXF2" priority="15"/>
+<Item defaultVect="186" id="CAN2_TXF2" priority="15"/>
+<Item defaultVect="187" id="CAN2_RXM2" priority="15"/>
+<Item defaultVect="188" id="CAN2_TXM2" priority="15"/>
+<Item defaultVect="189" id="USB0_USBI0" priority="15"/>
+<Item defaultVect="190" id="S12AD_S12ADI" priority="15"/>
+<Item defaultVect="191" id="S12AD_S12GBADI" priority="15"/>
+<Item defaultVect="192" id="S12AD1_S12ADI1" priority="15"/>
+<Item defaultVect="193" id="S12AD1_S12GBADI1" priority="15"/>
+<Item defaultVect="194" id="DES_DESEND" priority="15"/>
+<Item defaultVect="195" id="SHA_SHADEND" priority="15"/>
+<Item defaultVect="196" id="SHA_SHAEND" priority="15"/>
+<Item defaultVect="197" id="RNG_RNGEND" priority="15"/>
+<Item defaultVect="198" id="ELC_ELSR18I" priority="15"/>
+<Item defaultVect="199" id="ELC_ELSR19I" priority="15"/>
+<Item id="PERIB_INTB200" priority="15"/>
+<Item id="PERIB_INTB201" priority="15"/>
+<Item id="PERIB_INTB202" priority="15"/>
+<Item id="PERIB_INTB203" priority="15"/>
+<Item id="PERIB_INTB204" priority="15"/>
+<Item id="PERIB_INTB205" priority="15"/>
+<Item id="PERIB_INTB206" priority="15"/>
+<Item id="PERIB_INTB207" priority="15"/>
+<Item defaultVect="208" id="MTU1_TGIA1" priority="15"/>
+<Item defaultVect="209" id="MTU0_TGIA0" priority="15"/>
+<Item defaultVect="210" id="MTU0_TGIB0" priority="15"/>
+<Item defaultVect="211" id="MTU0_TGIC0" priority="15"/>
+<Item defaultVect="212" id="MTU0_TGID0" priority="15"/>
+<Item defaultVect="213" id="MTU0_TCIV0" priority="15"/>
+<Item defaultVect="214" id="MTU0_TGIE0" priority="15"/>
+<Item defaultVect="215" id="MTU0_TGIF0" priority="15"/>
+<Item defaultVect="216" id="MTU1_TGIB1" priority="15"/>
+<Item defaultVect="217" id="MTU1_TCIV1" priority="15"/>
+<Item defaultVect="218" id="MTU1_TCIU1" priority="15"/>
+<Item defaultVect="219" id="MTU2_TGIA2" priority="15"/>
+<Item defaultVect="220" id="MTU2_TGIB2" priority="15"/>
+<Item defaultVect="221" id="MTU2_TCIV2" priority="15"/>
+<Item defaultVect="222" id="MTU2_TCIU2" priority="15"/>
+<Item defaultVect="223" id="MTU3_TGIA3" priority="15"/>
+<Item defaultVect="224" id="MTU3_TGIB3" priority="15"/>
+<Item defaultVect="225" id="MTU3_TGIC3" priority="15"/>
+<Item defaultVect="226" id="MTU3_TGID3" priority="15"/>
+<Item defaultVect="227" id="MTU3_TCIV3" priority="15"/>
+<Item defaultVect="228" id="MTU4_TGIA4" priority="15"/>
+<Item defaultVect="229" id="MTU4_TGIB4" priority="15"/>
+<Item defaultVect="230" id="MTU4_TGIC4" priority="15"/>
+<Item defaultVect="231" id="MTU4_TGID4" priority="15"/>
+<Item defaultVect="232" id="MTU4_TCIV4" priority="15"/>
+<Item defaultVect="233" id="MTU5_TGIU5" priority="15"/>
+<Item defaultVect="234" id="MTU5_TGIV5" priority="15"/>
+<Item defaultVect="235" id="MTU5_TGIW5" priority="15"/>
+<Item defaultVect="236" id="MTU6_TGIA6" priority="15"/>
+<Item defaultVect="237" id="MTU6_TGIB6" priority="15"/>
+<Item defaultVect="238" id="MTU6_TGIC6" priority="15"/>
+<Item defaultVect="239" id="MTU6_TGID6" priority="15"/>
+<Item defaultVect="240" id="MTU6_TCIV6" priority="15"/>
+<Item defaultVect="241" id="MTU7_TGIA7" priority="15"/>
+<Item defaultVect="242" id="MTU7_TGIB7" priority="15"/>
+<Item defaultVect="243" id="MTU7_TGIC7" priority="15"/>
+<Item defaultVect="244" id="MTU7_TGID7" priority="15"/>
+<Item defaultVect="245" id="MTU7_TCIV7" priority="15"/>
+<Item defaultVect="246" id="MTU8_TGIA8" priority="15"/>
+<Item defaultVect="247" id="MTU8_TGIB8" priority="15"/>
+<Item defaultVect="248" id="MTU8_TGIC8" priority="15"/>
+<Item defaultVect="249" id="MTU8_TGID8" priority="15"/>
+<Item defaultVect="250" id="MTU8_TCIV8" priority="15"/>
+<Item defaultVect="251" id="EPTPC_IPLS" priority="15"/>
+<Item defaultVect="252" id="AES_AESRDY" priority="15"/>
+<Item defaultVect="253" id="AES_AESEND" priority="15"/>
+<Item id="PERIA_INTA254" priority="15"/>
+<Item id="PERIA_INTA255" priority="15"/>
+</tool>
 <tool id="SWComponent" version="1.0.0.0">
 <configuration inuse="true" name="r_bsp">
 <component description="依存モジュール: なし&#10;The r_bsp package provides a foundation for code to be built on top of. It provides startup code, iodefines, and MCU information for different boards. There are 2 folders that make up the r_bsp package. The 'mcu' folder contains files that are common to a MCU group. These files provide functionality such as easy register access, CPU functions, and a file named 'mcu_info.h' for each MCU group. The 'mcu_info.h' file has information about the MCU on the board and is configured based on the information given in r_bsp_config.h. The information in 'mcu_info.h' is used to help configure Renesas middleware that uses the r_bsp package. The 'board' folder has a folder with startup code for each supported board.  Which MCU and board is chosen is decided by the settings in 'platform.h'. The user can choose which board they are using by uncommenting the include path that applies to their board. For example, if you are using the RSK+RX62N then you would uncomment the #include &quot;./board/rskrx62n/r_bsp.h&quot; include path. Users are encouraged to add their own boards to the 'board' directory. BSPs are configured by using the r_bsp_config.h file. Each board will have a reference configuration file named r_bsp_config_reference.h. The user should copy this file to their project, rename it to r_bsp_config.h, and use the options inside the file to configure the BSP for their project." detailDescription="Board Support Packages." display="r_bsp" id="r_bspGeneric(v=3.60)" version="Generic(v=3.60)"/>
@@ -3021,248 +3266,195 @@
 </allocator>
 <source description="コード生成に対応したコンポーネントは、設定に応じた周辺ドライバのコードを小さなコードサイズで出力します。" display="コード生成" id="com.renesas.smc.tools.swcomponent.codegenerator.source"/>
 </configuration>
-</tool>
-<tool id="Pins" version="1.0.0.0">
-<pinItem allocation="2" direction="None" id="EMLE" locked="false" status="512"/>
-<pinItem allocation="11" direction="None" id="XTAL" locked="false" status="0"/>
-<pinItem allocation="85" direction="None" id="PD1" locked="false" status="0"/>
-<pinItem allocation="86" direction="None" id="PD0" locked="false" status="0"/>
-<pinItem allocation="83" direction="None" id="PD3" locked="false" status="0"/>
-<pinItem allocation="84" direction="None" id="PD2" locked="false" status="0"/>
-<pinItem allocation="81" direction="None" id="PD5" locked="false" status="0"/>
-<pinItem allocation="82" direction="None" id="PD4" locked="false" status="0"/>
-<pinItem allocation="79" direction="None" id="PD7" locked="false" status="0"/>
-<pinItem allocation="80" direction="None" id="PD6" locked="false" status="0"/>
-<pinItem allocation="19" direction="None" id="TMS" locked="false" status="512"/>
-<pinItem allocation="13" direction="None" id="EXTAL" locked="false" status="0"/>
-<pinItem allocation="7" direction="None" id="FINED" locked="false" status="512"/>
-<pinItem allocation="16" direction="None" id="TRST#" locked="false" status="512"/>
-<pinItem allocation="10" direction="None" id="RES#" locked="false" status="512"/>
-<pinItem allocation="21" direction="None" id="TCK" locked="false" status="512"/>
-<pinItem allocation="20" direction="None" id="TDI" locked="false" status="512"/>
-<pinItem allocation="22" direction="None" id="TDO" locked="false" status="512"/>
-</tool>
-<tool id="Interrupt">
-<Item id="BSC_BUSERR" priority="15"/>
-<Item id="RAM_RAMERR" priority="15"/>
-<Item id="FCU_FIFERR" priority="15"/>
-<Item id="FCU_FRDYI" priority="15"/>
-<Item id="ICU_SWINT2" priority="15"/>
-<Item id="ICU_SWINT" priority="15"/>
-<Item id="CMT0_CMI0" priority="15"/>
-<Item id="CMT1_CMI1" priority="15"/>
-<Item id="CMTW0_CMWI0" priority="15"/>
-<Item id="CMTW1_CMWI1" priority="15"/>
-<Item id="USBA_D0FIFO2" priority="15"/>
-<Item id="USBA_D1FIFO2" priority="15"/>
-<Item id="USB0_D0FIFO0" priority="15"/>
-<Item id="USB0_D1FIFO0" priority="15"/>
-<Item id="RSPI0_SPRI0" priority="15"/>
-<Item id="RSPI0_SPTI0" priority="15"/>
-<Item id="QSPI_SPRI" priority="15"/>
-<Item id="QSPI_SPTI" priority="15"/>
-<Item id="SDHI_SBFAI" priority="15"/>
-<Item id="MMCIF_MBFAI" priority="15"/>
-<Item id="SSI0_SSITXI0" priority="15"/>
-<Item id="SSI0_SSIRXI0" priority="15"/>
-<Item id="SSI1_SSIRTI1" priority="15"/>
-<Item id="SRC_IDEI" priority="15"/>
-<Item id="SRC_ODFI" priority="15"/>
-<Item id="RIIC0_RXI0" priority="15"/>
-<Item id="RIIC0_TXI0" priority="15"/>
-<Item id="RIIC2_RXI2" priority="15"/>
-<Item id="RIIC2_TXI2" priority="15"/>
-<Item id="SCI0_RXI0" priority="15"/>
-<Item id="SCI0_TXI0" priority="15"/>
-<Item id="SCI1_RXI1" priority="15"/>
-<Item id="SCI1_TXI1" priority="15"/>
-<Item id="SCI2_RXI2" priority="15"/>
-<Item id="SCI2_TXI2" priority="15"/>
-<Item id="ICU_IRQ0" priority="15"/>
-<Item id="ICU_IRQ1" priority="15"/>
-<Item id="ICU_IRQ2" priority="15"/>
-<Item id="ICU_IRQ3" priority="15"/>
-<Item id="ICU_IRQ4" priority="15"/>
-<Item id="ICU_IRQ5" priority="15"/>
-<Item id="ICU_IRQ6" priority="15"/>
-<Item id="ICU_IRQ7" priority="15"/>
-<Item id="ICU_IRQ8" priority="15"/>
-<Item id="ICU_IRQ9" priority="15"/>
-<Item id="ICU_IRQ10" priority="15"/>
-<Item id="ICU_IRQ11" priority="15"/>
-<Item id="ICU_IRQ12" priority="15"/>
-<Item id="ICU_IRQ13" priority="15"/>
-<Item id="ICU_IRQ14" priority="15"/>
-<Item id="ICU_IRQ15" priority="15"/>
-<Item id="SCI3_RXI3" priority="15"/>
-<Item id="SCI3_TXI3" priority="15"/>
-<Item id="SCI4_RXI4" priority="15"/>
-<Item id="SCI4_TXI4" priority="15"/>
-<Item id="SCI5_RXI5" priority="15"/>
-<Item id="SCI5_TXI5" priority="15"/>
-<Item id="SCI6_RXI6" priority="15"/>
-<Item id="SCI6_TXI6" priority="15"/>
-<Item id="LVD1_LVD1" priority="15"/>
-<Item id="LVD2_LVD2" priority="15"/>
-<Item id="USB0_USBR0" priority="15"/>
-<Item id="RTC_ALM" priority="15"/>
-<Item id="RTC_PRD" priority="15"/>
-<Item id="USBA_USBAR" priority="15"/>
-<Item id="IWDT_IWUNI" priority="15"/>
-<Item id="WDT_WUNI" priority="15"/>
-<Item id="PDC_PCDFI" priority="15"/>
-<Item id="SCI7_RXI7" priority="15"/>
-<Item id="SCI7_TXI7" priority="15"/>
-<Item id="SCIF8_RXIF8" priority="15"/>
-<Item id="SCIF8_TXIF8" priority="15"/>
-<Item id="SCIF9_RXIF9" priority="15"/>
-<Item id="SCIF9_TXIF9" priority="15"/>
-<Item id="SCIF10_RXIF10" priority="15"/>
-<Item id="SCIF10_TXIF10" priority="15"/>
-<Item id="BE0" priority="15"/>
-<Item id="BL0" priority="15"/>
-<Item id="BL1" priority="15"/>
-<Item id="AL0" priority="15"/>
-<Item id="AL1" priority="15"/>
-<Item id="SCIF11_RXIF11" priority="15"/>
-<Item id="SCIF11_TXIF11" priority="15"/>
-<Item id="SCI12_RXI12" priority="15"/>
-<Item id="SCI12_TXI12" priority="15"/>
-<Item id="DMAC_DMAC0I" priority="15"/>
-<Item id="DMAC_DMAC1I" priority="15"/>
-<Item id="DMAC_DMAC2I" priority="15"/>
-<Item id="DMAC_DMAC3I" priority="15"/>
-<Item id="DMAC_DMAC74I" priority="15"/>
-<Item id="OST_OSTDI" priority="15"/>
-<Item id="EXDMAC_EXDMAC0I" priority="15"/>
-<Item id="EXDMAC_EXDMAC1I" priority="15"/>
-<Item defaultVect="128" id="CMT2_CMI2" priority="15"/>
-<Item defaultVect="129" id="CMT3_CMI3" priority="15"/>
-<Item defaultVect="130" id="TPU0_TGI0A" priority="15"/>
-<Item defaultVect="131" id="TPU0_TGI0B" priority="15"/>
-<Item defaultVect="132" id="TPU0_TGI0C" priority="15"/>
-<Item defaultVect="133" id="TPU0_TGI0D" priority="15"/>
-<Item defaultVect="134" id="TPU0_TCI0V" priority="15"/>
-<Item defaultVect="135" id="TPU1_TGI1B" priority="15"/>
-<Item defaultVect="136" id="TPU1_TCI1V" priority="15"/>
-<Item defaultVect="137" id="TPU1_TCI1U" priority="15"/>
-<Item defaultVect="138" id="TPU2_TGI2A" priority="15"/>
-<Item defaultVect="139" id="TPU2_TGI2B" priority="15"/>
-<Item defaultVect="140" id="TPU2_TCI2V" priority="15"/>
-<Item defaultVect="141" id="TPU2_TCI2U" priority="15"/>
-<Item defaultVect="142" id="TPU3_TGI3A" priority="15"/>
-<Item defaultVect="143" id="TPU3_TGI3B" priority="15"/>
-<Item defaultVect="144" id="TPU1_TGI1A" priority="15"/>
-<Item defaultVect="145" id="TPU3_TGI3C" priority="15"/>
-<Item defaultVect="146" id="TMR0_CMIA0" priority="15"/>
-<Item defaultVect="147" id="TMR0_CMIB0" priority="15"/>
-<Item defaultVect="148" id="TMR0_OVI0" priority="15"/>
-<Item defaultVect="149" id="TMR1_CMIA1" priority="15"/>
-<Item defaultVect="150" id="TMR1_CMIB1" priority="15"/>
-<Item defaultVect="151" id="TMR1_OVI1" priority="15"/>
-<Item defaultVect="152" id="TMR2_CMIA2" priority="15"/>
-<Item defaultVect="153" id="TMR2_CMIB2" priority="15"/>
-<Item defaultVect="154" id="TMR2_OVI2" priority="15"/>
-<Item defaultVect="155" id="TMR3_CMIA3" priority="15"/>
-<Item defaultVect="156" id="TMR3_CMIB3" priority="15"/>
-<Item defaultVect="157" id="TMR3_OVI3" priority="15"/>
-<Item defaultVect="158" id="TPU3_TGI3D" priority="15"/>
-<Item defaultVect="159" id="TPU3_TCI3V" priority="15"/>
-<Item defaultVect="160" id="TPU4_TGI4A" priority="15"/>
-<Item defaultVect="161" id="TPU4_TGI4B" priority="15"/>
-<Item defaultVect="162" id="TPU4_TCI4V" priority="15"/>
-<Item defaultVect="163" id="TPU4_TCI4U" priority="15"/>
-<Item defaultVect="164" id="TPU5_TGI5A" priority="15"/>
-<Item defaultVect="165" id="TPU5_TGI5B" priority="15"/>
-<Item defaultVect="166" id="TPU5_TCI5V" priority="15"/>
-<Item defaultVect="167" id="TPU5_TCI5U" priority="15"/>
-<Item defaultVect="168" id="CMTW0_IC0I0" priority="15"/>
-<Item defaultVect="169" id="CMTW0_IC1I0" priority="15"/>
-<Item defaultVect="170" id="CMTW0_OC0I0" priority="15"/>
-<Item defaultVect="171" id="CMTW0_OC1I0" priority="15"/>
-<Item defaultVect="172" id="CMTW1_IC0I1" priority="15"/>
-<Item defaultVect="173" id="CMTW1_IC1I1" priority="15"/>
-<Item defaultVect="174" id="CMTW1_OC0I1" priority="15"/>
-<Item defaultVect="175" id="CMTW1_OC1I1" priority="15"/>
-<Item defaultVect="176" id="RTC_CUP" priority="15"/>
-<Item defaultVect="177" id="CAN0_RXF0" priority="15"/>
-<Item defaultVect="178" id="CAN0_TXF0" priority="15"/>
-<Item defaultVect="179" id="CAN0_RXM0" priority="15"/>
-<Item defaultVect="180" id="CAN0_TXM0" priority="15"/>
-<Item defaultVect="181" id="CAN1_RXF1" priority="15"/>
-<Item defaultVect="182" id="CAN1_TXF1" priority="15"/>
-<Item defaultVect="183" id="CAN1_RXM1" priority="15"/>
-<Item defaultVect="184" id="CAN1_TXM1" priority="15"/>
-<Item defaultVect="185" id="CAN2_RXF2" priority="15"/>
-<Item defaultVect="186" id="CAN2_TXF2" priority="15"/>
-<Item defaultVect="187" id="CAN2_RXM2" priority="15"/>
-<Item defaultVect="188" id="CAN2_TXM2" priority="15"/>
-<Item defaultVect="189" id="USB0_USBI0" priority="15"/>
-<Item defaultVect="190" id="S12AD_S12ADI" priority="15"/>
-<Item defaultVect="191" id="S12AD_S12GBADI" priority="15"/>
-<Item defaultVect="192" id="S12AD1_S12ADI1" priority="15"/>
-<Item defaultVect="193" id="S12AD1_S12GBADI1" priority="15"/>
-<Item defaultVect="194" id="DES_DESEND" priority="15"/>
-<Item defaultVect="195" id="SHA_SHADEND" priority="15"/>
-<Item defaultVect="196" id="SHA_SHAEND" priority="15"/>
-<Item defaultVect="197" id="RNG_RNGEND" priority="15"/>
-<Item defaultVect="198" id="ELC_ELSR18I" priority="15"/>
-<Item defaultVect="199" id="ELC_ELSR19I" priority="15"/>
-<Item id="PERIB_INTB200" priority="15"/>
-<Item id="PERIB_INTB201" priority="15"/>
-<Item id="PERIB_INTB202" priority="15"/>
-<Item id="PERIB_INTB203" priority="15"/>
-<Item id="PERIB_INTB204" priority="15"/>
-<Item id="PERIB_INTB205" priority="15"/>
-<Item id="PERIB_INTB206" priority="15"/>
-<Item id="PERIB_INTB207" priority="15"/>
-<Item defaultVect="208" id="MTU1_TGIA1" priority="15"/>
-<Item defaultVect="209" id="MTU0_TGIA0" priority="15"/>
-<Item defaultVect="210" id="MTU0_TGIB0" priority="15"/>
-<Item defaultVect="211" id="MTU0_TGIC0" priority="15"/>
-<Item defaultVect="212" id="MTU0_TGID0" priority="15"/>
-<Item defaultVect="213" id="MTU0_TCIV0" priority="15"/>
-<Item defaultVect="214" id="MTU0_TGIE0" priority="15"/>
-<Item defaultVect="215" id="MTU0_TGIF0" priority="15"/>
-<Item defaultVect="216" id="MTU1_TGIB1" priority="15"/>
-<Item defaultVect="217" id="MTU1_TCIV1" priority="15"/>
-<Item defaultVect="218" id="MTU1_TCIU1" priority="15"/>
-<Item defaultVect="219" id="MTU2_TGIA2" priority="15"/>
-<Item defaultVect="220" id="MTU2_TGIB2" priority="15"/>
-<Item defaultVect="221" id="MTU2_TCIV2" priority="15"/>
-<Item defaultVect="222" id="MTU2_TCIU2" priority="15"/>
-<Item defaultVect="223" id="MTU3_TGIA3" priority="15"/>
-<Item defaultVect="224" id="MTU3_TGIB3" priority="15"/>
-<Item defaultVect="225" id="MTU3_TGIC3" priority="15"/>
-<Item defaultVect="226" id="MTU3_TGID3" priority="15"/>
-<Item defaultVect="227" id="MTU3_TCIV3" priority="15"/>
-<Item defaultVect="228" id="MTU4_TGIA4" priority="15"/>
-<Item defaultVect="229" id="MTU4_TGIB4" priority="15"/>
-<Item defaultVect="230" id="MTU4_TGIC4" priority="15"/>
-<Item defaultVect="231" id="MTU4_TGID4" priority="15"/>
-<Item defaultVect="232" id="MTU4_TCIV4" priority="15"/>
-<Item defaultVect="233" id="MTU5_TGIU5" priority="15"/>
-<Item defaultVect="234" id="MTU5_TGIV5" priority="15"/>
-<Item defaultVect="235" id="MTU5_TGIW5" priority="15"/>
-<Item defaultVect="236" id="MTU6_TGIA6" priority="15"/>
-<Item defaultVect="237" id="MTU6_TGIB6" priority="15"/>
-<Item defaultVect="238" id="MTU6_TGIC6" priority="15"/>
-<Item defaultVect="239" id="MTU6_TGID6" priority="15"/>
-<Item defaultVect="240" id="MTU6_TCIV6" priority="15"/>
-<Item defaultVect="241" id="MTU7_TGIA7" priority="15"/>
-<Item defaultVect="242" id="MTU7_TGIB7" priority="15"/>
-<Item defaultVect="243" id="MTU7_TGIC7" priority="15"/>
-<Item defaultVect="244" id="MTU7_TGID7" priority="15"/>
-<Item defaultVect="245" id="MTU7_TCIV7" priority="15"/>
-<Item defaultVect="246" id="MTU8_TGIA8" priority="15"/>
-<Item defaultVect="247" id="MTU8_TGIB8" priority="15"/>
-<Item defaultVect="248" id="MTU8_TGIC8" priority="15"/>
-<Item defaultVect="249" id="MTU8_TGID8" priority="15"/>
-<Item defaultVect="250" id="MTU8_TCIV8" priority="15"/>
-<Item defaultVect="251" id="EPTPC_IPLS" priority="15"/>
-<Item defaultVect="252" id="AES_AESRDY" priority="15"/>
-<Item defaultVect="253" id="AES_AESEND" priority="15"/>
-<Item id="PERIA_INTA254" priority="15"/>
-<Item id="PERIA_INTA255" priority="15"/>
+<configuration id="10f01083-9496-47e7-9dbf-034be7a385ed" inuse="true" name="Config_RIIC0">
+<allocatable id="RIIC0" name="RIIC0">
+<isocket id="CountingClock" selection="Clock.tool_clock_pclkb" value="6.0E7"/>
+<option enabled="true" id="Bitrate" selection="FreeValue">
+<item id="10" input="" vlaue="0"/>
+<item id="50" input="" vlaue="0"/>
+<item id="100" input="" vlaue="0"/>
+<item id="400" input="" vlaue="0"/>
+<item id="1000" input="" vlaue="0"/>
+<item id="FreeValue" input="1000" vlaue="10"/>
+</option>
+<option enabled="true" id="NFEnable" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="NFStage" selection="1Stage">
+<item id="1Stage" input="" vlaue="0"/>
+<item id="2Stage" input="" vlaue="0"/>
+<item id="3Stage" input="" vlaue="0"/>
+<item id="4Stage" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="SDAEnable" selection="Disable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="SDACNTClock" selection="Internal">
+<item id="Internal" input="" vlaue="0"/>
+<item id="HalfInternal" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="SDAOutDelay" selection="Delay1">
+<item id="Delay1" input="" vlaue="0"/>
+<item id="Delay2" input="" vlaue="0"/>
+<item id="Delay3" input="" vlaue="0"/>
+<item id="Delay4" input="" vlaue="0"/>
+<item id="Delay5" input="" vlaue="0"/>
+<item id="Delay6" input="" vlaue="0"/>
+<item id="Delay7" input="" vlaue="0"/>
+<item id="Delay8" input="" vlaue="0"/>
+<item id="Delay9" input="" vlaue="0"/>
+<item id="Delay10" input="" vlaue="0"/>
+<item id="Delay11" input="" vlaue="0"/>
+<item id="Delay12" input="" vlaue="0"/>
+<item id="Delay13" input="" vlaue="0"/>
+<item id="Delay14" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="Timeout" selection="Disable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="DetCondition" selection="SCLBoth">
+<item id="SCLLow" input="" vlaue="0"/>
+<item id="SCLHigh" input="" vlaue="0"/>
+<item id="SCLBoth" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="DetTime" selection="LongMode">
+<item id="LongMode" input="" vlaue="0"/>
+<item id="ShortMode" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="MasterALDEnable" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="NACKALDEnable" selection="Disable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="TSusEnable" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="IntTXIPriority" selection="Level7">
+<item id="Level0" input="" vlaue="0"/>
+<item id="Level1" input="" vlaue="0"/>
+<item id="Level2" input="" vlaue="0"/>
+<item id="Level3" input="" vlaue="0"/>
+<item id="Level4" input="" vlaue="0"/>
+<item id="Level5" input="" vlaue="0"/>
+<item id="Level6" input="" vlaue="0"/>
+<item id="Level7" input="" vlaue="0"/>
+<item id="Level8" input="" vlaue="0"/>
+<item id="Level9" input="" vlaue="0"/>
+<item id="Level10" input="" vlaue="0"/>
+<item id="Level11" input="" vlaue="0"/>
+<item id="Level12" input="" vlaue="0"/>
+<item id="Level13" input="" vlaue="0"/>
+<item id="Level14" input="" vlaue="0"/>
+<item id="Level15" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="IntRXIPriority" selection="Level7">
+<item id="Level0" input="" vlaue="0"/>
+<item id="Level1" input="" vlaue="0"/>
+<item id="Level2" input="" vlaue="0"/>
+<item id="Level3" input="" vlaue="0"/>
+<item id="Level4" input="" vlaue="0"/>
+<item id="Level5" input="" vlaue="0"/>
+<item id="Level6" input="" vlaue="0"/>
+<item id="Level7" input="" vlaue="0"/>
+<item id="Level8" input="" vlaue="0"/>
+<item id="Level9" input="" vlaue="0"/>
+<item id="Level10" input="" vlaue="0"/>
+<item id="Level11" input="" vlaue="0"/>
+<item id="Level12" input="" vlaue="0"/>
+<item id="Level13" input="" vlaue="0"/>
+<item id="Level14" input="" vlaue="0"/>
+<item id="Level15" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="IntTEIPriority" selection="Level7">
+<item id="Level0" input="" vlaue="0"/>
+<item id="Level1" input="" vlaue="0"/>
+<item id="Level2" input="" vlaue="0"/>
+<item id="Level3" input="" vlaue="0"/>
+<item id="Level4" input="" vlaue="0"/>
+<item id="Level5" input="" vlaue="0"/>
+<item id="Level6" input="" vlaue="0"/>
+<item id="Level7" input="" vlaue="0"/>
+<item id="Level8" input="" vlaue="0"/>
+<item id="Level9" input="" vlaue="0"/>
+<item id="Level10" input="" vlaue="0"/>
+<item id="Level11" input="" vlaue="0"/>
+<item id="Level12" input="" vlaue="0"/>
+<item id="Level13" input="" vlaue="0"/>
+<item id="Level14" input="" vlaue="0"/>
+<item id="Level15" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="IntEEIPriority" selection="Level7">
+<item id="Level0" input="" vlaue="0"/>
+<item id="Level1" input="" vlaue="0"/>
+<item id="Level2" input="" vlaue="0"/>
+<item id="Level3" input="" vlaue="0"/>
+<item id="Level4" input="" vlaue="0"/>
+<item id="Level5" input="" vlaue="0"/>
+<item id="Level6" input="" vlaue="0"/>
+<item id="Level7" input="" vlaue="0"/>
+<item id="Level8" input="" vlaue="0"/>
+<item id="Level9" input="" vlaue="0"/>
+<item id="Level10" input="" vlaue="0"/>
+<item id="Level11" input="" vlaue="0"/>
+<item id="Level12" input="" vlaue="0"/>
+<item id="Level13" input="" vlaue="0"/>
+<item id="Level14" input="" vlaue="0"/>
+<item id="Level15" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="TMOIEnable" selection="Disable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="ALIEnable" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="STIEnable" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="SPIEnable" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="NAKIEnable" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="TransEnd" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="RecvEnd" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="RecvErr" selection="Enable">
+<item id="Enable" input="" vlaue="0"/>
+<item id="Disable" input="" vlaue="0"/>
+</option>
+<option enabled="true" id="Mode" selection="I2C">
+<item id="I2C" input="" vlaue="0"/>
+<item id="SMBS" input="" vlaue="0"/>
+</option>
+</allocatable>
+<component description="このソフトウェア・コンポーネントは、I2C マスタモードの構成を提供し" detailDescription="" display="I2C マスタモード" id="com.renesas.smc.tools.swcomponent.codegenerator.i2cmastermode" version="1.0.0"/>
+<allocator channelLevel0="0" channelLevel1="" channelLevel2="" channelLevel3="" channelLevel4="" channelLevel5="" description="RIIC チャネル 0" display="RIIC0" id="com.renesas.smc.tools.swcomponent.codegenerator.i2cmastermode.rx64m.riic0" type="RIIC">
+<context>
+<option enabled="true" id="Mode" selection="I2C">
+<item enabled="true" id="I2C"/>
+<item enabled="true" id="SMBS"/>
+</option>
+</context>
+</allocator>
+<source description="コード生成に対応したコンポーネントは、設定に応じた周辺ドライバのコードを小さなコードサイズで出力します。" display="コード生成" id="com.renesas.smc.tools.swcomponent.codegenerator.source"/>
+</configuration>
 </tool>
 </smc>

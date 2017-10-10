@@ -18,46 +18,52 @@
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
-* File Name    : r_smc_cgc_user.c
-* Version      : 1.1.0
+* File Name    : Config_RIIC0.h
+* Version      : 1.0.0
 * Device(s)    : R5F564MLDxFP
-* Description  : None
+* Description  : This file implements device driver for Config_RIIC0.
 * Creation Date: 2017-10-08
 ***********************************************************************************************************************/
 
-/***********************************************************************************************************************
-Pragma directive
-***********************************************************************************************************************/
-/* Start user code for pragma. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
+#ifndef Config_RIIC0_H
+#define Config_RIIC0_H
 
 /***********************************************************************************************************************
 Includes
 ***********************************************************************************************************************/
-#include "r_cg_macrodriver.h"
-/* Start user code for include. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
-#include "r_cg_userdefine.h"
+#include "r_cg_riic.h"
 
 /***********************************************************************************************************************
-Global variables and functions
+Macro definitions (Register bit)
 ***********************************************************************************************************************/
-/* Start user code for global. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */
 
 /***********************************************************************************************************************
-* Function Name: R_CGC_Create_UserInit
-* Description  : This function adds user code after initializing CGC
-* Arguments    : None
-* Return Value : None
+Macro definitions
+***********************************************************************************************************************/
+#define _FF_IIC0_SCL_LOW_LEVEL_PERIOD                          (0xFFU) /* SCL clock low-level period setting */
+#define _ED_IIC0_SCL_HIGH_LEVEL_PERIOD                         (0xEDU) /* SCL clock high-level period setting */
+
+/***********************************************************************************************************************
+Typedef definitions
 ***********************************************************************************************************************/
 
-void R_CGC_Create_UserInit(void)
-{
-    /* Start user code for code init. Do not edit comment generated here */
-    /* End user code. Do not edit comment generated here */
-}
-
-/* Start user code for adding. Do not edit comment generated here */
-/* End user code. Do not edit comment generated here */   
+/***********************************************************************************************************************
+Global functions
+***********************************************************************************************************************/
+void R_Config_RIIC0_Create(void);
+void R_Config_RIIC0_Start(void);
+void R_Config_RIIC0_Stop(void);
+void R_Config_RIIC0_Create_UserInit(void);
+MD_STATUS R_Config_RIIC0_Master_Send(uint16_t adr, uint8_t * const tx_buf, uint16_t tx_num);
+MD_STATUS R_Config_RIIC0_Master_Receive(uint16_t adr, uint8_t * const rx_buf, uint16_t rx_num);
+void R_Config_RIIC0_IIC_StartCondition(void);
+void R_Config_RIIC0_IIC_StopCondition(void);
+void r_Config_RIIC0_transmitend_interrupt(void);
+void r_Config_RIIC0_error_interrupt(void);
+static void r_Config_RIIC0_callback_transmitend(void);
+static void r_Config_RIIC0_callback_receiveend(void);
+static void r_Config_RIIC0_callback_receiveerror(MD_STATUS status);
+/* Start user code for function. Do not edit comment generated here */
+/* End user code. Do not edit comment generated here */
+#endif
 
