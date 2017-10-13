@@ -15,7 +15,9 @@
 #include "r_cg_macrodriver.h"
 #include "r_cg_userdefine.h"
 #include <stdint.h>
-#include "r_riic_rx_if.h"
+
+/* デバイス */
+#include "r_sci_iic_rx_if.h"
 #include "rx-8025.h"
 
 /* Kernel includes. */
@@ -31,10 +33,10 @@
 /**----------------------------------------------------------------------------
 <<変数>>
 -----------------------------------------------------------------------------**/
-#define RTC_ADDR (0x32)	//I2CAddress
+#define RTC_ADDR (RX_8025_ADDRESS)	//I2CAddress(FITドライバAPIはビットシフト無し)
 static volatile int i2c_runninng = FALSE; //I2C送受信中フラグ
 
-static riic_info_t iic_info_0;
+static sci_iic_info_t siic_info_0;
 
 //static uint8_t write_command[2] = {0, 0};
 static RtcRegisters rtc_mem;
@@ -43,26 +45,6 @@ static RtcRegisters rtc_mem;
 //static uint8_t * const rtc_mem_p = rtc_mem.read_data;
 
 /***公開関数*******************************************************************/
-
-void Rtctest2(void){
-	volatile riic_return_t ret;
-	Rx8025TransferByte mode;
-	uint8_t rtc_address[1] = {RTC_ADDR};
-
-	//
-	iic_info_0.cnt1st = 1;
-	iic_info_0.cnt2nd = sizeof(rtc_mem.read_data);
-	iic_info_0.p_data1st = &mode.byte;
-	iic_info_0.p_data2nd = rtc_mem.read_data;
-	iic_info_0.p_slv_adr = rtc_address;
-
-	mode.elements.address = 0x0;
-	mode.elements.transmode = kTransStandardMode;
-
-	i2c_runninng = TRUE;	//送信終了時にFalseになる。
-	ret = R_RIIC_MasterReceive(&iic_info_0);
-	while(i2c_runninng == TRUE);	//送信終了まで待つ
-}	
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：
 ＊　機能　　：
@@ -80,7 +62,7 @@ void RtcDriverTask(void){
 	while(1){
 		//vTaskDelay(500/portTICK_PERIOD_MS);
 		//Rtctest();
-		Rtctest2();
+		RefreshRtcState();
 		vTaskDelay(500/portTICK_PERIOD_MS);
 		//Rtctest1();
 	}
@@ -96,30 +78,62 @@ void RtcDriverTask(void){
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 static void InitRtc(void){
-	volatile riic_return_t ret;
-	Rx8025TransferByte mode;
-	uint8_t write_command;
-	uint8_t rtc_address[1] = {RTC_ADDR};
+	volatile sci_iic_return_t ret;           //i2cAPI戻り値
+	Rx8025TransferByte mode;              //RTC転送モード
+	uint8_t write_command;                //RTC書き込みデータ
+	uint8_t rtc_address[1] = {RTC_ADDR};  //スレーブアドレス
 
-	iic_info_0.dev_sts = RIIC_NO_INIT;
-	iic_info_0.ch_no   = 0;
+	/*I2C初期化*****************************************/
+	siic_info_0.dev_sts = SCI_IIC_NO_INIT;
+	siic_info_0.ch_no   = 0;
 
-	ret = R_RIIC_Open(&iic_info_0);
-	//
-	iic_info_0.callbackfunc = &RtcCallBackMaster;
-	iic_info_0.cnt1st = 1;
-	iic_info_0.cnt2nd = 1;
-	iic_info_0.p_data1st = &mode.byte;
-	iic_info_0.p_data2nd = &write_command;
-	iic_info_0.p_slv_adr = rtc_address;
+	ret = R_SCI_IIC_Open(&siic_info_0);
 
-	mode.elements.address = 0xE;
-	mode.elements.transmode = kTransStandardMode;
+	/*INTAの1Hz周期割込み設定*****************************/
+	//通信構造体を設定
+	siic_info_0.callbackfunc = &RtcCallBackMaster;
+	siic_info_0.cnt1st = 1;
+	siic_info_0.cnt2nd = 1;
+	siic_info_0.p_data1st = &mode.byte;
+	siic_info_0.p_data2nd = &write_command;
+	siic_info_0.p_slv_adr = rtc_address;
+
+	//RTCのレジスタアドレス、転送モード、設定データ初期化
+	mode.bit.address = 0xE;
+	mode.bit.transmode = kTransStandardMode;
 	write_command = 0x03;
 
 	i2c_runninng = TRUE;	//送信終了時にFalseになる。
-	ret = R_RIIC_MasterSend(&iic_info_0);
-	while(i2c_runninng == TRUE);	//送信終了まで待つ
+	ret = R_SCI_IIC_MasterSend(&siic_info_0);
+	while(i2c_runninng == TRUE);	//送信終了までコールバックを待つ
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：RefreshRtcState
+＊　機能　　： RTCの全レジスタ読み込み
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void RefreshRtcState(void){
+	volatile sci_iic_return_t ret;
+	Rx8025TransferByte mode;
+	uint8_t rtc_address[1] = {RTC_ADDR};
+
+	/*アドレス0x0~0xfまで順次読出し*/
+	siic_info_0.cnt1st = 1;
+	siic_info_0.cnt2nd = sizeof(rtc_mem.read_data);
+	siic_info_0.p_data1st = &mode.byte;
+	siic_info_0.p_data2nd = rtc_mem.read_data;
+	siic_info_0.p_slv_adr = rtc_address;
+
+	mode.bit.address = 0x0;
+	mode.bit.transmode = kTransStandardMode;
+
+	i2c_runninng = TRUE;	//送信終了時にFalseになる。
+	ret = R_SCI_IIC_MasterReceive(&siic_info_0);
+	while(i2c_runninng == TRUE);	//送信終了コールバックを待つ
 }
 
 

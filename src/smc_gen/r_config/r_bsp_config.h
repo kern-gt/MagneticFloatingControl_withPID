@@ -83,7 +83,7 @@ Configuration Options
    FP           = 0x5             = LFQFP/100/0.50
    LJ           = 0xA             = TFLGA/100/0.65
 */
-#define BSP_CFG_MCU_PART_PACKAGE        (0x5)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MCU_PART_PACKAGE        (0x5)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Whether Encryption and SDHI are included or not. 
    Character(s) = Value for macro = Description
@@ -92,7 +92,7 @@ Configuration Options
    C            = false           = Encryption module not included, SDHI module not included
    G            = true            = Encryption module included, SDHI module not included
 */
-#define BSP_CFG_MCU_PART_ENCRYPTION_INCLUDED   (false)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MCU_PART_ENCRYPTION_INCLUDED   (false)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* ROM, RAM, and Data Flash Capacity. 
    Character(s) = Value for macro = ROM Size/Ram Size/Data Flash Size
@@ -101,25 +101,25 @@ Configuration Options
    G            = 0x10            = 2.5MB/512KB/64KB
    F            = 0xF             = 2MB/512KB/64KB
 */
-#define BSP_CFG_MCU_PART_MEMORY_SIZE    (0x15)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MCU_PART_MEMORY_SIZE    (0x15)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Group name. 
    Character(s) = Value for macro = Description
    4M           = 0x0             = RX64M Group
 */
-#define BSP_CFG_MCU_PART_GROUP          (0x0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MCU_PART_GROUP          (0x0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Series name. 
    Character(s) = Value for macro = Description
    56           = 0x0             = RX600 Series
 */  
-#define BSP_CFG_MCU_PART_SERIES         (0x0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MCU_PART_SERIES         (0x0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Memory type. 
    Character(s) = Value for macro = Description
    F            = 0x0             = Flash memory version
 */
-#define BSP_CFG_MCU_PART_MEMORY_TYPE    (0x0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MCU_PART_MEMORY_TYPE    (0x0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Whether to use 1 stack or 2. RX MCUs have the ability to use 2 stacks: an interrupt stack and a user stack.
  * When using 2 stacks the user stack will be used during normal user code. When an interrupt occurs the CPU
@@ -199,7 +199,7 @@ Configuration Options
    3 = Sub-Clock Oscillator
    4 = PLL Circuit
 */ 
-#define BSP_CFG_CLOCK_SOURCE            (4)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_CLOCK_SOURCE            (4)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* The sub-clock oscillation control for using the RTC.
    When '1' is selected, the registers related to RTC are initialized and the sub-clock oscillator is operated.
@@ -218,7 +218,7 @@ Configuration Options
    0 = Resonator
    1 = External clock input
 */ 
-#define BSP_CFG_MAIN_CLOCK_SOURCE       (0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MAIN_CLOCK_SOURCE       (0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Clock configuration options.
    The input clock frequency is specified and then the system clocks are set by specifying the multipliers used. The
@@ -248,7 +248,7 @@ Configuration Options
 */
 
 /* Input clock frequency in Hz (XTAL or EXTAL). */
-#define BSP_CFG_XTAL_HZ                 (12000000)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_XTAL_HZ                 (12000000)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* The HOCO can operate at several different frequencies. Choose which one using the macro below.
    Available frequency settings:
@@ -256,69 +256,69 @@ Configuration Options
    1 = 18MHz
    2 = 20MHz
 */
-#define BSP_CFG_HOCO_FREQUENCY          (0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_HOCO_FREQUENCY          (0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* PLL clock source (PLLSRCEL). Choose which clock source to input to the PLL circuit.
    Available clock sources:
    0 = Main clock (default)
    1 = HOCO
 */
-#define BSP_CFG_PLL_SRC                 (0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_PLL_SRC                 (0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* PLL Input Frequency Division Ratio Select (PLIDIV).
    Available divisors = /1 (no division), /2, /3
 */
-#define BSP_CFG_PLL_DIV                 (1)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_PLL_DIV                 (1)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* PLL Frequency Multiplication Factor Select (STC). 
    Available multipliers = x10.0 to x30.0 in 0.5 increments (e.g. 10.0, 10.5, 11.0, 11.5, ..., 29.0, 29.5, 30.0)
 */
-#define BSP_CFG_PLL_MUL                 (10.0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_PLL_MUL                 (10.0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* System Clock Divider (ICK).
    Available divisors = /1 (no division), /2, /4, /8, /16, /32, /64
 */
-#define BSP_CFG_ICK_DIV                 (1)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_ICK_DIV                 (1)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Peripheral Module Clock A Divider (PCKA). 
    Available divisors = /1 (no division), /2, /4, /8, /16, /32, /64
 */
-#define BSP_CFG_PCKA_DIV                (1)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_PCKA_DIV                (1)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Peripheral Module Clock B Divider (PCKB). 
    Available divisors = /1 (no division), /2, /4, /8, /16, /32, /64
 */
-#define BSP_CFG_PCKB_DIV                (2)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_PCKB_DIV                (2)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Peripheral Module Clock C Divider (PCKC).
    Available divisors = /1 (no division), /2, /4, /8, /16, /32, /64
 */
-#define BSP_CFG_PCKC_DIV                (2)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_PCKC_DIV                (2)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Peripheral Module Clock D Divider (PCKD).
    Available divisors = /1 (no division), /2, /4, /8, /16, /32, /64
 */
-#define BSP_CFG_PCKD_DIV                (2)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_PCKD_DIV                (2)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* External Bus Clock Divider (BCLK). 
    Available divisors = /1 (no division), /2, /4, /8, /16, /32, /64
 */
-#define BSP_CFG_BCK_DIV                 (1)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_BCK_DIV                 (1)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Flash IF Clock Divider (FCK). 
    Available divisors = /1 (no division), /2, /4, /8, /16, /32, /64
 */
-#define BSP_CFG_FCK_DIV                 (2)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_FCK_DIV                 (2)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* USB Clock Divider Select. 
    Available divisors = /2, /3, /4, /5
 */
-#define BSP_CFG_UCK_DIV                 (5)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_UCK_DIV                 (5)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Configure BCLK output pin (only effective when external bus enabled)
    Values 0=no output, 1 = BCK frequency, 2= BCK/2 frequency
 */
-#define BSP_CFG_BCLK_OUTPUT             (0)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_BCLK_OUTPUT             (0)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Configure SDCLK output pin (only effective when external bus enabled)
    Values 0=no output, 1 = BCK frequency
@@ -338,7 +338,7 @@ Configuration Options
    NOTE: The waiting time is not required when an external clock signal is input for the main clock oscillator. 
          Set the BSP_CFG_MOSC_WAIT_TIME to 00h.
 */
-#define BSP_CFG_MOSC_WAIT_TIME          (0x53)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_MOSC_WAIT_TIME          (0x53)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Sub-Clock Oscillator Wait Time (SOSCWTCR).
    The value of SOSCWTCR register required for correspondence with the expected time to secure settling of oscillation
@@ -350,7 +350,7 @@ Configuration Options
    If tSUBOSC is 2 s and fLOCO is 264 kHz (the period is 1/3.78 us), the formula gives
     BSP_CFG_SOSC_WAIT_TIME > (2 s * (264 kHz) +16)/16384 = 32.22, so set the  BSP_CFG_SOSC_WAIT_TIME bits to 33(21h).
 */
-#define BSP_CFG_SOSC_WAIT_TIME          (0x21)                          // <-- Updated by GUI. Do not edit this value manually
+#define BSP_CFG_SOSC_WAIT_TIME          (0x21)                            // <-- Updated by GUI. Do not edit this value manually
 
 /* Configure WDT and IWDT settings.
    OFS0 - Option Function Select Register 0
@@ -372,7 +372,7 @@ Configuration Options
        b3:b2   IWDTTOPS - IWDT Timeout Period Select - (0=1024 cycles, 1=4096, 2=8192, 3=16384)
        b1      IWDTSTRT - IWDT Start Mode Select - (0=auto-start after reset, 1=halt after reset)
        b0      Reserved (set to 1) */
-#define BSP_CFG_OFS0_REG_VALUE  (0xFFFFFFFF)                          // <-- Updated by GUI. Do not edit this value manually //Disable by default
+#define BSP_CFG_OFS0_REG_VALUE  (0xFFFFFFFF)                            // <-- Updated by GUI. Do not edit this value manually //Disable by default
 
 /* Configure whether voltage detection 0 circuit and HOCO are enabled after reset.
    OFS1 - Option Function Select Register 1
@@ -384,7 +384,7 @@ Configuration Options
        NOTE: If HOCO oscillation is enabled by OFS1.HOCOEN, HOCO frequency is 16MHz.
              BSP_CFG_HOCO_FREQUENCY should be default value.
 */
-#define BSP_CFG_OFS1_REG_VALUE  (0xFFFFFFFF)                          // <-- Updated by GUI. Do not edit this value manually //Disable by default
+#define BSP_CFG_OFS1_REG_VALUE  (0xFFFFFFFF)                            // <-- Updated by GUI. Do not edit this value manually //Disable by default
 
 /* Both RX64M and RX71M MCU's have a 'Trusted Memory' feature. This feature protects against 
  * illicit reading of blocks 8 and 9 in the code flash memory. This feature is disabled by default

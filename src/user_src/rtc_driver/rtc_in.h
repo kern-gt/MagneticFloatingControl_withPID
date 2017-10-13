@@ -32,5 +32,6 @@ typedef enum{
 /*static */
 static void InitRtc(void);
 static void RtcCallBackMaster(void);
+static void RefreshRtcState(void);
 
 #endif /*_RTC_IN_H_*/

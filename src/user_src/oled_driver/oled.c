@@ -15,7 +15,12 @@
 #include "r_cg_macrodriver.h"
 #include "r_cg_userdefine.h"
 #include <stdint.h>
-#include "Config_SCI0.h"
+
+/* デバイス */
+#include "r_riic_rx_if.h"
+#include "ssd1306.h"
+
+/* データ定義 */
 #include "draw_data.h"
 
 /* Kernel includes. */
@@ -31,12 +36,119 @@
 /**----------------------------------------------------------------------------
 <<変数>>
 -----------------------------------------------------------------------------**/
-#define OLED_ADDR (0x3C << 1)	//I2CAddress
+#define OLED_ADDR (SSD1306_ADDRESS)	//I2CAddress(コード生成APIはビットシフトが必要)
 static volatile int send_busy = FALSE; //I2C送信中フラグ
 
-/* SSD1306 I2C初期設定データ */
-static uint8_t setup_data[] = {0,     //control byte, Co bit = 0 (continue), D/C# = 0 (command)
-								0xAE, //display off
+static riic_info_t iic_info_0;  //i2c通信構造体
+
+//1バイトコマンド
+//static uint8_t disp_bytecommand[2] = {kCtrlCommands, kCommandDispOn};
+
+//グラフィックRAM構造体
+static OledScreenBuf gram;
+
+/***公開関数*******************************************************************/
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　： DrawTask
+＊　機能　　： 描画タスク
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DrawTask(void){
+
+	//vTaskDelay(200/portTICK_PERIOD_MS);
+	InitOled();
+	//DrawWhite();
+	//RefreshDisplay();
+	
+	while(1){
+
+		DrawWhite();
+		RefreshDisplay();
+		//DisplayOn();
+		vTaskDelay(500/portTICK_PERIOD_MS);
+
+		DrawClear();
+		RefreshDisplay();
+		//DisplayOff();
+		vTaskDelay(500/portTICK_PERIOD_MS);
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DisplayOn(void){
+	volatile riic_return_t ret;
+	uint8_t oled_address[1] = {OLED_ADDR};  //スレーブアドレス
+	uint8_t control_byte[1] = {0};    //control byte, Co bit = 0 (continue), D/C# = 0 (command)
+	uint8_t oled_command[1] = {0};
+
+	//通信構造体を設定
+	iic_info_0.cnt1st = sizeof(control_byte);
+	iic_info_0.cnt2nd = sizeof(oled_command);
+	iic_info_0.p_data1st = control_byte;
+	iic_info_0.p_data2nd = oled_command;
+	iic_info_0.p_slv_adr = oled_address;
+
+	control_byte[0] = kCtrlCommands;
+	oled_command[0] = kCommandDispOn;
+	
+	send_busy = TRUE;
+    ret = R_RIIC_MasterSend(&iic_info_0);
+    while(send_busy == TRUE);
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DisplayOff(void){
+	volatile riic_return_t ret;
+	uint8_t oled_address[1] = {OLED_ADDR};  //スレーブアドレス
+	uint8_t control_byte[1] = {0};    //control byte, Co bit = 0 (continue), D/C# = 0 (command)
+	uint8_t oled_command[1] = {0};
+
+	//通信構造体を設定
+	iic_info_0.cnt1st = sizeof(control_byte);
+	iic_info_0.cnt2nd = sizeof(oled_command);
+	iic_info_0.p_data1st = control_byte;
+	iic_info_0.p_data2nd = oled_command;
+	iic_info_0.p_slv_adr = oled_address;
+
+	control_byte[0] = kCtrlCommands;
+	oled_command[0] = kCommandDispOff;
+
+	send_busy = TRUE;
+    ret = R_RIIC_MasterSend(&iic_info_0);
+    while(send_busy == TRUE);
+}
+
+
+/***非公開関数******************************************************************/
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void InitOled(void){
+	volatile riic_return_t ret;
+	uint8_t oled_address[1] = {OLED_ADDR};  //スレーブアドレス
+	/* SSD1306 I2C初期設定データ */
+	uint8_t control_byte[1] = {0};    //control byte, Co bit = 0 (continue), D/C# = 0 (command)
+	const uint8_t setup_data[] = {0xAE, //display off
 								0xA8, //Set Multiplex Ratio  0xA8, 0x3F
 								0x3F, //64MUX
 								0xD3, //Set Display Offset 0xD3, 0x00
@@ -64,117 +176,25 @@ static uint8_t setup_data[] = {0,     //control byte, Co bit = 0 (continue), D/C
 								0x8D, //Set Enable charge pump regulator 0x8D, 0x14
 								0x14,
 								0xAF};//Display On 0xAF
-//1バイトコマンド
-static uint8_t disp_bytecommand[2] = {kCtrlCommands, kCommandDispOn};
-//描画RAMカーソル設定
-static uint8_t draw_set[] = {0x00, 0xb0, 0x21, 0x00, 0x7f};
-//グラフィックRAM構造体
-static OledScreenBuf gram;
 
-//i2c送信API用配列ポインタ
-static uint8_t * const disp_bytecommand_p = disp_bytecommand;
-static uint8_t * const setup_data_p = setup_data;
-static uint8_t * const draw_set_p = draw_set;
-static uint8_t * const gram_p = gram.buf_byte;
+	/*I2C初期化*******************************************/
+	iic_info_0.dev_sts = RIIC_NO_INIT;
+	iic_info_0.ch_no   = 0;
+	ret = R_RIIC_Open(&iic_info_0);
 
-/***公開関数*******************************************************************/
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　関数名　： DrawTask
-＊　機能　　： 描画タスク
-＊　引数　　：
-＊　戻り値　：
-＊　備考　　：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-void DrawTask(void){
-
-	//vTaskDelay(200/portTICK_PERIOD_MS);
-	InitOled();
-	DrawClear();
-	
-	while(1){
-
-		DrawWhite();
-		RefreshDisplay();
-		vTaskDelay(500/portTICK_PERIOD_MS);
-
-		DrawClear();
-		RefreshDisplay();
-		vTaskDelay(500/portTICK_PERIOD_MS);
-	}
-}
-
-
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　関数名　：
-＊　機能　　：
-＊　引数　　：
-＊　戻り値　：
-＊　備考　　：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-void DisplayOn(void){
-
-	disp_bytecommand[0] = kCtrlCommands;
-	disp_bytecommand[1] = kCommandDispOn;
-
-	send_busy = TRUE;
-    R_Config_SCI0_IIC_Master_Send(OLED_ADDR, disp_bytecommand_p, (uint16_t)sizeof(disp_bytecommand)); //control byte, Co bit = 0 (continue), D/C# = 1 (data)
-    while(send_busy == TRUE);
-}
-
-
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　関数名　：
-＊　機能　　：
-＊　引数　　：
-＊　戻り値　：
-＊　備考　　：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-void DisplayOff(void){
-
-	disp_bytecommand[0] = kCtrlCommands;
-	disp_bytecommand[1] = kCommandDispOff;
-
-	send_busy = TRUE;
-    R_Config_SCI0_IIC_Master_Send(OLED_ADDR, disp_bytecommand_p, (uint16_t)sizeof(disp_bytecommand)); //control byte, Co bit = 0 (continue), D/C# = 1 (data)
-    while(send_busy == TRUE);
-}
-
-
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　関数名　：OledDataSendFinish
-＊　機能　　： i2c送信終了コールバックハンドラ
-          ここでは送信ビジーフラグをクリアする。
-＊　引数　　：
-＊　戻り値　：
-＊　備考　　：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-void OledDataSendFinish(void){
-	send_busy = FALSE;
-}
-
-
-/***非公開関数******************************************************************/
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　関数名　：
-＊　機能　　：
-＊　引数　　：
-＊　戻り値　：
-＊　備考　　：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-static void InitOled(void){
-	//MD_STATUS id = MD_OK;
-
-	R_Config_SCI0_Start();
-
-	//OLED(SSD1306)を初期化
+	/*OLED(SSD1306)を初期化********************************/
+	//通信構造体を設定
+	iic_info_0.callbackfunc = &OledSendCallBack;
+	iic_info_0.cnt1st = sizeof(control_byte);
+	iic_info_0.cnt2nd = sizeof(setup_data);
+	iic_info_0.p_data1st = control_byte;
+	iic_info_0.p_data2nd = (uint8_t*)setup_data;
+	iic_info_0.p_slv_adr = oled_address;
+	//送信
 	send_busy = TRUE;	//送信終了時にFalseになる。
-	//do{
-	R_Config_SCI0_IIC_Master_Send(OLED_ADDR, setup_data_p, (uint16_t)sizeof(setup_data));
-	//}while(id != MD_OK);
-	while(send_busy == TRUE);	//送信終了したら、ストップコンディション発行
+	ret = R_RIIC_MasterSend(&iic_info_0);
+	while(send_busy == TRUE);	//送信終了するまでコールバックを待つ
 
-	//グラフィックRAM構造体初期化
-	gram.Elements.control_byte = kCtrlData;
 	DrawClear();
 }
 
@@ -200,43 +220,40 @@ static void RefreshDisplay(void){
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 static void SendImageData(void){
-	//MD_STATUS id;
+	volatile riic_return_t ret;
+	uint8_t oled_address[1] = {OLED_ADDR};  //スレーブアドレス
+	uint8_t control_byte[1] = {0};                  //control byte, Co bit = 0 (continue), D/C# = 0 (command)
+	uint8_t draw_set[] = {(kCommandSetPageNum | 0), //Set PageNumber 0
+						kCommandSetColumnAddress,   //Set Column Address
+						0x00,                       //Column Start Address
+						0x7F};                      //Column Stop  Address
 
-	//グラフィックRAMのカーソル位置を画面左上にセット
+
+	//スクリーンバッファポインタセット
+	iic_info_0.cnt1st = sizeof(control_byte);
+	iic_info_0.cnt2nd = sizeof(draw_set);
+	iic_info_0.p_data1st = control_byte;
+	iic_info_0.p_data2nd = draw_set;
+	iic_info_0.p_slv_adr = oled_address;
+
+	control_byte[0] = kCtrlCommands;
+
 	send_busy = TRUE;	//送信終了時にFalseになる。
-	draw_set[1] = kCtrlCommands;
-	//do{
-		R_Config_SCI0_IIC_Master_Send(OLED_ADDR, draw_set_p, (uint16_t)sizeof(draw_set));
-		//if(id == MD_ERROR1){
-			//バスビジー
-		//}else if(id == MD_ERROR2){
-			//アドレスエラー
-		//	break;
-		//}else{
-			//未定義エラー
-		//	break;
-		//}
-	//}while(id != MD_OK);
+	ret = R_RIIC_MasterSend(&iic_info_0);
+	while(send_busy == TRUE);	//送信終了までコールバックを待つ
 
-	while(send_busy == TRUE);	//送信終了したら、ストップコンディション発行
-
-	//vTaskDelay(20/portTICK_PERIOD_MS);
 
 	//描画データ送信
-	send_busy = TRUE;
-	//do{
-		R_Config_SCI0_IIC_Master_Send(OLED_ADDR, gram_p, (uint16_t)(sizeof(gram.buf_byte) - SCREENBUF_PADDING));
-		//if(id == MD_ERROR1){
-			//バスビジー
-		//}else if(id == MD_ERROR2){
-			//アドレスエラー
-		//	break;
-		//}else{
-			//未定義エラー
-		//	break;
-		//}
-	//}while(id != MD_OK);
+	iic_info_0.cnt1st = sizeof(control_byte);
+	iic_info_0.cnt2nd = sizeof(gram.buf_byte);
+	iic_info_0.p_data1st = control_byte;
+	iic_info_0.p_data2nd = gram.buf_byte;
+	iic_info_0.p_slv_adr = oled_address;
 
+	control_byte[0] = kCtrlData;
+
+	send_busy = TRUE;
+	ret = R_RIIC_MasterSend(&iic_info_0);
 	while(send_busy == TRUE);
 }
 
@@ -267,7 +284,7 @@ static void DrawClear(void){
 	{
 		for (j = 0; j < (OLED_ROW_SIZE); ++j)
 		{
-			gram.Elements.disp_buf[i][j] = 0x00;
+			gram.disp_buf[i][j] = 0x00;
 		}
 	}
 }
@@ -287,10 +304,24 @@ static void DrawWhite(void){
 	{
 		for (j = 0; j < (OLED_ROW_SIZE); ++j)
 		{
-			gram.Elements.disp_buf[i][j] = 0xff;
+			gram.disp_buf[i][j] = 0xff;
 		}
 	}
 }
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：OledDataSendFinish
+＊　機能　　： i2c送信終了コールバックハンドラ
+          ここでは送信ビジーフラグをクリアする。
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void OledSendCallBack(void){
+	send_busy = FALSE;
+}
+
 
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：

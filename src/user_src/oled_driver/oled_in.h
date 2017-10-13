@@ -16,36 +16,16 @@
 -----------------------------------------------------------------------------**/
 #define OLED_ROW_SIZE    (128U)
 #define OLED_COLUMN_SIZE (64U)
-#define OLED_PAGE_NUM    (8U)
-#define SSD1306_CTRLBYTE_SIZE (1U)
-
-#define SCREENBUF_PADDING (sizeof(unsigned int) - SSD1306_CTRLBYTE_SIZE)
+#define OLED_PAGE_NUM    (OLED_COLUMN_SIZE/8) //8[bit/page]
 
 /**----------------------------------------------------------------------------
 <<非公開型定義>>
 -----------------------------------------------------------------------------**/
 //グラフィックRAM構造体
 typedef union{
-	uint8_t  buf_byte[SSD1306_CTRLBYTE_SIZE + (OLED_PAGE_NUM * OLED_ROW_SIZE) + SCREENBUF_PADDING];
-	struct
-	{
-		uint8_t control_byte;
-		uint8_t disp_buf[OLED_PAGE_NUM][OLED_ROW_SIZE];
-		uint8_t dummy[SCREENBUF_PADDING]; //control_byteが1バイトなのでアライメントをとる
-	}Elements;
+	uint8_t buf_byte[(OLED_PAGE_NUM * OLED_ROW_SIZE)];
+	uint8_t disp_buf[OLED_PAGE_NUM][OLED_ROW_SIZE];
 }OledScreenBuf;
-
-//SSD1306用コントロールバイト定義
-typedef enum{
-	kCtrlCommands = 0x00,
-	kCtrlData     = 0x40
-}OledControlByteEnum;
-
-//SSD1306用コマンド定義
-typedef enum{
-	kCommandDispOff = 0xAE,
-	kCommandDispOn  = 0xAF
-}OledCommandTypeEnum;
 
 //エラー定義
 typedef enum{
@@ -64,5 +44,6 @@ static void DrawClear(void);
 static void DrawWhite(void);
 static void RefreshDisplay(void);
 static void SendCommand(void);
+static void OledSendCallBack(void);
 
 #endif /*_OLED_IN_H_*/

@@ -81,7 +81,7 @@
     #define RIIC_CFG_CH2_INCLUDED           (0U)
 
 /* Set RIIC bps(kbps) */
-    #define RIIC_CFG_CH0_kBPS               (400U)
+    #define RIIC_CFG_CH0_kBPS               (1000U)
     #define RIIC_CFG_CH2_kBPS               (400U)
 
 /* Set using digital filter(Selected IIC phi cycle is filtered out) */
