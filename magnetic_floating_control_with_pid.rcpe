@@ -14,10 +14,10 @@
           <Path>src\smc_gen\Config_PORT\Config_PORT.h</Path>
           <Path>src\smc_gen\Config_PORT\Config_PORT_user.c</Path>
         </Category>
-        <Category Name="Config_RIIC0">
-          <Path>src\smc_gen\Config_RIIC0\Config_RIIC0.c</Path>
-          <Path>src\smc_gen\Config_RIIC0\Config_RIIC0.h</Path>
-          <Path>src\smc_gen\Config_RIIC0\Config_RIIC0_user.c</Path>
+        <Category Name="Config_SCI0">
+          <Path>src\smc_gen\Config_SCI0\Config_SCI0.c</Path>
+          <Path>src\smc_gen\Config_SCI0\Config_SCI0.h</Path>
+          <Path>src\smc_gen\Config_SCI0\Config_SCI0_user.c</Path>
         </Category>
         <Category Name="general">
           <Path>src\smc_gen\general\r_cg_bsc.h</Path>
@@ -118,10 +118,40 @@
           <Path>src\smc_gen\r_config\r_bsp_config.h</Path>
           <Path>src\smc_gen\r_config\r_bsp_config_readme.txt</Path>
           <Path>src\smc_gen\r_config\r_bsp_interrupt_config.h</Path>
+          <Path>src\smc_gen\r_config\r_riic_rx_config.h</Path>
+          <Path>src\smc_gen\r_config\r_riic_rx_pin_config.h</Path>
         </Category>
         <Category Name="r_pincfg">
           <Path>src\smc_gen\r_pincfg\Pin.c</Path>
           <Path>src\smc_gen\r_pincfg\Pin.h</Path>
+        </Category>
+        <Category Name="r_riic_rx">
+          <Path>src\smc_gen\r_riic_rx\readme.txt</Path>
+          <Path>src\smc_gen\r_riic_rx\r_riic_rx_if.h</Path>
+          <Category Name="doc">
+            <Category Name="en">
+              <Path>src\smc_gen\r_riic_rx\doc\en\r01an1692ej0200-rx.pdf</Path>
+            </Category>
+            <Category Name="ja">
+              <Path>src\smc_gen\r_riic_rx\doc\ja\r01an1692jj0200-rx.pdf</Path>
+            </Category>
+          </Category>
+          <Category Name="ref">
+            <Path>src\smc_gen\r_riic_rx\ref\r_riic_rx_config_reference.h</Path>
+            <Path>src\smc_gen\r_riic_rx\ref\r_riic_rx_pin_config_reference.h</Path>
+          </Category>
+          <Category Name="src">
+            <Category Name="targets">
+              <Category Name="riic">
+                <Path>src\smc_gen\r_riic_rx\src\targets\riic\r_riic_rx.c</Path>
+                <Path>src\smc_gen\r_riic_rx\src\targets\riic\r_riic_rx_private.h</Path>
+                <Category Name="rx64m">
+                  <Path>src\smc_gen\r_riic_rx\src\targets\riic\rx64m\r_riic_rx64m.c</Path>
+                  <Path>src\smc_gen\r_riic_rx\src\targets\riic\rx64m\r_riic_rx64m_private.h</Path>
+                </Category>
+              </Category>
+            </Category>
+          </Category>
         </Category>
       </Category>
       <Category Name="FreeRTOS">
@@ -164,6 +194,12 @@
           <Path>src\user_src\oled_driver\oled_in.h</Path>
         </Category>
         <Path>src\user_src\userdefine.h</Path>
+        <Category Name="rtc_driver">
+          <Path>src\user_src\rtc_driver\rtc.c</Path>
+          <Path>src\user_src\rtc_driver\rtc.h</Path>
+          <Path>src\user_src\rtc_driver\rtc_in.h</Path>
+          <Path>src\user_src\rtc_driver\rx-8025.h</Path>
+        </Category>
       </Category>
     </Files>
     <Device Series="RX">R5F564MLDxFP</Device>
@@ -176,6 +212,13 @@
           <Option>-isa=rxv2</Option>
           <Option>-fpu</Option>
           <Option>-lang=c99</Option>
+          <Option>-include=src\smc_gen\r_riic_rx\src\targets\riic\rx64m</Option>
+          <Option>-include=src\smc_gen\r_riic_rx\src\targets\riic</Option>
+          <Option>-include=src\smc_gen\r_riic_rx\ref</Option>
+          <Option>-include=src\smc_gen\r_riic_rx</Option>
+          <Option>-include=src\smc_gen\Config_SCI0</Option>
+          <Option>-include=src\user_src\rtc_driver</Option>
+          <Option>-include=src\smc_gen\Config_RIIC2</Option>
           <Option>-include=src\user_src</Option>
           <Option>-include=src\user_src\oled_driver</Option>
           <Option>-include=src\user_src\lcd_driver</Option>
@@ -246,10 +289,12 @@
           <Path>DefaultBuild\timers.obj</Path>
           <Path>DefaultBuild\main_apl.obj</Path>
           <Path>DefaultBuild\UserSetting.obj</Path>
+          <Path>DefaultBuild\oled.obj</Path>
+          <Path>DefaultBuild\rtc.obj</Path>
           <Path>DefaultBuild\Config_PORT.obj</Path>
           <Path>DefaultBuild\Config_PORT_user.obj</Path>
-          <Path>DefaultBuild\Config_RIIC0.obj</Path>
-          <Path>DefaultBuild\Config_RIIC0_user.obj</Path>
+          <Path>DefaultBuild\Config_SCI0.obj</Path>
+          <Path>DefaultBuild\Config_SCI0_user.obj</Path>
           <Path>DefaultBuild\r_cg_dmac_user.obj</Path>
           <Path>DefaultBuild\r_cg_hardware_setup.obj</Path>
           <Path>DefaultBuild\r_smc_cgc.obj</Path>
@@ -271,9 +316,17 @@
           <Path>DefaultBuild\mcu_locks.obj</Path>
           <Path>DefaultBuild\mcu_mapped_interrupts.obj</Path>
           <Path>DefaultBuild\Pin.obj</Path>
-          <Path>DefaultBuild\oled.obj</Path>
+          <Path>DefaultBuild\r_riic_rx.obj</Path>
+          <Path>DefaultBuild\r_riic_rx64m.obj</Path>
         </LinkOrder>
         <CommonOptions>
+          <IncludePathForC>src\smc_gen\r_riic_rx\src\targets\riic\rx64m</IncludePathForC>
+          <IncludePathForC>src\smc_gen\r_riic_rx\src\targets\riic</IncludePathForC>
+          <IncludePathForC>src\smc_gen\r_riic_rx\ref</IncludePathForC>
+          <IncludePathForC>src\smc_gen\r_riic_rx</IncludePathForC>
+          <IncludePathForC>src\smc_gen\Config_SCI0</IncludePathForC>
+          <IncludePathForC>src\user_src\rtc_driver</IncludePathForC>
+          <IncludePathForC>src\smc_gen\Config_RIIC2</IncludePathForC>
           <IncludePathForC>src\user_src</IncludePathForC>
           <IncludePathForC>src\user_src\oled_driver</IncludePathForC>
           <IncludePathForC>src\user_src\lcd_driver</IncludePathForC>

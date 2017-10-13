@@ -26,6 +26,6 @@
 extern void DrawTask(void);
 extern void DisplayOn(void);
 extern void DisplayOff(void);
-extern void I2cSendBufEnpty(void);
+extern void OledDataSendFinish(void);
 
 #endif /* _OLED_H_ */

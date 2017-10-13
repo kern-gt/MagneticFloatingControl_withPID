@@ -22,7 +22,7 @@
 * Version      : 
 * Device(s)    : R5F564MLDxFP
 * Description  : This file implements SMC pin code generation.
-* Creation Date: 2017-10-08
+* Creation Date: 2017-10-12
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -63,6 +63,15 @@ void R_Pins_Create(void)
     /* Set SDA0 pin */
     MPC.P13PFS.BYTE = 0x0FU;
     PORT1.PMR.BYTE |= 0x08U;
+
+    /* Set SSCL0 pin */
+    MPC.P21PFS.BYTE = 0x0AU;
+    PORT2.PMR.BYTE |= 0x02U;
+
+    /* Set SSDA0 pin */
+    PORT2.PODR.BYTE |= 0x01U;
+    MPC.P20PFS.BYTE = 0x0AU;
+    PORT2.PMR.BYTE |= 0x01U;
 
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_MPC);
 }   

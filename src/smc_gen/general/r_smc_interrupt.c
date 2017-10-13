@@ -22,7 +22,7 @@
 * Version      : 1.1.0
 * Device(s)    : R5F564MLDxFP
 * Description  : This file implements interrupt setting
-* Creation Date: 2017-10-08
+* Creation Date: 2017-10-12
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
 Includes
@@ -39,14 +39,14 @@ Includes
 
 void R_Interrupt_Create(void)
 {
-    /* Disable group BL1 interrupt*/
-    IEN(ICU,GROUPBL1) = 0U;
+    /* Disable group BL0 interrupt*/
+    IEN(ICU,GROUPBL0) = 0U;
     
-    /* Set group BL1 interrupt priority level */
-    IPR(ICU,GROUPBL1) = _07_ICU_PRIORITY_LEVEL7;
+    /* Set group BL0 interrupt priority level */
+    IPR(ICU,GROUPBL0) = _02_ICU_PRIORITY_LEVEL2;
     
-    /* Enable group BL1 interrupt */
-    IEN(ICU,GROUPBL1) = 1U;
+    /* Enable group BL0 interrupt */
+    IEN(ICU,GROUPBL0) = 1U;
     
 }
 

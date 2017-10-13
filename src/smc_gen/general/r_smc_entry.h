@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : SMC platform header file.
-* Creation Date: 2017-10-08
+* Creation Date: 2017-10-12
 ***********************************************************************************************************************/
 
 #ifndef SMC_PLATFORM_H
@@ -33,7 +33,7 @@ Includes
 ***********************************************************************************************************************/
 #include "r_cg_macrodriver.h"
 #include "Config_PORT.h"
-#include "Config_RIIC0.h"
+#include "Config_SCI0.h"
 
 /***********************************************************************************************************************
 Macro definitions (Register bit)

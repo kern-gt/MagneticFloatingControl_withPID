@@ -35,15 +35,24 @@ typedef union{
 	}Elements;
 }OledScreenBuf;
 
+//SSD1306用コントロールバイト定義
 typedef enum{
 	kCtrlCommands = 0x00,
 	kCtrlData     = 0x40
-}eOledControlByte;
+}OledControlByteEnum;
 
+//SSD1306用コマンド定義
 typedef enum{
 	kCommandDispOff = 0xAE,
 	kCommandDispOn  = 0xAF
-}eOledCommandType;
+}OledCommandTypeEnum;
+
+//エラー定義
+typedef enum{
+	kOk = 0,
+	kErrorAddress,
+	kErrorUnknown
+}OledErrorEnum;
 
 /**----------------------------------------------------------------------------
 <<非公開プロトタイプ定義>>

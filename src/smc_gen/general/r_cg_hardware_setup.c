@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : Initialization file for code generation configurations.
-* Creation Date: 2017-10-08
+* Creation Date: 2017-10-12
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -36,7 +36,7 @@ Includes
 ***********************************************************************************************************************/
 #include "r_cg_macrodriver.h"
 #include "Config_PORT.h"
-#include "Config_RIIC0.h"
+#include "Config_SCI0.h"
 #include "r_smc_cgc.h"
 #include "r_smc_interrupt.h"
 /* Start user code for include. Do not edit comment generated here */
@@ -83,7 +83,7 @@ void R_Systeminit(void)
 
     /* Set peripheral settings */
     R_Config_PORT_Create();
-    R_Config_RIIC0_Create();
+    R_Config_SCI0_Create();
 
     /* Set interrupt settings */
     R_Interrupt_Create();
@@ -91,11 +91,8 @@ void R_Systeminit(void)
     /* Register undefined interrupt */
     R_BSP_InterruptWrite(BSP_INT_SRC_UNDEFINED_INTERRUPT,(bsp_int_cb_t)r_undefined_exception);
 
-    /* Register group BL1 interrupt TEI0 (RIIC0) */
-    R_BSP_InterruptWrite(BSP_INT_SRC_BL1_RIIC0_TEI0,(bsp_int_cb_t)r_Config_RIIC0_transmitend_interrupt);
-
-    /* Register group BL1 interrupt EEI0 (RIIC0) */
-    R_BSP_InterruptWrite(BSP_INT_SRC_BL1_RIIC0_EEI0,(bsp_int_cb_t)r_Config_RIIC0_error_interrupt);
+    /* Register group BL0 interrupt TEI0 (SCI0) */
+    R_BSP_InterruptWrite(BSP_INT_SRC_BL0_SCI0_TEI0,(bsp_int_cb_t)r_Config_SCI0_transmitend_interrupt);
 
     /* Disable writing to MPC pin function control registers */
     MPC.PWPR.BIT.PFSWE = 0U;

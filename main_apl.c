@@ -23,6 +23,7 @@
 
 /* アプリケーション */
 #include "oled.h"
+#include "rtc.h"
 
 /**----------------------------------------------------------------------------
 <<自ファイルのヘッダ>>
@@ -50,6 +51,10 @@ void vTask3(void *pvParameters){
 	DrawTask();
 }
 
+void vTask4(void *pvParameters){
+	RtcDriverTask();
+}
+
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　： MainApplication
 ＊　機能　　： ユーザmain関数
@@ -62,8 +67,8 @@ void MainApplication(void)
 	/*タスク生成*/
 	//xTaskCreate(LedBlink2Hz,"LedBlink2Hz",100,NULL,2,NULL);
 	//xTaskCreate(LedBlink1Hz,"LedBlink1Hz",100,NULL,2,NULL);
-	xTaskCreate(vTask3,"Task3",100,NULL,1,NULL);
-	//xTaskCreate(vTask4,"Task4",100,NULL,1,NULL);
+	//xTaskCreate(vTask3,"Task3",100,NULL,1,NULL);
+	xTaskCreate(vTask4,"Task4",100,NULL,1,NULL);
 	
 	/* タスクスケジューラ起動*/
 	vTaskStartScheduler();

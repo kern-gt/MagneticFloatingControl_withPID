@@ -18,20 +18,20 @@
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
-* File Name    : Config_RIIC0.h
+* File Name    : Config_SCI0.h
 * Version      : 1.0.0
 * Device(s)    : R5F564MLDxFP
-* Description  : This file implements device driver for Config_RIIC0.
-* Creation Date: 2017-10-08
+* Description  : This file implements device driver for Config_SCI0.
+* Creation Date: 2017-10-12
 ***********************************************************************************************************************/
 
-#ifndef Config_RIIC0_H
-#define Config_RIIC0_H
+#ifndef Config_SCI0_H
+#define Config_SCI0_H
 
 /***********************************************************************************************************************
 Includes
 ***********************************************************************************************************************/
-#include "r_cg_riic.h"
+#include "r_cg_sci.h"
 
 /***********************************************************************************************************************
 Macro definitions (Register bit)
@@ -40,8 +40,6 @@ Macro definitions (Register bit)
 /***********************************************************************************************************************
 Macro definitions
 ***********************************************************************************************************************/
-#define _FF_IIC0_SCL_LOW_LEVEL_PERIOD                          (0xFFU) /* SCL clock low-level period setting */
-#define _ED_IIC0_SCL_HIGH_LEVEL_PERIOD                         (0xEDU) /* SCL clock high-level period setting */
 
 /***********************************************************************************************************************
 Typedef definitions
@@ -50,19 +48,17 @@ Typedef definitions
 /***********************************************************************************************************************
 Global functions
 ***********************************************************************************************************************/
-void R_Config_RIIC0_Create(void);
-void R_Config_RIIC0_Start(void);
-void R_Config_RIIC0_Stop(void);
-void R_Config_RIIC0_Create_UserInit(void);
-MD_STATUS R_Config_RIIC0_Master_Send(uint16_t adr, uint8_t * const tx_buf, uint16_t tx_num);
-MD_STATUS R_Config_RIIC0_Master_Receive(uint16_t adr, uint8_t * const rx_buf, uint16_t rx_num);
-void R_Config_RIIC0_IIC_StartCondition(void);
-void R_Config_RIIC0_IIC_StopCondition(void);
-void r_Config_RIIC0_transmitend_interrupt(void);
-void r_Config_RIIC0_error_interrupt(void);
-static void r_Config_RIIC0_callback_transmitend(void);
-static void r_Config_RIIC0_callback_receiveend(void);
-static void r_Config_RIIC0_callback_receiveerror(MD_STATUS status);
+void R_Config_SCI0_Create(void);
+void R_Config_SCI0_Start(void);
+void R_Config_SCI0_Stop(void);
+void R_Config_SCI0_Create_UserInit(void);
+void R_Config_SCI0_IIC_Master_Send(uint8_t adr, uint8_t * const tx_buf, uint16_t tx_num);
+void R_Config_SCI0_IIC_Master_Receive(uint8_t adr, uint8_t * const rx_buf, uint16_t rx_num);
+void R_Config_SCI0_IIC_StartCondition(void);
+void R_Config_SCI0_IIC_StopCondition(void);
+void r_Config_SCI0_transmitend_interrupt(void);
+static void r_Config_SCI0_callback_transmitend(void);
+static void r_Config_SCI0_callback_receiveend(void);
 /* Start user code for function. Do not edit comment generated here */
 /* End user code. Do not edit comment generated here */
 #endif

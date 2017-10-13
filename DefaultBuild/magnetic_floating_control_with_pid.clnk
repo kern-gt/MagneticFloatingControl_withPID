@@ -12,10 +12,12 @@
 -input=DefaultBuild\timers.obj
 -input=DefaultBuild\main_apl.obj
 -input=DefaultBuild\UserSetting.obj
+-input=DefaultBuild\oled.obj
+-input=DefaultBuild\rtc.obj
 -input=DefaultBuild\Config_PORT.obj
 -input=DefaultBuild\Config_PORT_user.obj
--input=DefaultBuild\Config_RIIC0.obj
--input=DefaultBuild\Config_RIIC0_user.obj
+-input=DefaultBuild\Config_SCI0.obj
+-input=DefaultBuild\Config_SCI0_user.obj
 -input=DefaultBuild\r_cg_dmac_user.obj
 -input=DefaultBuild\r_cg_hardware_setup.obj
 -input=DefaultBuild\r_smc_cgc.obj
@@ -37,7 +39,8 @@
 -input=DefaultBuild\mcu_locks.obj
 -input=DefaultBuild\mcu_mapped_interrupts.obj
 -input=DefaultBuild\Pin.obj
--input=DefaultBuild\oled.obj
+-input=DefaultBuild\r_riic_rx.obj
+-input=DefaultBuild\r_riic_rx64m.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
 -vect=_undefined_interrupt_source_isr

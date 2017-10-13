@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : General header file for PPG peripheral.
-* Creation Date: 2017-10-08
+* Creation Date: 2017-10-12
 ***********************************************************************************************************************/
 
 #ifndef PPG_H
