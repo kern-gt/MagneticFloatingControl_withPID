@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : General header file for S12AD peripheral.
-* Creation Date: 2017-10-13
+* Creation Date: 2017-10-17
 ***********************************************************************************************************************/
 
 #ifndef S12AD_H

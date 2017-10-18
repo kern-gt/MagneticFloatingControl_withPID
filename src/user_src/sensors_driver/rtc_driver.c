@@ -1,5 +1,5 @@
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　ファイル名　： rtc.c
+＊　ファイル名　： rtc_driver.c
 ＊　責務　　　：
 ＊　作成日　　： 2017/10/11
 ＊　作成者　　：　kern-gt
@@ -17,7 +17,7 @@
 #include <stdint.h>
 
 /* デバイス */
-#include "r_sci_iic_rx_if.h"
+#include "i2c_driver.h"
 #include "rx-8025.h"
 
 /* Kernel includes. */
@@ -28,21 +28,19 @@
 /**----------------------------------------------------------------------------
 <<自ファイルのヘッダ>>
 -----------------------------------------------------------------------------**/
-#include "rtc_in.h"
+#include "rtc_driver_in.h"
 
 /**----------------------------------------------------------------------------
 <<変数>>
 -----------------------------------------------------------------------------**/
-#define RTC_ADDR (RX_8025_ADDRESS)	//I2CAddress(FITドライバAPIはビットシフト無し)
-static volatile int i2c_runninng = FALSE; //I2C送受信中フラグ
+/* kernel */
+extern xQueueHandle sci0_iic_queue;
+extern xQueueHandle rtc_que;
 
-static sci_iic_info_t siic_info_0;
+/**/
+#define RTC_ADDR (RX_8025_ADDRESS)	//I2CAddress
 
-//static uint8_t write_command[2] = {0, 0};
 static RtcRegisters rtc_mem;
-
-//static uint8_t * const write_command_p = write_command;
-//static uint8_t * const rtc_mem_p = rtc_mem.read_data;
 
 /***公開関数*******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,17 +52,13 @@ static RtcRegisters rtc_mem;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 void RtcDriverTask(void){
 
-	//
 	//vTaskDelay(3000/portTICK_PERIOD_MS);
 	InitRtc();
 
-
 	while(1){
-		//vTaskDelay(500/portTICK_PERIOD_MS);
-		//Rtctest();
+		vTaskDelay(1000/portTICK_PERIOD_MS);
 		RefreshRtcState();
-		vTaskDelay(500/portTICK_PERIOD_MS);
-		//Rtctest1();
+		//vTaskDelay(500/portTICK_PERIOD_MS);
 	}
 }
 
@@ -78,34 +72,38 @@ void RtcDriverTask(void){
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 static void InitRtc(void){
-	volatile sci_iic_return_t ret;           //i2cAPI戻り値
-	Rx8025TransferByte mode;              //RTC転送モード
-	uint8_t write_command;                //RTC書き込みデータ
-	uint8_t rtc_address[1] = {RTC_ADDR};  //スレーブアドレス
-
-	/*I2C初期化*****************************************/
-	siic_info_0.dev_sts = SCI_IIC_NO_INIT;
-	siic_info_0.ch_no   = 0;
-
-	ret = R_SCI_IIC_Open(&siic_info_0);
-
-	/*INTAの1Hz周期割込み設定*****************************/
-	//通信構造体を設定
-	siic_info_0.callbackfunc = &RtcCallBackMaster;
-	siic_info_0.cnt1st = 1;
-	siic_info_0.cnt2nd = 1;
-	siic_info_0.p_data1st = &mode.byte;
-	siic_info_0.p_data2nd = &write_command;
-	siic_info_0.p_slv_adr = rtc_address;
+	Rx8025TransferByte mode;  //RTC転送モード
+	uint8_t init_data;        //RTC書き込みデータ
+	I2cData_t i2c_data;
+	I2cRetData_t i2c_ret;
 
 	//RTCのレジスタアドレス、転送モード、設定データ初期化
 	mode.bit.address = 0xE;
 	mode.bit.transmode = kTransStandardMode;
-	write_command = 0x03;
+	init_data = 0x03;
 
-	i2c_runninng = TRUE;	//送信終了時にFalseになる。
-	ret = R_SCI_IIC_MasterSend(&siic_info_0);
-	while(i2c_runninng == TRUE);	//送信終了までコールバックを待つ
+	i2c_data.que_id = (QueueID)rtc_que;
+	i2c_data.p_data1st = &mode.byte;
+	i2c_data.p_data2nd = &init_data;
+	i2c_data.cnt1st    = sizeof(mode.byte);
+	i2c_data.cnt2nd    = sizeof(init_data);
+	i2c_data.slave_addr= RTC_ADDR;
+	i2c_data.mast_slv_r_w = kI2cMasterSend;
+
+	xQueueSend(sci0_iic_queue, &i2c_data, portMAX_DELAY);
+
+	xQueueReceive(rtc_que, &i2c_ret, portMAX_DELAY);
+
+	switch(i2c_ret.ret){
+		case kI2cSuccess:
+			break;
+
+		case kI2cError:
+			break;
+
+		default:
+			break;
+	}
 }
 
 
@@ -117,36 +115,39 @@ static void InitRtc(void){
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 static void RefreshRtcState(void){
-	volatile sci_iic_return_t ret;
 	Rx8025TransferByte mode;
-	uint8_t rtc_address[1] = {RTC_ADDR};
+	I2cData_t i2c_data;
+	I2cRetData_t i2c_ret;
 
-	/*アドレス0x0~0xfまで順次読出し*/
-	siic_info_0.cnt1st = 1;
-	siic_info_0.cnt2nd = sizeof(rtc_mem.read_data);
-	siic_info_0.p_data1st = &mode.byte;
-	siic_info_0.p_data2nd = rtc_mem.read_data;
-	siic_info_0.p_slv_adr = rtc_address;
-
+	//RTCのレジスタアドレス、転送モード、設定データ初期化
 	mode.bit.address = 0x0;
 	mode.bit.transmode = kTransStandardMode;
 
-	i2c_runninng = TRUE;	//送信終了時にFalseになる。
-	ret = R_SCI_IIC_MasterReceive(&siic_info_0);
-	while(i2c_runninng == TRUE);	//送信終了コールバックを待つ
+	i2c_data.que_id = (QueueID)rtc_que;
+	i2c_data.p_data1st = &mode.byte;
+	i2c_data.p_data2nd = rtc_mem.read_data;
+	i2c_data.cnt1st    = sizeof(mode.byte);
+	i2c_data.cnt2nd    = sizeof(rtc_mem.read_data);
+	i2c_data.slave_addr= RTC_ADDR;
+	i2c_data.mast_slv_r_w = kI2cMasterReceive;
+
+	xQueueSend(sci0_iic_queue, &i2c_data, portMAX_DELAY);
+
+	xQueueReceive(rtc_que, &i2c_ret, portMAX_DELAY);
+
+	switch(i2c_ret.ret){
+		case kI2cSuccess:
+			break;
+
+		case kI2cError:
+			break;
+
+		default:
+			break;
+	}
 }
 
 
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　関数名　：RtcCallBackMaster
-＊　機能　　： i2c通信終了コールバックハンドラ
-＊　引数　　：
-＊　戻り値　：
-＊　備考　　：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-static void RtcCallBackMaster(void){
-	i2c_runninng = FALSE;
-}
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：
 ＊　機能　　：

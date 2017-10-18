@@ -1,15 +1,15 @@
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　ファイル名　： rtc_in.h
+＊　ファイル名　： temp_sens_driver_in.h
 ＊　責務　　　：
-＊　作成日　　： 2017/10/11
+＊　作成日　　： 2017/10/13
 ＊　作成者　　：　kern-gt
 
 ＊　備考　　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-#ifndef _RTC_IN_H_
-#define _RTC_IN_H_
+#ifndef _TEMP_SENS_DRIVER_IN_H_
+#define _TEMP_SENS_DRIVER_IN_H_
 
-#include "rtc.h"
+#include "temp_sens_driver.h"
 
 /**----------------------------------------------------------------------------
 <<非公開マクロ定義>>
@@ -19,19 +19,17 @@
 /**----------------------------------------------------------------------------
 <<非公開型定義>>
 -----------------------------------------------------------------------------**/
-//エラー定義
-typedef enum{
-	kOk = 0,
-	kErrorAddress,
-	kErrorUnknown
-}OledErrorEnum;
+typedef struct{
+	float    temp;
+	float    humi;
+	uint32_t count;
+}TempHumiData;
 
 /**----------------------------------------------------------------------------
 <<非公開プロトタイプ定義>>
 -----------------------------------------------------------------------------**/
 /*static */
-static void InitRtc(void);
-static void RtcCallBackMaster(void);
-static void RefreshRtcState(void);
-
-#endif /*_RTC_IN_H_*/
+static void InitTempSens(void);
+static void TempSensRead(void);
+static void ConvertSensorVal(TempHumiData *temp_humi_p, uint8_t *data);
+#endif /*_TEMP_SENS_DRIVER_IN_H_*/

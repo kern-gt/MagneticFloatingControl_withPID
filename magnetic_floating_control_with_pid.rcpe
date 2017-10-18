@@ -201,6 +201,7 @@
         <Path>FreeRTOS\FreeRTOS.h</Path>
         <Path>FreeRTOS\FreeRTOSConfig.h</Path>
         <Path>FreeRTOS\list.h</Path>
+        <Path>FreeRTOS\mpu_prototypes.h</Path>
         <Path>FreeRTOS\mpu_wrappers.h</Path>
         <Path>FreeRTOS\portable.h</Path>
         <Path>FreeRTOS\projdefs.h</Path>
@@ -214,18 +215,31 @@
       <Path>main_apl.h</Path>
       <Category Name="src">
         <Path>src\user_src\userdefine.h</Path>
-        <Category Name="OLED_driver">
-          <Path>src\user_src\oled_driver\draw_data.h</Path>
+        <Category Name="oled_driver">
+          <Category Name="devices">
+            <Path>src\user_src\oled_driver\devices\ssd1306.h</Path>
+          </Category>
+          <Category Name="image_data">
+            <Path>src\user_src\oled_driver\image_data\draw_data.h</Path>
+          </Category>
           <Path>src\user_src\oled_driver\oled.h</Path>
           <Path>src\user_src\oled_driver\oled_in.h</Path>
-          <Path>src\user_src\oled_driver\ssd1306.h</Path>
           <Path>src\user_src\oled_driver\oled.c</Path>
         </Category>
-        <Category Name="rtc_driver">
-          <Path>src\user_src\rtc_driver\rtc.c</Path>
-          <Path>src\user_src\rtc_driver\rtc.h</Path>
-          <Path>src\user_src\rtc_driver\rtc_in.h</Path>
-          <Path>src\user_src\rtc_driver\rx-8025.h</Path>
+        <Category Name="sensors_driver">
+          <Category Name="devices">
+            <Path>src\user_src\sensors_driver\devices\hdc1000.h</Path>
+            <Path>src\user_src\sensors_driver\devices\rx-8025.h</Path>
+          </Category>
+          <Path>src\user_src\sensors_driver\i2c_driver.c</Path>
+          <Path>src\user_src\sensors_driver\i2c_driver.h</Path>
+          <Path>src\user_src\sensors_driver\i2c_driver_in.h</Path>
+          <Path>src\user_src\sensors_driver\rtc_driver.c</Path>
+          <Path>src\user_src\sensors_driver\rtc_driver.h</Path>
+          <Path>src\user_src\sensors_driver\rtc_driver_in.h</Path>
+          <Path>src\user_src\sensors_driver\temp_sens_driver.c</Path>
+          <Path>src\user_src\sensors_driver\temp_sens_driver.h</Path>
+          <Path>src\user_src\sensors_driver\temp_sens_driver_in.h</Path>
         </Category>
       </Category>
     </Files>
@@ -239,6 +253,15 @@
           <Option>-isa=rxv2</Option>
           <Option>-fpu</Option>
           <Option>-lang=c99</Option>
+          <Option>-include=src\user_src\oled_driver\image_data</Option>
+          <Option>-include=src\user_src\oled_driver\devices</Option>
+          <Option>-include=src\user_src\sensors_driver</Option>
+          <Option>-include=src\user_src\sensors_driver\devices</Option>
+          <Option>-include=FreeRTOSv9\portable</Option>
+          <Option>-include=FreeRTOSv9</Option>
+          <Option>-include=src\smc_gen\Config_ICU</Option>
+          <Option>-include=src\user_src\sensor_driver\dev_lib</Option>
+          <Option>-include=src\user_src\sensor_driver</Option>
           <Option>-include=src\smc_gen\r_sci_iic_rx\src\targets\sci\rx64m</Option>
           <Option>-include=src\smc_gen\r_sci_iic_rx\src\targets\sci</Option>
           <Option>-include=src\smc_gen\r_sci_iic_rx\ref</Option>
@@ -308,19 +331,22 @@
         </LibraryGenerateOptions>
         <LinkOrder>
           <Path>DefaultBuild\magnetic_floating_control_with_pid.obj</Path>
-          <Path>DefaultBuild\ApplicationHook.obj</Path>
-          <Path>DefaultBuild\heap_1.obj</Path>
-          <Path>DefaultBuild\port.obj</Path>
-          <Path>DefaultBuild\port_asm.obj</Path>
+          <Path>DefaultBuild\main_apl.obj</Path>
+          <Path>DefaultBuild\oled.obj</Path>
           <Path>DefaultBuild\croutine.obj</Path>
           <Path>DefaultBuild\event_groups.obj</Path>
           <Path>DefaultBuild\list.obj</Path>
           <Path>DefaultBuild\queue.obj</Path>
           <Path>DefaultBuild\tasks.obj</Path>
           <Path>DefaultBuild\timers.obj</Path>
-          <Path>DefaultBuild\main_apl.obj</Path>
+          <Path>DefaultBuild\ApplicationHook.obj</Path>
+          <Path>DefaultBuild\heap_1.obj</Path>
+          <Path>DefaultBuild\port.obj</Path>
+          <Path>DefaultBuild\port_asm.obj</Path>
           <Path>DefaultBuild\UserSetting.obj</Path>
-          <Path>DefaultBuild\rtc.obj</Path>
+          <Path>DefaultBuild\i2c_driver.obj</Path>
+          <Path>DefaultBuild\rtc_driver.obj</Path>
+          <Path>DefaultBuild\temp_sens_driver.obj</Path>
           <Path>DefaultBuild\Config_PORT.obj</Path>
           <Path>DefaultBuild\Config_PORT_user.obj</Path>
           <Path>DefaultBuild\r_cg_dmac_user.obj</Path>
@@ -348,9 +374,17 @@
           <Path>DefaultBuild\r_riic_rx64m.obj</Path>
           <Path>DefaultBuild\r_sci_iic_rx.obj</Path>
           <Path>DefaultBuild\r_sci_iic_rx64m.obj</Path>
-          <Path>DefaultBuild\oled.obj</Path>
         </LinkOrder>
         <CommonOptions>
+          <IncludePathForC>src\user_src\oled_driver\image_data</IncludePathForC>
+          <IncludePathForC>src\user_src\oled_driver\devices</IncludePathForC>
+          <IncludePathForC>src\user_src\sensors_driver</IncludePathForC>
+          <IncludePathForC>src\user_src\sensors_driver\devices</IncludePathForC>
+          <IncludePathForC>FreeRTOSv9\portable</IncludePathForC>
+          <IncludePathForC>FreeRTOSv9</IncludePathForC>
+          <IncludePathForC>src\smc_gen\Config_ICU</IncludePathForC>
+          <IncludePathForC>src\user_src\sensor_driver\dev_lib</IncludePathForC>
+          <IncludePathForC>src\user_src\sensor_driver</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_sci_iic_rx\src\targets\sci\rx64m</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_sci_iic_rx\src\targets\sci</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_sci_iic_rx\ref</IncludePathForC>

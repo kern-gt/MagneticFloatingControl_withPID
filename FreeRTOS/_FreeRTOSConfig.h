@@ -1,5 +1,5 @@
 /*
-    FreeRTOS V8.2.3 - Copyright (C) 2015 Real Time Engineers Ltd.
+    FreeRTOS V9.0.0 - Copyright (C) 2016 Real Time Engineers Ltd.
     All rights reserved
 
     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
@@ -71,9 +71,8 @@
 #define FREERTOS_CONFIG_H
 
 /* Prevent Renesas headers redefining some stdint.h types. */
-#ifndef __TYPEDEF__
-	#define __TYPEDEF__	1
-#endif
+#define __TYPEDEF__	1
+
 /*-----------------------------------------------------------
  * Application specific definitions.
  *
@@ -91,10 +90,10 @@
 #define configUSE_TICK_HOOK				0
 #define configCPU_CLOCK_HZ				( 120000000UL )
 #define configPERIPHERAL_CLOCK_HZ		( 60000000UL )
-#define configTICK_RATE_HZ				( ( TickType_t ) 100 )
+#define configTICK_RATE_HZ				( ( TickType_t ) 1000 )
 #define configMINIMAL_STACK_SIZE		( ( unsigned short ) 140 )
-#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 10 * 1024 ) )
-#define configMAX_TASK_NAME_LEN			( 16 )
+#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 45 * 1024 ) )
+#define configMAX_TASK_NAME_LEN			( 12 )
 #define configUSE_TRACE_FACILITY		0
 #define configUSE_16_BIT_TICKS			0
 #define configIDLE_SHOULD_YIELD			0
@@ -124,7 +123,7 @@ the pended interrupt.  This would normally be the lowest priority. */
 /* The maximum interrupt priority from which FreeRTOS API calls can be made.
 Interrupts that use a priority above this will not be effected by anything the
 kernel is doing. */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY    15
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    4
 
 /* The peripheral used to generate the tick interrupt is configured as part of
 the application code.  This constant should be set to the vector number of the
@@ -145,9 +144,6 @@ to exclude the API function. */
 #define INCLUDE_xTaskGetSchedulerState		1
 #define INCLUDE_eTaskGetState				1
 #define INCLUDE_xTimerPendFunctionCall		1
-
-#define INCLUDE_xTaskGetCurrentTaskHandle   1
-#define INCLUDE_xTaskResumeFromISR          1
 
 void vAssertCalled( void );
 #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled()
