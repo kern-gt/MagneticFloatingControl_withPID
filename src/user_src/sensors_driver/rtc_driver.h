@@ -24,5 +24,9 @@
 -----------------------------------------------------------------------------**/
 /*extern*/
 extern void RtcDriverTask(void);
+extern uint8_t GetCurrentTimeSec(void);
+extern uint8_t GetCurrentTimeMin(void);
+extern uint8_t GetCurrentTimeHour(void);
+extern uint8_t GetCurrentTimeHour24(void);
 
 #endif /* _RTC_DRIVER_H_ */

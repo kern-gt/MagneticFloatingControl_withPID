@@ -20,9 +20,9 @@
 #include "r_sci_iic_rx_if.h"
 
 /* Kernel includes. */
-#include "FreeRTOS/FreeRTOS.h"
-#include "FreeRTOS/task.h"
-#include "FreeRTOS/queue.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
 
 /**----------------------------------------------------------------------------
 <<自ファイルのヘッダ>>

@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.07.00 )             18-Oct-2017 11:32:25
+Renesas Optimizing Linker (W2.07.00 )             23-Oct-2017 17:09:18
 
 *** Options ***
 
@@ -6,21 +6,17 @@ Renesas Optimizing Linker (W2.07.00 )             18-Oct-2017 11:32:25
 -library=DefaultBuild\magnetic_floating_control_with_pid.lib
 -input=DefaultBuild\magnetic_floating_control_with_pid.obj
 -input=DefaultBuild\main_apl.obj
--input=DefaultBuild\oled.obj
+-input=DefaultBuild\ApplicationHook.obj
+-input=DefaultBuild\heap_1.obj
+-input=DefaultBuild\port.obj
+-input=DefaultBuild\port_asm.obj
+-input=DefaultBuild\UserSetting.obj
 -input=DefaultBuild\croutine.obj
 -input=DefaultBuild\event_groups.obj
 -input=DefaultBuild\list.obj
 -input=DefaultBuild\queue.obj
 -input=DefaultBuild\tasks.obj
 -input=DefaultBuild\timers.obj
--input=DefaultBuild\ApplicationHook.obj
--input=DefaultBuild\heap_1.obj
--input=DefaultBuild\port.obj
--input=DefaultBuild\port_asm.obj
--input=DefaultBuild\UserSetting.obj
--input=DefaultBuild\i2c_driver.obj
--input=DefaultBuild\rtc_driver.obj
--input=DefaultBuild\temp_sens_driver.obj
 -input=DefaultBuild\Config_PORT.obj
 -input=DefaultBuild\Config_PORT_user.obj
 -input=DefaultBuild\r_cg_dmac_user.obj
@@ -48,9 +44,16 @@ Renesas Optimizing Linker (W2.07.00 )             18-Oct-2017 11:32:25
 -input=DefaultBuild\r_riic_rx64m.obj
 -input=DefaultBuild\r_sci_iic_rx.obj
 -input=DefaultBuild\r_sci_iic_rx64m.obj
+-input=DefaultBuild\disp_clock.obj
+-input=DefaultBuild\disp_main.obj
+-input=DefaultBuild\i2c_driver.obj
+-input=DefaultBuild\rtc_driver.obj
+-input=DefaultBuild\temp_sens_driver.obj
+-input=DefaultBuild\oled.obj
+-input=DefaultBuild\sin_cos.obj
+-input=DefaultBuild\draw_data.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
--vect=_undefined_interrupt_source_isr
 -list=DefaultBuild\magnetic_floating_control_with_pid.map
 -nooptimize
 -start=B_1,R_1,B_2,R_2,B,R,SU,SI/00000004,C_1,C_2,C,C$DSEC,C$BSEC,C$VECT,D_1,D_2,D,P,W_1,W_2,W,L/0FFC00100,EXCEPTVECT/0FFFFFF80,RESETVECT/0FFFFFFFC
@@ -64,21 +67,21 @@ Renesas Optimizing Linker (W2.07.00 )             18-Oct-2017 11:32:25
 
 SECTION                            START      END         SIZE   ALIGN
 B_1
-                                  00000004  00002c4b      2c48   1
+                                  00000004  00002c4f      2c4c   1
 R_1
-                                  00002c4c  00002c9b        50   1
+                                  00002c50  00002ca0        51   1
 B_2
-                                  00002c9c  00002ca3         8   2
+                                  00002ca2  00002ca9         8   2
 R_2
-                                  00002ca4  00002ca4         0   1
+                                  00002caa  00002caa         0   1
 B
-                                  00002ca4  000031f7       554   4
+                                  00002cac  00003203       558   4
 R
-                                  000031f8  00003357       160   4
+                                  00003204  00003367       164   4
 SU
-                                  00003358  0000335b         4   4
+                                  00003368  0000336b         4   4
 SI
-                                  0000335c  0000375b       400   4
+                                  0000336c  0000376b       400   4
 $ADDR_C_120040
                                   00120040  00120043         4   1
 $ADDR_C_120048
@@ -86,33 +89,33 @@ $ADDR_C_120048
 $ADDR_C_120050
                                   00120050  0012006f        20   1
 C_1
-                                  ffc00100  ffc00114        15   1
+                                  ffc00100  ffc00314       215   1
 C_2
-                                  ffc00116  ffc00133        1e   2
+                                  ffc00316  ffc00343        2e   2
 C
-                                  ffc00134  ffc007af       67c   4
+                                  ffc00344  ffc0150b      11c8   4
 C$DSEC
-                                  ffc007b0  ffc007d3        24   4
+                                  ffc0150c  ffc0152f        24   4
 C$BSEC
-                                  ffc007d4  ffc007eb        18   4
+                                  ffc01530  ffc01547        18   4
 C$VECT
-                                  ffc007ec  ffc00beb       400   4
+                                  ffc01548  ffc01947       400   4
 D_1
-                                  ffc00bec  ffc00c3b        50   1
+                                  ffc01948  ffc01998        51   1
 D_2
-                                  ffc00c3c  ffc00c3c         0   1
+                                  ffc01999  ffc01999         0   1
 D
-                                  ffc00c3c  ffc00d9b       160   4
+                                  ffc0199c  ffc01aff       164   4
 P
-                                  ffc00d9c  ffc0b01c      a281   1
+                                  ffc01b00  ffc08fa9      74aa   1
 W_1
-                                  ffc0b01d  ffc0b01d         0   1
+                                  ffc08faa  ffc08faa         0   1
 W_2
-                                  ffc0b01d  ffc0b01d         0   1
+                                  ffc08faa  ffc08faa         0   1
 W
-                                  ffc0b01d  ffc0b01d         0   1
+                                  ffc08faa  ffc08faa         0   1
 L
-                                  ffc0b020  ffc0b0d1        b2   4
+                                  ffc08fac  ffc09037        8c   4
 EXCEPTVECT
                                   ffffff80  fffffffb        7c   4
 RESETVECT

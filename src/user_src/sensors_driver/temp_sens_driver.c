@@ -21,9 +21,9 @@
 #include "hdc1000.h"
 
 /* Kernel includes. */
-#include "FreeRTOS/FreeRTOS.h"
-#include "FreeRTOS/task.h"
-#include "FreeRTOS/queue.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
 
 /**----------------------------------------------------------------------------
 <<自ファイルのヘッダ>>
@@ -37,8 +37,8 @@
 extern xQueueHandle sci0_iic_queue;
 extern xQueueHandle temp_sens_que;
 
+/**/
 #define TEMP_SENSOR_ADDR (HDC1000_ADDR)
-
 static TempHumiData temp_humi_data;
 
 /***公開関数*******************************************************************/
@@ -53,7 +53,7 @@ void TempSensTask(void){
 	InitTempSens();
 
 	while(1){
-		vTaskDelay(1000/portTICK_PERIOD_MS);
+		vTaskDelay(10000/portTICK_PERIOD_MS);
 		TempSensRead();
 	}
 }
@@ -66,6 +66,21 @@ void TempSensTask(void){
 ＊　戻り値　：
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+float ReadTemperature(void){
+	return(temp_humi_data.temp);
+}
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+float ReadHumidity(void){
+	return(temp_humi_data.humi);
+}
+
 
 /***非公開関数******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,7 +96,7 @@ static void InitTempSens(void){
 	I2cData_t i2c_data;
 	I2cRetData_t i2c_ret;
 
-	temp_humi_data.temp = 0.0f;
+	temp_humi_data.temp = 25.678f;
 	temp_humi_data.humi = 0.0f;
 	temp_humi_data.count = 0U;
 

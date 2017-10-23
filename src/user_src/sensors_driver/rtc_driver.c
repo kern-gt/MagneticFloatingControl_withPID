@@ -21,9 +21,9 @@
 #include "rx-8025.h"
 
 /* Kernel includes. */
-#include "FreeRTOS/FreeRTOS.h"
-#include "FreeRTOS/task.h"
-#include "FreeRTOS/queue.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
 
 /**----------------------------------------------------------------------------
 <<自ファイルのヘッダ>>
@@ -42,6 +42,8 @@ extern xQueueHandle rtc_que;
 
 static RtcRegisters rtc_mem;
 
+static RtcTime current_time;
+
 /***公開関数*******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：
@@ -52,14 +54,65 @@ static RtcRegisters rtc_mem;
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 void RtcDriverTask(void){
 
-	//vTaskDelay(3000/portTICK_PERIOD_MS);
 	InitRtc();
 
 	while(1){
-		vTaskDelay(1000/portTICK_PERIOD_MS);
+		vTaskDelay(500/portTICK_PERIOD_MS);
 		RefreshRtcState();
 		//vTaskDelay(500/portTICK_PERIOD_MS);
 	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+uint8_t GetCurrentTimeSec(void){
+
+	return(current_time.sec);
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+uint8_t GetCurrentTimeMin(void){
+
+	return(current_time.min);
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+uint8_t GetCurrentTimeHour(void){
+
+	return(current_time.hour);
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+uint8_t GetCurrentTimeHour24(void){
+
+	return(current_time.hour24);
 }
 
 
@@ -76,6 +129,15 @@ static void InitRtc(void){
 	uint8_t init_data;        //RTC書き込みデータ
 	I2cData_t i2c_data;
 	I2cRetData_t i2c_ret;
+
+	//時間管理構造体の初期化
+	current_time.sec    = 33;
+	current_time.min    = 10;
+	current_time.hour   = 10;
+	current_time.hour24 = 10;
+
+	//RTCの発振安定時間待機
+	vTaskDelay(2000/portTICK_PERIOD_MS);
 
 	//RTCのレジスタアドレス、転送モード、設定データ初期化
 	mode.bit.address = 0xE;
@@ -145,6 +207,10 @@ static void RefreshRtcState(void){
 		default:
 			break;
 	}
+
+	ConvertSec(rtc_mem.registers.seconds.byte);
+	ConvertMin(rtc_mem.registers.minutes.byte);
+	ConvertHour(rtc_mem.registers.hours.byte, rtc_mem.registers.control1.byte);
 }
 
 
@@ -155,6 +221,82 @@ static void RefreshRtcState(void){
 ＊　戻り値　：
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void ConvertSec(uint8_t data){
+	Rx8025Seconds sec;
+
+	sec.byte = data;
+	current_time.sec = sec.bit.s1;
+	current_time.sec += sec.bit.s2 * 2;
+	current_time.sec += sec.bit.s4 * 4;
+	current_time.sec += sec.bit.s8 * 8;
+	current_time.sec += sec.bit.s10 * 10;
+	current_time.sec += sec.bit.s20 * 20;
+	current_time.sec += sec.bit.s40 * 40;
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void ConvertMin(uint8_t data){
+	Rx8025Minutes min;
+
+	min.byte = data;
+	current_time.min = min.bit.m1;
+	current_time.min += min.bit.m2 * 2;
+	current_time.min += min.bit.m4 * 4;
+	current_time.min += min.bit.m8 * 8;
+	current_time.min += min.bit.m10 * 10;
+	current_time.min += min.bit.m20 * 20;
+	current_time.min += min.bit.m40 * 40;
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void ConvertHour(uint8_t data, uint8_t ctrl_reg){
+	Rx8025Hours hour;
+	Rx8025Control1 reg;
+
+	reg.byte = ctrl_reg;
+
+	if(reg.bit.h12_24 == TRUE)
+	{
+		//24時間制
+		hour.byte = data;
+		current_time.hour = hour.bit.h1;
+		current_time.hour += hour.bit.h2 * 2;
+		current_time.hour += hour.bit.h4 * 4;
+		current_time.hour += hour.bit.h8 * 8;
+		current_time.hour += hour.bit.h10 * 10;
+		current_time.hour24 = current_time.hour;
+		current_time.hour24 += hour.bit.h20_pa * 20;
+	}else{
+		//12時間制
+		hour.byte = data;
+		current_time.hour = hour.bit.h1;
+		current_time.hour += hour.bit.h2 * 2;
+		current_time.hour += hour.bit.h4 * 4;
+		current_time.hour += hour.bit.h8 * 8;
+		current_time.hour += hour.bit.h10 * 10;
+		current_time.hour24 = current_time.hour;
+		if(hour.bit.h20_pa)
+		{
+			//PM
+			current_time.hour24 += 12;
+		}
+	}
+}
+
 
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：

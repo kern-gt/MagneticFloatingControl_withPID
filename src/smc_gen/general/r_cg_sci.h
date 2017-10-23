@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : General header file for SCI peripheral.
-* Creation Date: 2017-10-17
+* Creation Date: 2017-10-22
 ***********************************************************************************************************************/
 
 #ifndef SCI_H

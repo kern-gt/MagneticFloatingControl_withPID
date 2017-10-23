@@ -16,12 +16,17 @@
 #include <stdio.h>
 #include "iodefine.h"
 
-/* Kernel includes. */
-#include "FreeRTOS/FreeRTOS.h"
-#include "FreeRTOS/task.h"
-#include "FreeRTOS/queue.h"
+//#include <mathf.h>
 
-/* アプリケーション */
+/* Kernel includes. */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+/* アプリケーションタスク */
+#include "disp_main.h"
+
+/* サービスタスク */
 #include "oled.h"
 #include "rtc_driver.h"
 #include "temp_sens_driver.h"
@@ -36,6 +41,8 @@
 <<変数>>
 -----------------------------------------------------------------------------**/
 xQueueHandle sci0_iic_queue, rtc_que, temp_sens_que;
+
+xTaskHandle oled_tsk_id;
 
 //static xTaskHandle task1_id, task2_id;
 
@@ -70,7 +77,8 @@ void LedBlink1Hz(void *pvParameters)
 }
 
 void vTask3(void *pvParameters){
-	DrawTask();
+	//DrawTask();
+	DisplayApli();
 }
 
 void vTask4(void *pvParameters){
@@ -103,10 +111,10 @@ void MainApplication(void)
 	/*タスク生成*/
 	//xTaskCreate(LedBlink2Hz,"LedBlink2Hz",100,NULL,1,NULL);
 	//xTaskCreate(LedBlink1Hz,"LedBlink1Hz",100,NULL,4,NULL);
-	xTaskCreate(vTask3,"Task3",100,NULL,1,NULL);
-	xTaskCreate(vTask4,"Task4",100,NULL,1,NULL);
-	xTaskCreate(vTask5,"Task5",100,NULL,1,NULL);
-	xTaskCreate(vTask6,"Task6",100,NULL,1,NULL);
+	xTaskCreate(vTask3,"Task3",100,NULL,1,&oled_tsk_id);
+	xTaskCreate(vTask4,"Task4",100,NULL,2,NULL);
+	xTaskCreate(vTask5,"Task5",100,NULL,3,NULL);
+	xTaskCreate(vTask6,"Task6",100,NULL,2,NULL);
 	
 	/* タスクスケジューラ起動*/
 	vTaskStartScheduler();

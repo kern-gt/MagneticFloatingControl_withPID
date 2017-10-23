@@ -24,5 +24,7 @@
 -----------------------------------------------------------------------------**/
 /*extern*/
 extern void TempSensTask(void);
+extern float ReadTemperature(void);
+extern float ReadHumidity(void);
 
 #endif /* _TEMP_SENS_DRIVER_H_ */

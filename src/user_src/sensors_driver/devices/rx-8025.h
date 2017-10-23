@@ -91,7 +91,7 @@ typedef union{
 		uint8_t h4:1;
 		uint8_t h8:1;
 		uint8_t h10:1;
-		uint8_t h20:1;
+		uint8_t h20_pa:1;
 		uint8_t :2;
 	}bit;
 }Rx8025Hours;

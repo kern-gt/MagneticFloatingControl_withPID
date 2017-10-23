@@ -214,17 +214,17 @@
       <Path>main_apl.c</Path>
       <Path>main_apl.h</Path>
       <Category Name="src">
-        <Path>src\user_src\userdefine.h</Path>
         <Category Name="oled_driver">
           <Category Name="devices">
             <Path>src\user_src\oled_driver\devices\ssd1306.h</Path>
           </Category>
           <Category Name="image_data">
             <Path>src\user_src\oled_driver\image_data\draw_data.h</Path>
+            <Path>src\user_src\oled_driver\image_data\draw_data.c</Path>
           </Category>
+          <Path>src\user_src\oled_driver\oled.c</Path>
           <Path>src\user_src\oled_driver\oled.h</Path>
           <Path>src\user_src\oled_driver\oled_in.h</Path>
-          <Path>src\user_src\oled_driver\oled.c</Path>
         </Category>
         <Category Name="sensors_driver">
           <Category Name="devices">
@@ -232,15 +232,29 @@
             <Path>src\user_src\sensors_driver\devices\rx-8025.h</Path>
           </Category>
           <Path>src\user_src\sensors_driver\i2c_driver.c</Path>
+          <Path>src\user_src\sensors_driver\rtc_driver.c</Path>
+          <Path>src\user_src\sensors_driver\temp_sens_driver.c</Path>
           <Path>src\user_src\sensors_driver\i2c_driver.h</Path>
           <Path>src\user_src\sensors_driver\i2c_driver_in.h</Path>
-          <Path>src\user_src\sensors_driver\rtc_driver.c</Path>
           <Path>src\user_src\sensors_driver\rtc_driver.h</Path>
           <Path>src\user_src\sensors_driver\rtc_driver_in.h</Path>
-          <Path>src\user_src\sensors_driver\temp_sens_driver.c</Path>
           <Path>src\user_src\sensors_driver\temp_sens_driver.h</Path>
           <Path>src\user_src\sensors_driver\temp_sens_driver_in.h</Path>
         </Category>
+        <Category Name="display_appli">
+          <Path>src\user_src\display_appli\disp_clock.c</Path>
+          <Path>src\user_src\display_appli\disp_main.c</Path>
+          <Path>src\user_src\display_appli\disp_clock.h</Path>
+          <Path>src\user_src\display_appli\disp_clock_in.h</Path>
+          <Path>src\user_src\display_appli\disp_main.h</Path>
+          <Path>src\user_src\display_appli\disp_main_in.h</Path>
+        </Category>
+        <Category Name="lib">
+          <Path>src\user_src\lib\sin_cos.c</Path>
+          <Path>src\user_src\lib\sin_cos.h</Path>
+          <Path>src\user_src\lib\sin_cos_in.h</Path>
+        </Category>
+        <Path>src\user_src\userdefine.h</Path>
       </Category>
     </Files>
     <Device Series="RX">R5F564MLDxFP</Device>
@@ -253,15 +267,14 @@
           <Option>-isa=rxv2</Option>
           <Option>-fpu</Option>
           <Option>-lang=c99</Option>
-          <Option>-include=src\user_src\oled_driver\image_data</Option>
+          <Option>-include=src\user_src\lib</Option>
           <Option>-include=src\user_src\oled_driver\devices</Option>
+          <Option>-include=src\user_src\oled_driver\image_data</Option>
+          <Option>-include=src\user_src\oled_driver</Option>
           <Option>-include=src\user_src\sensors_driver</Option>
+          <Option>-include=src\user_src\display_appli</Option>
           <Option>-include=src\user_src\sensors_driver\devices</Option>
-          <Option>-include=FreeRTOSv9\portable</Option>
-          <Option>-include=FreeRTOSv9</Option>
-          <Option>-include=src\smc_gen\Config_ICU</Option>
-          <Option>-include=src\user_src\sensor_driver\dev_lib</Option>
-          <Option>-include=src\user_src\sensor_driver</Option>
+          <Option>-include=src\user_src</Option>
           <Option>-include=src\smc_gen\r_sci_iic_rx\src\targets\sci\rx64m</Option>
           <Option>-include=src\smc_gen\r_sci_iic_rx\src\targets\sci</Option>
           <Option>-include=src\smc_gen\r_sci_iic_rx\ref</Option>
@@ -270,17 +283,6 @@
           <Option>-include=src\smc_gen\r_riic_rx\src\targets\riic</Option>
           <Option>-include=src\smc_gen\r_riic_rx\ref</Option>
           <Option>-include=src\smc_gen\r_riic_rx</Option>
-          <Option>-include=src\smc_gen\Config_SCI0</Option>
-          <Option>-include=src\user_src\rtc_driver</Option>
-          <Option>-include=src\smc_gen\Config_RIIC2</Option>
-          <Option>-include=src\user_src</Option>
-          <Option>-include=src\user_src\oled_driver</Option>
-          <Option>-include=src\user_src\lcd_driver</Option>
-          <Option>-include=src\lcd_driver</Option>
-          <Option>-include=src\smc_gen\Config_RIIC0</Option>
-          <Option>-include=.</Option>
-          <Option>-include=FreeRTOS</Option>
-          <Option>-include=FreeRTOS\portable</Option>
           <Option>-include=src\smc_gen\r_pincfg</Option>
           <Option>-include=src\smc_gen\r_config</Option>
           <Option>-include=src\smc_gen\r_bsp\mcu\rx64m\register_access</Option>
@@ -290,11 +292,12 @@
           <Option>-include=src\smc_gen\r_bsp</Option>
           <Option>-include=src\smc_gen\general</Option>
           <Option>-include=src\smc_gen\Config_PORT</Option>
+          <Option>-include=FreeRTOS</Option>
+          <Option>-include=FreeRTOS\portable</Option>
           <Option>-utf8</Option>
           <Option>-output=obj=%BuildModeName%\%FileLeaf%.obj</Option>
           <Option>-debug</Option>
           <Option>-outcode=utf8</Option>
-          <Option>-optimize=0</Option>
           <Option>-nologo</Option>
         </CompileOptions>
         <AssembleOptions>
@@ -307,7 +310,6 @@
         </AssembleOptions>
         <LinkOptions>
           <Option>-output=%BuildModeName%\%ProjectName%.abs</Option>
-          <Option>-vect=_undefined_interrupt_source_isr</Option>
           <Option>-list=%BuildModeName%\%ProjectName%.map</Option>
           <Option>-nooptimize</Option>
           <Option>-start=B_1,R_1,B_2,R_2,B,R,SU,SI/00000004,C_1,C_2,C,C$DSEC,C$BSEC,C$VECT,D_1,D_2,D,P,W_1,W_2,W,L/0FFC00100,EXCEPTVECT/0FFFFFF80,RESETVECT/0FFFFFFFC</Option>
@@ -332,21 +334,17 @@
         <LinkOrder>
           <Path>DefaultBuild\magnetic_floating_control_with_pid.obj</Path>
           <Path>DefaultBuild\main_apl.obj</Path>
-          <Path>DefaultBuild\oled.obj</Path>
+          <Path>DefaultBuild\ApplicationHook.obj</Path>
+          <Path>DefaultBuild\heap_1.obj</Path>
+          <Path>DefaultBuild\port.obj</Path>
+          <Path>DefaultBuild\port_asm.obj</Path>
+          <Path>DefaultBuild\UserSetting.obj</Path>
           <Path>DefaultBuild\croutine.obj</Path>
           <Path>DefaultBuild\event_groups.obj</Path>
           <Path>DefaultBuild\list.obj</Path>
           <Path>DefaultBuild\queue.obj</Path>
           <Path>DefaultBuild\tasks.obj</Path>
           <Path>DefaultBuild\timers.obj</Path>
-          <Path>DefaultBuild\ApplicationHook.obj</Path>
-          <Path>DefaultBuild\heap_1.obj</Path>
-          <Path>DefaultBuild\port.obj</Path>
-          <Path>DefaultBuild\port_asm.obj</Path>
-          <Path>DefaultBuild\UserSetting.obj</Path>
-          <Path>DefaultBuild\i2c_driver.obj</Path>
-          <Path>DefaultBuild\rtc_driver.obj</Path>
-          <Path>DefaultBuild\temp_sens_driver.obj</Path>
           <Path>DefaultBuild\Config_PORT.obj</Path>
           <Path>DefaultBuild\Config_PORT_user.obj</Path>
           <Path>DefaultBuild\r_cg_dmac_user.obj</Path>
@@ -374,17 +372,24 @@
           <Path>DefaultBuild\r_riic_rx64m.obj</Path>
           <Path>DefaultBuild\r_sci_iic_rx.obj</Path>
           <Path>DefaultBuild\r_sci_iic_rx64m.obj</Path>
+          <Path>DefaultBuild\disp_clock.obj</Path>
+          <Path>DefaultBuild\disp_main.obj</Path>
+          <Path>DefaultBuild\i2c_driver.obj</Path>
+          <Path>DefaultBuild\rtc_driver.obj</Path>
+          <Path>DefaultBuild\temp_sens_driver.obj</Path>
+          <Path>DefaultBuild\oled.obj</Path>
+          <Path>DefaultBuild\sin_cos.obj</Path>
+          <Path>DefaultBuild\draw_data.obj</Path>
         </LinkOrder>
         <CommonOptions>
-          <IncludePathForC>src\user_src\oled_driver\image_data</IncludePathForC>
+          <IncludePathForC>src\user_src\lib</IncludePathForC>
           <IncludePathForC>src\user_src\oled_driver\devices</IncludePathForC>
+          <IncludePathForC>src\user_src\oled_driver\image_data</IncludePathForC>
+          <IncludePathForC>src\user_src\oled_driver</IncludePathForC>
           <IncludePathForC>src\user_src\sensors_driver</IncludePathForC>
+          <IncludePathForC>src\user_src\display_appli</IncludePathForC>
           <IncludePathForC>src\user_src\sensors_driver\devices</IncludePathForC>
-          <IncludePathForC>FreeRTOSv9\portable</IncludePathForC>
-          <IncludePathForC>FreeRTOSv9</IncludePathForC>
-          <IncludePathForC>src\smc_gen\Config_ICU</IncludePathForC>
-          <IncludePathForC>src\user_src\sensor_driver\dev_lib</IncludePathForC>
-          <IncludePathForC>src\user_src\sensor_driver</IncludePathForC>
+          <IncludePathForC>src\user_src</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_sci_iic_rx\src\targets\sci\rx64m</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_sci_iic_rx\src\targets\sci</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_sci_iic_rx\ref</IncludePathForC>
@@ -393,17 +398,6 @@
           <IncludePathForC>src\smc_gen\r_riic_rx\src\targets\riic</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_riic_rx\ref</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_riic_rx</IncludePathForC>
-          <IncludePathForC>src\smc_gen\Config_SCI0</IncludePathForC>
-          <IncludePathForC>src\user_src\rtc_driver</IncludePathForC>
-          <IncludePathForC>src\smc_gen\Config_RIIC2</IncludePathForC>
-          <IncludePathForC>src\user_src</IncludePathForC>
-          <IncludePathForC>src\user_src\oled_driver</IncludePathForC>
-          <IncludePathForC>src\user_src\lcd_driver</IncludePathForC>
-          <IncludePathForC>src\lcd_driver</IncludePathForC>
-          <IncludePathForC>src\smc_gen\Config_RIIC0</IncludePathForC>
-          <IncludePathForC>.</IncludePathForC>
-          <IncludePathForC>FreeRTOS</IncludePathForC>
-          <IncludePathForC>FreeRTOS\portable</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_pincfg</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_config</IncludePathForC>
           <IncludePathForC>src\smc_gen\r_bsp\mcu\rx64m\register_access</IncludePathForC>
@@ -413,6 +407,8 @@
           <IncludePathForC>src\smc_gen\r_bsp</IncludePathForC>
           <IncludePathForC>src\smc_gen\general</IncludePathForC>
           <IncludePathForC>src\smc_gen\Config_PORT</IncludePathForC>
+          <IncludePathForC>FreeRTOS</IncludePathForC>
+          <IncludePathForC>FreeRTOS\portable</IncludePathForC>
         </CommonOptions>
       </BuildMode>
     </BuildOptions>

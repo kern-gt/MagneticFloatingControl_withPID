@@ -19,12 +19,20 @@
 /**----------------------------------------------------------------------------
 <<非公開型定義>>
 -----------------------------------------------------------------------------**/
+//時間管理構造体
+typedef struct{
+	uint8_t sec;
+	uint8_t min;
+	uint8_t hour;
+	uint8_t hour24;
+}RtcTime;
+
 //エラー定義
 typedef enum{
 	kOk = 0,
 	kErrorAddress,
 	kErrorUnknown
-}OledErrorEnum;
+}RtcErrorEnum;
 
 /**----------------------------------------------------------------------------
 <<非公開プロトタイプ定義>>
@@ -33,5 +41,9 @@ typedef enum{
 static void InitRtc(void);
 static void RtcCallBackMaster(void);
 static void RefreshRtcState(void);
+
+static void ConvertSec(uint8_t data);
+static void ConvertMin(uint8_t data);
+static void ConvertHour(uint8_t data, uint8_t ctrl_reg);
 
 #endif /*_RTC_DRIVER_IN_H_*/

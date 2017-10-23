@@ -38,12 +38,12 @@ typedef enum{
 <<非公開プロトタイプ定義>>
 -----------------------------------------------------------------------------**/
 /*static */
-static void InitOled(void);
 static void SendImageData(void);
-static void DrawClear(void);
-static void DrawWhite(void);
-static void RefreshDisplay(void);
 static void SendCommand(void);
 static void OledSendCallBack(void);
+
+static void CrossLine(uint16_t x_l, uint16_t y_l, uint16_t x_h, uint16_t y_h, uint8_t color);
+static void SlopeLine(uint16_t x_l, uint16_t y_l, uint16_t x_h, uint16_t y_h, uint8_t color);
+
 
 #endif /*_OLED_IN_H_*/
