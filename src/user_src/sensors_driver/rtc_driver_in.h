@@ -41,6 +41,7 @@ typedef enum{
 static void InitRtc(void);
 static void RtcCallBackMaster(void);
 static void RefreshRtcState(void);
+static void RtcDeviceCallBack(uint8_t ret);
 
 static void ConvertSec(uint8_t data);
 static void ConvertMin(uint8_t data);

@@ -40,7 +40,7 @@
 /**----------------------------------------------------------------------------
 <<変数>>
 -----------------------------------------------------------------------------**/
-xQueueHandle sci0_iic_queue, rtc_que, temp_sens_que;
+xQueueHandle sci0_iic_queue;
 
 xTaskHandle oled_tsk_id;
 
@@ -104,8 +104,6 @@ void MainApplication(void)
 {
 	/*キュー生成*/
 	sci0_iic_queue = xQueueCreate(4, 24);
-	rtc_que        = xQueueCreate(1,4);
-	temp_sens_que  = xQueueCreate(1,4);
 
 
 	/*タスク生成*/

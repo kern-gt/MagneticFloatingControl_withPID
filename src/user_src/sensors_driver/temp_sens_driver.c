@@ -33,13 +33,11 @@
 /**----------------------------------------------------------------------------
 <<変数>>
 -----------------------------------------------------------------------------**/
-/* kernel */
-extern xQueueHandle sci0_iic_queue;
-extern xQueueHandle temp_sens_que;
-
 /**/
 #define TEMP_SENSOR_ADDR (HDC1000_ADDR)
+static xTaskHandle mytask_id;
 static TempHumiData temp_humi_data;
+static I2cRetData_t i2c_ret;
 
 /***公開関数*******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,18 +92,20 @@ static void InitTempSens(void){
 	uint8_t regi_addr;
 	Hdc1000Config init_data;        //
 	I2cData_t i2c_data;
-	I2cRetData_t i2c_ret;
 
 	temp_humi_data.temp = 25.678f;
 	temp_humi_data.humi = 0.0f;
 	temp_humi_data.count = 0U;
+
+	//
+	mytask_id = xTaskGetCurrentTaskHandle();
 
 	//初期化
 	regi_addr = kConfiguration;
 	init_data.word[0] = 0x10;
 	init_data.word[1] = 0x00;
 
-	i2c_data.que_id = (QueueID)temp_sens_que;
+	i2c_data.callbackfunc = TempDeviceCallBack;
 	i2c_data.p_data1st = &regi_addr;
 	i2c_data.p_data2nd = init_data.word;
 	i2c_data.cnt1st    = sizeof(regi_addr);
@@ -113,9 +113,8 @@ static void InitTempSens(void){
 	i2c_data.slave_addr= TEMP_SENSOR_ADDR;
 	i2c_data.mast_slv_r_w = kI2cMasterSend;
 
-	xQueueSend(sci0_iic_queue, &i2c_data, portMAX_DELAY);
-
-	xQueueReceive(temp_sens_que, &i2c_ret, portMAX_DELAY);
+	I2cWrite(&i2c_data);
+	vTaskSuspend(mytask_id);
 
 	switch(i2c_ret.ret){
 		case kI2cSuccess:
@@ -141,12 +140,11 @@ static void TempSensRead(void){
 	uint8_t regi_addr;
 	uint8_t data[4];        //
 	I2cData_t i2c_data;
-	I2cRetData_t i2c_ret;
 
-	//AD変換トリガ
+	//センサ値起動トリガ
 	regi_addr = kTemperature;
 
-	i2c_data.que_id = (QueueID)temp_sens_que;
+	i2c_data.callbackfunc = TempDeviceCallBack;
 	i2c_data.p_data1st = FIT_NO_PTR;
 	i2c_data.p_data2nd = &regi_addr;
 	i2c_data.cnt1st    = 0;
@@ -154,9 +152,8 @@ static void TempSensRead(void){
 	i2c_data.slave_addr= TEMP_SENSOR_ADDR;
 	i2c_data.mast_slv_r_w = kI2cMasterSend;
 
-	xQueueSend(sci0_iic_queue, &i2c_data, portMAX_DELAY);
-
-	xQueueReceive(temp_sens_que, &i2c_ret, portMAX_DELAY);
+	I2cWrite(&i2c_data);
+	vTaskSuspend(mytask_id);
 
 	switch(i2c_ret.ret){
 		case kI2cSuccess:
@@ -172,7 +169,7 @@ static void TempSensRead(void){
 	vTaskDelay(30/portTICK_PERIOD_MS);
 
 	//温度・湿度を読み込み
-	i2c_data.que_id = (QueueID)temp_sens_que;
+	i2c_data.callbackfunc = TempDeviceCallBack;
 	i2c_data.p_data1st = FIT_NO_PTR;
 	i2c_data.p_data2nd = data;
 	i2c_data.cnt1st    = 0;
@@ -180,9 +177,8 @@ static void TempSensRead(void){
 	i2c_data.slave_addr= TEMP_SENSOR_ADDR;
 	i2c_data.mast_slv_r_w = kI2cMasterReceive;
 
-	xQueueSend(sci0_iic_queue, &i2c_data, portMAX_DELAY);
-
-	xQueueReceive(temp_sens_que, &i2c_ret, portMAX_DELAY);
+	I2cWrite(&i2c_data);
+	vTaskSuspend(mytask_id);
 
 	switch(i2c_ret.ret){
 		case kI2cSuccess:
@@ -221,6 +217,21 @@ static void ConvertSensorVal(TempHumiData *temp_humi_p, uint8_t *data){
 	humi_f = (float)purehumi;
 	temp_humi_p->humi = humi_f * 100.0f/65536.0f;
 }
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void TempDeviceCallBack(uint8_t ret){
+	i2c_ret.ret = ret;
+	vTaskResume(mytask_id);
+}
+
+
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：
 ＊　機能　　：

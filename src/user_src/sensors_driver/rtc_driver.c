@@ -33,16 +33,13 @@
 /**----------------------------------------------------------------------------
 <<変数>>
 -----------------------------------------------------------------------------**/
-/* kernel */
-extern xQueueHandle sci0_iic_queue;
-extern xQueueHandle rtc_que;
-
 /**/
 #define RTC_ADDR (RX_8025_ADDRESS)	//I2CAddress
 
+static xTaskHandle mytask_id;
 static RtcRegisters rtc_mem;
-
 static RtcTime current_time;
+static I2cRetData_t i2c_ret;
 
 /***公開関数*******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -128,13 +125,14 @@ static void InitRtc(void){
 	Rx8025TransferByte mode;  //RTC転送モード
 	uint8_t init_data;        //RTC書き込みデータ
 	I2cData_t i2c_data;
-	I2cRetData_t i2c_ret;
 
 	//時間管理構造体の初期化
 	current_time.sec    = 33;
 	current_time.min    = 10;
 	current_time.hour   = 10;
 	current_time.hour24 = 10;
+
+	mytask_id = xTaskGetCurrentTaskHandle();
 
 	//RTCの発振安定時間待機
 	vTaskDelay(2000/portTICK_PERIOD_MS);
@@ -144,7 +142,7 @@ static void InitRtc(void){
 	mode.bit.transmode = kTransStandardMode;
 	init_data = 0x03;
 
-	i2c_data.que_id = (QueueID)rtc_que;
+	i2c_data.callbackfunc = RtcDeviceCallBack;
 	i2c_data.p_data1st = &mode.byte;
 	i2c_data.p_data2nd = &init_data;
 	i2c_data.cnt1st    = sizeof(mode.byte);
@@ -152,9 +150,8 @@ static void InitRtc(void){
 	i2c_data.slave_addr= RTC_ADDR;
 	i2c_data.mast_slv_r_w = kI2cMasterSend;
 
-	xQueueSend(sci0_iic_queue, &i2c_data, portMAX_DELAY);
-
-	xQueueReceive(rtc_que, &i2c_ret, portMAX_DELAY);
+	I2cWrite(&i2c_data);
+	vTaskSuspend(mytask_id);
 
 	switch(i2c_ret.ret){
 		case kI2cSuccess:
@@ -179,13 +176,12 @@ static void InitRtc(void){
 static void RefreshRtcState(void){
 	Rx8025TransferByte mode;
 	I2cData_t i2c_data;
-	I2cRetData_t i2c_ret;
 
 	//RTCのレジスタアドレス、転送モード、設定データ初期化
 	mode.bit.address = 0x0;
 	mode.bit.transmode = kTransStandardMode;
 
-	i2c_data.que_id = (QueueID)rtc_que;
+	i2c_data.callbackfunc = RtcDeviceCallBack;
 	i2c_data.p_data1st = &mode.byte;
 	i2c_data.p_data2nd = rtc_mem.read_data;
 	i2c_data.cnt1st    = sizeof(mode.byte);
@@ -193,9 +189,8 @@ static void RefreshRtcState(void){
 	i2c_data.slave_addr= RTC_ADDR;
 	i2c_data.mast_slv_r_w = kI2cMasterReceive;
 
-	xQueueSend(sci0_iic_queue, &i2c_data, portMAX_DELAY);
-
-	xQueueReceive(rtc_que, &i2c_ret, portMAX_DELAY);
+	I2cWrite(&i2c_data);
+	vTaskSuspend(mytask_id);
 
 	switch(i2c_ret.ret){
 		case kI2cSuccess:
@@ -295,6 +290,19 @@ static void ConvertHour(uint8_t data, uint8_t ctrl_reg){
 			current_time.hour24 += 12;
 		}
 	}
+}
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+static void RtcDeviceCallBack(uint8_t ret){
+
+	i2c_ret.ret = ret;
+	vTaskResume(mytask_id);
 }
 
 

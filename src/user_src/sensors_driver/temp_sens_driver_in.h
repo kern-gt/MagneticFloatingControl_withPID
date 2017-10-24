@@ -32,4 +32,6 @@ typedef struct{
 static void InitTempSens(void);
 static void TempSensRead(void);
 static void ConvertSensorVal(TempHumiData *temp_humi_p, uint8_t *data);
+static void TempDeviceCallBack(uint8_t ret);
+
 #endif /*_TEMP_SENS_DRIVER_IN_H_*/

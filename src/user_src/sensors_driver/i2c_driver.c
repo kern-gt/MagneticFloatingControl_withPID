@@ -34,7 +34,6 @@
 -----------------------------------------------------------------------------**/
 static sci_iic_info_t siic_info_0;        //sci0_iic
 static xTaskHandle i2c_driv_tsk_id;
-
 extern xQueueHandle sci0_iic_queue;
 /***公開関数*******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,7 +46,6 @@ extern xQueueHandle sci0_iic_queue;
 void I2cDrivTask(void){
 	I2cData_t i2c_data;
 
-	i2c_driv_tsk_id = xTaskGetCurrentTaskHandle();
 	InitI2c();
 
 	while(1){
@@ -67,6 +65,10 @@ void I2cDrivTask(void){
 ＊　戻り値　：
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void I2cWrite(I2cData_t *i2c_data){
+	xQueueSend(sci0_iic_queue, i2c_data, portMAX_DELAY);
+}
+
 
 /***非公開関数******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,6 +80,9 @@ void I2cDrivTask(void){
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 static void InitI2c(void){
 	volatile sci_iic_return_t ret;           //i2cAPI戻り値
+
+	//自タスクID取得
+	i2c_driv_tsk_id = xTaskGetCurrentTaskHandle();
 
 	/*I2C初期化*****************************************/
 	siic_info_0.callbackfunc = &CallBackMaster;
@@ -175,12 +180,10 @@ static void I2cCommunication(I2cData_t *i2c_data){
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 static void I2cCommuniReturn(I2cData_t *data){
-	xQueueHandle que_id;
-	I2cRetData_t i2c_ret;
+	i2c_callback CallBack;
 
-	que_id = (xQueueHandle)data->que_id;
-	i2c_ret.ret = kI2cSuccess;
-	xQueueSend(que_id, &i2c_ret, portMAX_DELAY);
+	CallBack = data->callbackfunc;
+	(*CallBack)((uint8_t)kI2cSuccess);
 }
 
 

@@ -64,9 +64,8 @@ const float hour_hand_length = 13.0f;
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 uint8_t DispClock(uint8_t changeflag){
-	uint8_t bitblt_flag = FALSE;
+	uint8_t bitblt_flag = FALSE, num_i[4];
 	uint16_t x, y, angle, sec=0, min=0, hour=0;
-	uint8_t num_i[4];
 	uint32_t num_l;
 	float hour_angle;
 
