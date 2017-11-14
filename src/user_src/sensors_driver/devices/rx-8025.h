@@ -232,9 +232,7 @@ typedef union{
 typedef union{
 	uint8_t byte;
 	struct{
-		uint8_t ct0:1;
-		uint8_t ct1:1;
-		uint8_t ct2:1;
+		uint8_t ct:3;
 		uint8_t test:1;
 		uint8_t clen2:1;
 		uint8_t h12_24:1;

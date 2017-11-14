@@ -31,4 +31,9 @@ extern const uint8_t colon_font[];
 extern const uint8_t percent_font[];
 extern const uint8_t celsius_font[];
 extern const uint8_t dot_font[];
+extern const uint8_t startlogo[][32];
+extern const uint8_t startlogo2[][32];
+extern const uint8_t startlogo3[][32];
+extern const uint8_t cyclone[][32];
+extern const uint8_t cpuinfo[][32];
 #endif /* _DRAW_DATA_H_ */

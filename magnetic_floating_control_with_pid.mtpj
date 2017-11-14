@@ -1152,7 +1152,7 @@
       <Property>6646f9ce-42fe-48b0-9ed2-ade86c61d09f</Property>
     </Instance>
     <Instance Guid="4877c1fa-5a8d-4191-a59c-02437f76bc8b">
-      <Name>display_appli</Name>
+      <Name>display_app</Name>
       <Type>Category</Type>
       <ParentItem>a42c25c9-dec3-4632-bc32-9f6fdb099426</ParentItem>
       <Property>bde38c3e-b58b-4613-b43b-a793816d6a4a</Property>
@@ -1307,45 +1307,66 @@
       <TreeImageGuid>03cad1e8-2eb3-4cde-a8a3-982423631122</TreeImageGuid>
       <ParentItem>e50e1867-6408-497e-8ef9-07e98d8fe728</ParentItem>
     </Instance>
-    <Instance Guid="6f03e18f-bb5c-458a-adfa-5c4ed78e7259">
+    <Instance Guid="cd586b32-0ea0-4476-b60a-157cfab8f573">
+      <Name>disp_boot.c</Name>
+      <Type>File</Type>
+      <RelativePath>src\user_src\display_app\disp_boot.c</RelativePath>
+      <TreeImageGuid>941832c1-fc3b-4e1b-94e8-01ea17128b42</TreeImageGuid>
+      <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
+    </Instance>
+    <Instance Guid="804a8b9d-561c-4061-ad4c-21bc72ee8d86">
+      <Name>disp_boot.h</Name>
+      <Type>File</Type>
+      <RelativePath>src\user_src\display_app\disp_boot.h</RelativePath>
+      <TreeImageGuid>03cad1e8-2eb3-4cde-a8a3-982423631122</TreeImageGuid>
+      <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
+    </Instance>
+    <Instance Guid="73730635-6d8e-4c90-9b0f-33b31a849492">
+      <Name>disp_boot_in.h</Name>
+      <Type>File</Type>
+      <RelativePath>src\user_src\display_app\disp_boot_in.h</RelativePath>
+      <TreeImageGuid>03cad1e8-2eb3-4cde-a8a3-982423631122</TreeImageGuid>
+      <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
+    </Instance>
+    <Instance Guid="615de6ec-6e28-4704-a03e-01a3f6ef5292">
       <Name>disp_clock.c</Name>
       <Type>File</Type>
-      <RelativePath>src\user_src\display_appli\disp_clock.c</RelativePath>
+      <RelativePath>src\user_src\display_app\disp_clock.c</RelativePath>
       <TreeImageGuid>941832c1-fc3b-4e1b-94e8-01ea17128b42</TreeImageGuid>
       <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
     </Instance>
-    <Instance Guid="8b98a9c4-2fdb-413d-b2ab-187c6c446026">
-      <Name>disp_main.c</Name>
-      <Type>File</Type>
-      <RelativePath>src\user_src\display_appli\disp_main.c</RelativePath>
-      <TreeImageGuid>941832c1-fc3b-4e1b-94e8-01ea17128b42</TreeImageGuid>
-      <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
-    </Instance>
-    <Instance Guid="bb872fdf-cc0b-436d-9f9f-f5e988ae3257">
+    <Instance Guid="23f4d59c-d27a-4c21-9493-2613c11b12a2">
       <Name>disp_clock.h</Name>
       <Type>File</Type>
-      <RelativePath>src\user_src\display_appli\disp_clock.h</RelativePath>
+      <RelativePath>src\user_src\display_app\disp_clock.h</RelativePath>
       <TreeImageGuid>03cad1e8-2eb3-4cde-a8a3-982423631122</TreeImageGuid>
       <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
     </Instance>
-    <Instance Guid="727d4242-bbca-4146-972a-36512e5feb8e">
+    <Instance Guid="1c576e12-8542-452f-b5d8-5b55eeb4707c">
       <Name>disp_clock_in.h</Name>
       <Type>File</Type>
-      <RelativePath>src\user_src\display_appli\disp_clock_in.h</RelativePath>
+      <RelativePath>src\user_src\display_app\disp_clock_in.h</RelativePath>
       <TreeImageGuid>03cad1e8-2eb3-4cde-a8a3-982423631122</TreeImageGuid>
       <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
     </Instance>
-    <Instance Guid="73b3560c-5478-4e9b-909f-e5df008069a6">
+    <Instance Guid="70e59711-2a5f-462e-8391-6980cfed6bf5">
+      <Name>disp_main.c</Name>
+      <Type>File</Type>
+      <RelativePath>src\user_src\display_app\disp_main.c</RelativePath>
+      <TreeImageGuid>941832c1-fc3b-4e1b-94e8-01ea17128b42</TreeImageGuid>
+      <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
+    </Instance>
+    <Instance Guid="4c464028-9cd1-4710-8e89-81df73d34444">
       <Name>disp_main.h</Name>
       <Type>File</Type>
-      <RelativePath>src\user_src\display_appli\disp_main.h</RelativePath>
+      <RelativePath>src\user_src\display_app\disp_main.h</RelativePath>
       <TreeImageGuid>03cad1e8-2eb3-4cde-a8a3-982423631122</TreeImageGuid>
       <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
     </Instance>
-    <Instance Guid="0016d6f7-7802-4cbc-bc3a-959682cb6f67">
+    <Instance Guid="47b97319-36d4-4180-a011-cb5ab5dd8fb1">
       <Name>disp_main_in.h</Name>
       <Type>File</Type>
-      <RelativePath>src\user_src\display_appli\disp_main_in.h</RelativePath>
+      <RelativePath>src\user_src\display_app\disp_main_in.h</RelativePath>
       <TreeImageGuid>03cad1e8-2eb3-4cde-a8a3-982423631122</TreeImageGuid>
       <ParentItem>4877c1fa-5a8d-4191-a59c-02437f76bc8b</ParentItem>
     </Instance>
@@ -1529,21 +1550,23 @@
       <SourceItemType39>CSource</SourceItemType39>
       <SourceItemGuid40>9f7b1e78-cbda-4ae4-ae46-84a1ce74d415</SourceItemGuid40>
       <SourceItemType40>CSource</SourceItemType40>
-      <SourceItemGuid41>62d11b4f-9b01-43a7-93df-59242dd73375</SourceItemGuid41>
+      <SourceItemGuid41>f43e8bdc-c211-4805-853b-89bf6ed53323</SourceItemGuid41>
       <SourceItemType41>CSource</SourceItemType41>
-      <SourceItemGuid42>df132303-b62d-4a1b-aaf5-d621e56221d6</SourceItemGuid42>
+      <SourceItemGuid42>62d11b4f-9b01-43a7-93df-59242dd73375</SourceItemGuid42>
       <SourceItemType42>CSource</SourceItemType42>
-      <SourceItemGuid43>befd472b-d28a-4cef-bde8-270ec0f2d685</SourceItemGuid43>
+      <SourceItemGuid43>df132303-b62d-4a1b-aaf5-d621e56221d6</SourceItemGuid43>
       <SourceItemType43>CSource</SourceItemType43>
-      <SourceItemGuid44>6f03e18f-bb5c-458a-adfa-5c4ed78e7259</SourceItemGuid44>
+      <SourceItemGuid44>befd472b-d28a-4cef-bde8-270ec0f2d685</SourceItemGuid44>
       <SourceItemType44>CSource</SourceItemType44>
-      <SourceItemGuid45>8b98a9c4-2fdb-413d-b2ab-187c6c446026</SourceItemGuid45>
+      <SourceItemGuid45>cd586b32-0ea0-4476-b60a-157cfab8f573</SourceItemGuid45>
       <SourceItemType45>CSource</SourceItemType45>
-      <SourceItemGuid46>f81d62a5-1347-4682-ae68-3a54a9c3373f</SourceItemGuid46>
+      <SourceItemGuid46>615de6ec-6e28-4704-a03e-01a3f6ef5292</SourceItemGuid46>
       <SourceItemType46>CSource</SourceItemType46>
-      <SourceItemGuid47>f43e8bdc-c211-4805-853b-89bf6ed53323</SourceItemGuid47>
+      <SourceItemGuid47>70e59711-2a5f-462e-8391-6980cfed6bf5</SourceItemGuid47>
       <SourceItemType47>CSource</SourceItemType47>
-      <SourceItemCount>48</SourceItemCount>
+      <SourceItemGuid48>f81d62a5-1347-4682-ae68-3a54a9c3373f</SourceItemGuid48>
+      <SourceItemType48>CSource</SourceItemType48>
+      <SourceItemCount>49</SourceItemCount>
       <LastDeviceChangedCounter>0</LastDeviceChangedCounter>
     </Instance>
     <Instance Guid="9e208646-ccba-4100-a676-29b1efe6545f">
@@ -1723,6 +1746,7 @@
       <COptionShowExpansions-DefaultValue>False</COptionShowExpansions-DefaultValue>
       <COptionCommandLine-DefaultValue>-isa=rxv2
 -fpu
+-include=src\user_src\display_app
 -include=src\user_src\lib
 -include=src\user_src\oled_driver\devices
 -include=src\user_src\oled_driver\image_data
@@ -1754,6 +1778,7 @@
 -output=obj=%BuildModeName%\%FileLeaf%.obj
 -debug
 -outcode=utf8
+-optimize=0
 -nologo
 -exec_time
 </COptionCommandLine-DefaultValue>
@@ -1818,12 +1843,12 @@
       <COptionFloatOrder-DefaultValue>False</COptionFloatOrder-DefaultValue>
       <COptionIncode-DefaultValue>Sjis</COptionIncode-DefaultValue>
       <IsLockedByUser>False</IsLockedByUser>
-      <TimeTagModified--0>-8586928912184898011</TimeTagModified--0>
+      <TimeTagModified--0>-8586909231567842292</TimeTagModified--0>
       <COptionLangC-0>C99</COptionLangC-0>
       <COptionListfile-0>False</COptionListfile-0>
       <COptionLogo-0>False</COptionLogo-0>
       <COptionMisra-0>Misra2012</COptionMisra-0>
-      <COptionOptimize-0>Level2</COptionOptimize-0>
+      <COptionOptimize-0>Level0</COptionOptimize-0>
       <COptionOutput-0>Object</COptionOutput-0>
       <COptionOutputAssembly-0>False</COptionOutputAssembly-0>
       <COptionStackProtector-0>None</COptionStackProtector-0>
@@ -1835,7 +1860,8 @@
       <COptionShowSource-0>False</COptionShowSource-0>
       <COptionXcref-0>False</COptionXcref-0>
       <COptionDebug-0>True</COptionDebug-0>
-      <COptionInclude-0>src\user_src\lib
+      <COptionInclude-0>src\user_src\display_app
+src\user_src\lib
 src\user_src\oled_driver\devices
 src\user_src\oled_driver\image_data
 src\user_src\oled_driver
@@ -1881,6 +1907,7 @@ FreeRTOS\portable
       <COptionShowExpansions-0>False</COptionShowExpansions-0>
       <COptionCommandLine-0>-isa=rxv2
 -fpu
+-include=src\user_src\display_app
 -include=src\user_src\lib
 -include=src\user_src\oled_driver\devices
 -include=src\user_src\oled_driver\image_data
@@ -1912,6 +1939,7 @@ FreeRTOS\portable
 -output=obj=%BuildModeName%\%FileLeaf%.obj
 -debug
 -outcode=utf8
+-optimize=0
 -nologo
 -exec_time
 </COptionCommandLine-0>
@@ -2122,7 +2150,7 @@ D_2=R_2
 -exit
 </LinkOptionCommandLine-DefaultValue>
       <IsLockedByUser>False</IsLockedByUser>
-      <TimeTagModified--0>-8586929189662785435</TimeTagModified--0>
+      <TimeTagModified--0>-8586923472254225710</TimeTagModified--0>
       <LinkOptionCpu-0>False</LinkOptionCpu-0>
       <LinkOptionForm-0>Absolute</LinkOptionForm-0>
       <LinkOptionFormConvert-0>Stype</LinkOptionFormConvert-0>
@@ -3120,29 +3148,29 @@ D_2=R_2
       <ItemAddTime>636442777313700334</ItemAddTime>
       <ItemAddTimeCount>14</ItemAddTimeCount>
     </Instance>
-    <Instance Guid="0016d6f7-7802-4cbc-bc3a-959682cb6f67">
-      <ItemAddTime>636442781443433313</ItemAddTime>
+    <Instance Guid="615de6ec-6e28-4704-a03e-01a3f6ef5292">
+      <ItemAddTime>636448889293397200</ItemAddTime>
       <ItemAddTimeCount>3</ItemAddTimeCount>
     </Instance>
-    <Instance Guid="73b3560c-5478-4e9b-909f-e5df008069a6">
-      <ItemAddTime>636442781443433313</ItemAddTime>
-      <ItemAddTimeCount>2</ItemAddTimeCount>
+    <Instance Guid="23f4d59c-d27a-4c21-9493-2613c11b12a2">
+      <ItemAddTime>636448889293397200</ItemAddTime>
+      <ItemAddTimeCount>4</ItemAddTimeCount>
     </Instance>
-    <Instance Guid="727d4242-bbca-4146-972a-36512e5feb8e">
-      <ItemAddTime>636442781443433313</ItemAddTime>
-      <ItemAddTimeCount>1</ItemAddTimeCount>
+    <Instance Guid="1c576e12-8542-452f-b5d8-5b55eeb4707c">
+      <ItemAddTime>636448889293397200</ItemAddTime>
+      <ItemAddTimeCount>5</ItemAddTimeCount>
     </Instance>
-    <Instance Guid="bb872fdf-cc0b-436d-9f9f-f5e988ae3257">
-      <ItemAddTime>636442781443433313</ItemAddTime>
-      <ItemAddTimeCount>0</ItemAddTimeCount>
+    <Instance Guid="70e59711-2a5f-462e-8391-6980cfed6bf5">
+      <ItemAddTime>636448889293397200</ItemAddTime>
+      <ItemAddTimeCount>6</ItemAddTimeCount>
     </Instance>
-    <Instance Guid="8b98a9c4-2fdb-413d-b2ab-187c6c446026">
-      <ItemAddTime>636442781278162902</ItemAddTime>
-      <ItemAddTimeCount>1</ItemAddTimeCount>
+    <Instance Guid="4c464028-9cd1-4710-8e89-81df73d34444">
+      <ItemAddTime>636448889293397200</ItemAddTime>
+      <ItemAddTimeCount>7</ItemAddTimeCount>
     </Instance>
-    <Instance Guid="6f03e18f-bb5c-458a-adfa-5c4ed78e7259">
-      <ItemAddTime>636442781278162902</ItemAddTime>
-      <ItemAddTimeCount>0</ItemAddTimeCount>
+    <Instance Guid="47b97319-36d4-4180-a011-cb5ab5dd8fb1">
+      <ItemAddTime>636448889293397200</ItemAddTime>
+      <ItemAddTimeCount>8</ItemAddTimeCount>
     </Instance>
     <Instance Guid="f81d62a5-1347-4682-ae68-3a54a9c3373f">
       <ItemAddTime>636442839719356622</ItemAddTime>
@@ -3158,6 +3186,18 @@ D_2=R_2
     </Instance>
     <Instance Guid="f43e8bdc-c211-4805-853b-89bf6ed53323">
       <ItemAddTime>636443171645336796</ItemAddTime>
+      <ItemAddTimeCount>0</ItemAddTimeCount>
+    </Instance>
+    <Instance Guid="73730635-6d8e-4c90-9b0f-33b31a849492">
+      <ItemAddTime>636448889293397200</ItemAddTime>
+      <ItemAddTimeCount>2</ItemAddTimeCount>
+    </Instance>
+    <Instance Guid="804a8b9d-561c-4061-ad4c-21bc72ee8d86">
+      <ItemAddTime>636448889293397200</ItemAddTime>
+      <ItemAddTimeCount>1</ItemAddTimeCount>
+    </Instance>
+    <Instance Guid="cd586b32-0ea0-4476-b60a-157cfab8f573">
+      <ItemAddTime>636448889293397200</ItemAddTime>
       <ItemAddTimeCount>0</ItemAddTimeCount>
     </Instance>
     <Instance Guid="a7be515f-f007-45ed-9059-4e1500c0f74d">
@@ -3321,7 +3361,7 @@ D_2=R_2
       <SourceItem40-IsLockedByUser>False</SourceItem40-IsLockedByUser>
       <SourceItem40-BuildingTarget-0>True</SourceItem40-BuildingTarget-0>
       <SourceItem40-IndividualCompileOption-0>False</SourceItem40-IndividualCompileOption-0>
-      <TimeTagModified-SourceItem41--0>-8586929578999999670</TimeTagModified-SourceItem41--0>
+      <TimeTagModified-SourceItem41--0>-8586929189209439012</TimeTagModified-SourceItem41--0>
       <SourceItem41-IsLockedByUser>False</SourceItem41-IsLockedByUser>
       <SourceItem41-BuildingTarget-0>True</SourceItem41-BuildingTarget-0>
       <SourceItem41-IndividualCompileOption-0>False</SourceItem41-IndividualCompileOption-0>
@@ -3333,22 +3373,26 @@ D_2=R_2
       <SourceItem43-IsLockedByUser>False</SourceItem43-IsLockedByUser>
       <SourceItem43-BuildingTarget-0>True</SourceItem43-BuildingTarget-0>
       <SourceItem43-IndividualCompileOption-0>False</SourceItem43-IndividualCompileOption-0>
-      <TimeTagModified-SourceItem44--0>-8586929579576612906</TimeTagModified-SourceItem44--0>
+      <TimeTagModified-SourceItem44--0>-8586929578999999670</TimeTagModified-SourceItem44--0>
       <SourceItem44-IsLockedByUser>False</SourceItem44-IsLockedByUser>
       <SourceItem44-BuildingTarget-0>True</SourceItem44-BuildingTarget-0>
       <SourceItem44-IndividualCompileOption-0>False</SourceItem44-IndividualCompileOption-0>
-      <TimeTagModified-SourceItem45--0>-8586929579576612906</TimeTagModified-SourceItem45--0>
+      <TimeTagModified-SourceItem45--0>-8586923471561378608</TimeTagModified-SourceItem45--0>
       <SourceItem45-IsLockedByUser>False</SourceItem45-IsLockedByUser>
       <SourceItem45-BuildingTarget-0>True</SourceItem45-BuildingTarget-0>
       <SourceItem45-IndividualCompileOption-0>False</SourceItem45-IndividualCompileOption-0>
-      <TimeTagModified-SourceItem46--0>-8586929521135419186</TimeTagModified-SourceItem46--0>
+      <TimeTagModified-SourceItem46--0>-8586923471561368599</TimeTagModified-SourceItem46--0>
       <SourceItem46-IsLockedByUser>False</SourceItem46-IsLockedByUser>
       <SourceItem46-BuildingTarget-0>True</SourceItem46-BuildingTarget-0>
       <SourceItem46-IndividualCompileOption-0>False</SourceItem46-IndividualCompileOption-0>
-      <TimeTagModified-SourceItem47--0>-8586929189209439012</TimeTagModified-SourceItem47--0>
+      <TimeTagModified-SourceItem47--0>-8586923471561368599</TimeTagModified-SourceItem47--0>
       <SourceItem47-IsLockedByUser>False</SourceItem47-IsLockedByUser>
       <SourceItem47-BuildingTarget-0>True</SourceItem47-BuildingTarget-0>
       <SourceItem47-IndividualCompileOption-0>False</SourceItem47-IndividualCompileOption-0>
+      <TimeTagModified-SourceItem48--0>-8586929521135419186</TimeTagModified-SourceItem48--0>
+      <SourceItem48-IsLockedByUser>False</SourceItem48-IsLockedByUser>
+      <SourceItem48-BuildingTarget-0>True</SourceItem48-BuildingTarget-0>
+      <SourceItem48-IndividualCompileOption-0>False</SourceItem48-IndividualCompileOption-0>
     </Instance>
     <Instance Guid="c20a78d9-8038-46fe-9b87-bc2fa2aa9bdc">
       <TimeTagModified-SourceItem38--0>-8586929584034253011</TimeTagModified-SourceItem38--0>

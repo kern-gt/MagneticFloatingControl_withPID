@@ -105,7 +105,6 @@ void MainApplication(void)
 	/*キュー生成*/
 	sci0_iic_queue = xQueueCreate(4, 24);
 
-
 	/*タスク生成*/
 	//xTaskCreate(LedBlink2Hz,"LedBlink2Hz",100,NULL,1,NULL);
 	//xTaskCreate(LedBlink1Hz,"LedBlink1Hz",100,NULL,4,NULL);

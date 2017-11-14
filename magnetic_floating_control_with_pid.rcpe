@@ -241,13 +241,16 @@
           <Path>src\user_src\sensors_driver\temp_sens_driver.h</Path>
           <Path>src\user_src\sensors_driver\temp_sens_driver_in.h</Path>
         </Category>
-        <Category Name="display_appli">
-          <Path>src\user_src\display_appli\disp_clock.c</Path>
-          <Path>src\user_src\display_appli\disp_main.c</Path>
-          <Path>src\user_src\display_appli\disp_clock.h</Path>
-          <Path>src\user_src\display_appli\disp_clock_in.h</Path>
-          <Path>src\user_src\display_appli\disp_main.h</Path>
-          <Path>src\user_src\display_appli\disp_main_in.h</Path>
+        <Category Name="display_app">
+          <Path>src\user_src\display_app\disp_boot.c</Path>
+          <Path>src\user_src\display_app\disp_boot.h</Path>
+          <Path>src\user_src\display_app\disp_boot_in.h</Path>
+          <Path>src\user_src\display_app\disp_clock.c</Path>
+          <Path>src\user_src\display_app\disp_clock.h</Path>
+          <Path>src\user_src\display_app\disp_clock_in.h</Path>
+          <Path>src\user_src\display_app\disp_main.c</Path>
+          <Path>src\user_src\display_app\disp_main.h</Path>
+          <Path>src\user_src\display_app\disp_main_in.h</Path>
         </Category>
         <Category Name="lib">
           <Path>src\user_src\lib\sin_cos.c</Path>
@@ -267,6 +270,7 @@
           <Option>-isa=rxv2</Option>
           <Option>-fpu</Option>
           <Option>-lang=c99</Option>
+          <Option>-include=src\user_src\display_app</Option>
           <Option>-include=src\user_src\lib</Option>
           <Option>-include=src\user_src\oled_driver\devices</Option>
           <Option>-include=src\user_src\oled_driver\image_data</Option>
@@ -298,6 +302,7 @@
           <Option>-output=obj=%BuildModeName%\%FileLeaf%.obj</Option>
           <Option>-debug</Option>
           <Option>-outcode=utf8</Option>
+          <Option>-optimize=0</Option>
           <Option>-nologo</Option>
         </CompileOptions>
         <AssembleOptions>
@@ -372,16 +377,18 @@
           <Path>DefaultBuild\r_riic_rx64m.obj</Path>
           <Path>DefaultBuild\r_sci_iic_rx.obj</Path>
           <Path>DefaultBuild\r_sci_iic_rx64m.obj</Path>
-          <Path>DefaultBuild\disp_clock.obj</Path>
-          <Path>DefaultBuild\disp_main.obj</Path>
           <Path>DefaultBuild\i2c_driver.obj</Path>
           <Path>DefaultBuild\rtc_driver.obj</Path>
           <Path>DefaultBuild\temp_sens_driver.obj</Path>
           <Path>DefaultBuild\oled.obj</Path>
           <Path>DefaultBuild\sin_cos.obj</Path>
           <Path>DefaultBuild\draw_data.obj</Path>
+          <Path>DefaultBuild\disp_boot.obj</Path>
+          <Path>DefaultBuild\disp_clock.obj</Path>
+          <Path>DefaultBuild\disp_main.obj</Path>
         </LinkOrder>
         <CommonOptions>
+          <IncludePathForC>src\user_src\display_app</IncludePathForC>
           <IncludePathForC>src\user_src\lib</IncludePathForC>
           <IncludePathForC>src\user_src\oled_driver\devices</IncludePathForC>
           <IncludePathForC>src\user_src\oled_driver\image_data</IncludePathForC>

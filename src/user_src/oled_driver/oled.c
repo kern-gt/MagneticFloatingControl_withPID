@@ -331,13 +331,13 @@ void PasteImage1616(uint16_t x, uint16_t page_num, const uint8_t *data){
 	{
 		for(i = 0; i < 16; ++i)
 		{
-			if((x+i) > OLED_ROW_SIZE)	break;
+			if((x+i) > (OLED_ROW_SIZE-1))	break;
 			gram.disp_buf[page_num][x+i] |= data[i];
 		}
 
 		for(i = 0; i < 16; ++i)
 		{
-			if((x+i) > OLED_ROW_SIZE) break;
+			if((x+i) > (OLED_ROW_SIZE-1)) break;
 			gram.disp_buf[page_num+1][x+i] |= data[16+i];
 		}
 	}

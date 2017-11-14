@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.07.00 )             24-Oct-2017 12:53:35
+Renesas Optimizing Linker (W2.07.00 )             15-Nov-2017 07:33:16
 
 *** Options ***
 
@@ -44,14 +44,15 @@ Renesas Optimizing Linker (W2.07.00 )             24-Oct-2017 12:53:35
 -input=DefaultBuild\r_riic_rx64m.obj
 -input=DefaultBuild\r_sci_iic_rx.obj
 -input=DefaultBuild\r_sci_iic_rx64m.obj
--input=DefaultBuild\disp_clock.obj
--input=DefaultBuild\disp_main.obj
 -input=DefaultBuild\i2c_driver.obj
 -input=DefaultBuild\rtc_driver.obj
 -input=DefaultBuild\temp_sens_driver.obj
 -input=DefaultBuild\oled.obj
 -input=DefaultBuild\sin_cos.obj
 -input=DefaultBuild\draw_data.obj
+-input=DefaultBuild\disp_boot.obj
+-input=DefaultBuild\disp_clock.obj
+-input=DefaultBuild\disp_main.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
 -list=DefaultBuild\magnetic_floating_control_with_pid.map
@@ -67,21 +68,21 @@ Renesas Optimizing Linker (W2.07.00 )             24-Oct-2017 12:53:35
 
 SECTION                            START      END         SIZE   ALIGN
 B_1
-                                  00000004  00002c57      2c54   1
+                                  00000004  00002c55      2c52   1
 R_1
-                                  00002c58  00002ca8        51   1
+                                  00002c56  00002ca6        51   1
 B_2
-                                  00002caa  00002cb1         8   2
+                                  00002ca8  00002cc7        20   2
 R_2
-                                  00002cb2  00002cb2         0   1
+                                  00002cc8  00002cc8         0   1
 B
-                                  00002cb4  0000320b       558   4
+                                  00002cc8  00003227       560   4
 R
-                                  0000320c  0000336f       164   4
+                                  00003228  00003387       160   4
 SU
-                                  00003370  00003373         4   4
+                                  00003388  0000338b         4   4
 SI
-                                  00003374  00003773       400   4
+                                  0000338c  0000378b       400   4
 $ADDR_C_120040
                                   00120040  00120043         4   1
 $ADDR_C_120048
@@ -89,33 +90,33 @@ $ADDR_C_120048
 $ADDR_C_120050
                                   00120050  0012006f        20   1
 C_1
-                                  ffc00100  ffc00314       215   1
+                                  ffc00100  ffc007b4       6b5   1
 C_2
-                                  ffc00316  ffc00343        2e   2
+                                  ffc007b6  ffc007e9        34   2
 C
-                                  ffc00344  ffc0150b      11c8   4
+                                  ffc007ec  ffc019cb      11e0   4
 C$DSEC
-                                  ffc0150c  ffc0152f        24   4
+                                  ffc019cc  ffc019ef        24   4
 C$BSEC
-                                  ffc01530  ffc01547        18   4
+                                  ffc019f0  ffc01a07        18   4
 C$VECT
-                                  ffc01548  ffc01947       400   4
+                                  ffc01a08  ffc01e07       400   4
 D_1
-                                  ffc01948  ffc01998        51   1
+                                  ffc01e08  ffc01e58        51   1
 D_2
-                                  ffc01999  ffc01999         0   1
+                                  ffc01e59  ffc01e59         0   1
 D
-                                  ffc0199c  ffc01aff       164   4
+                                  ffc01e5c  ffc01fbb       160   4
 P
-                                  ffc01b00  ffc08f60      7461   1
+                                  ffc01fbc  ffc0dcee      bd33   1
 W_1
-                                  ffc08f61  ffc08f61         0   1
+                                  ffc0dcef  ffc0dcef         0   1
 W_2
-                                  ffc08f61  ffc08f61         0   1
+                                  ffc0dcef  ffc0dcef         0   1
 W
-                                  ffc08f61  ffc08f61         0   1
+                                  ffc0dcef  ffc0dcef         0   1
 L
-                                  ffc08f64  ffc08fef        8c   4
+                                  ffc0dcf0  ffc0dda1        b2   4
 EXCEPTVECT
                                   ffffff80  fffffffb        7c   4
 RESETVECT

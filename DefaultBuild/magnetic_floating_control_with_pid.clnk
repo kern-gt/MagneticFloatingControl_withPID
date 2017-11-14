@@ -39,14 +39,15 @@
 -input=DefaultBuild\r_riic_rx64m.obj
 -input=DefaultBuild\r_sci_iic_rx.obj
 -input=DefaultBuild\r_sci_iic_rx64m.obj
--input=DefaultBuild\disp_clock.obj
--input=DefaultBuild\disp_main.obj
 -input=DefaultBuild\i2c_driver.obj
 -input=DefaultBuild\rtc_driver.obj
 -input=DefaultBuild\temp_sens_driver.obj
 -input=DefaultBuild\oled.obj
 -input=DefaultBuild\sin_cos.obj
 -input=DefaultBuild\draw_data.obj
+-input=DefaultBuild\disp_boot.obj
+-input=DefaultBuild\disp_clock.obj
+-input=DefaultBuild\disp_main.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
 -list=DefaultBuild\magnetic_floating_control_with_pid.map
