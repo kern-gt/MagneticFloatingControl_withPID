@@ -1,23 +1,22 @@
-Renesas Optimizing Linker (W2.07.00 )             13-Oct-2017 13:10:11
+Renesas Optimizing Linker (W2.07.00 )             15-Nov-2017 07:33:16
 
 *** Options ***
 
 -subcommand=DefaultBuild\magnetic_floating_control_with_pid.clnk
 -library=DefaultBuild\magnetic_floating_control_with_pid.lib
 -input=DefaultBuild\magnetic_floating_control_with_pid.obj
+-input=DefaultBuild\main_apl.obj
 -input=DefaultBuild\ApplicationHook.obj
 -input=DefaultBuild\heap_1.obj
 -input=DefaultBuild\port.obj
 -input=DefaultBuild\port_asm.obj
+-input=DefaultBuild\UserSetting.obj
 -input=DefaultBuild\croutine.obj
 -input=DefaultBuild\event_groups.obj
 -input=DefaultBuild\list.obj
 -input=DefaultBuild\queue.obj
 -input=DefaultBuild\tasks.obj
 -input=DefaultBuild\timers.obj
--input=DefaultBuild\main_apl.obj
--input=DefaultBuild\UserSetting.obj
--input=DefaultBuild\rtc.obj
 -input=DefaultBuild\Config_PORT.obj
 -input=DefaultBuild\Config_PORT_user.obj
 -input=DefaultBuild\r_cg_dmac_user.obj
@@ -45,10 +44,17 @@ Renesas Optimizing Linker (W2.07.00 )             13-Oct-2017 13:10:11
 -input=DefaultBuild\r_riic_rx64m.obj
 -input=DefaultBuild\r_sci_iic_rx.obj
 -input=DefaultBuild\r_sci_iic_rx64m.obj
+-input=DefaultBuild\i2c_driver.obj
+-input=DefaultBuild\rtc_driver.obj
+-input=DefaultBuild\temp_sens_driver.obj
 -input=DefaultBuild\oled.obj
+-input=DefaultBuild\sin_cos.obj
+-input=DefaultBuild\draw_data.obj
+-input=DefaultBuild\disp_boot.obj
+-input=DefaultBuild\disp_clock.obj
+-input=DefaultBuild\disp_main.obj
 -noprelink
 -output=DefaultBuild\magnetic_floating_control_with_pid.abs
--vect=_undefined_interrupt_source_isr
 -list=DefaultBuild\magnetic_floating_control_with_pid.map
 -nooptimize
 -start=B_1,R_1,B_2,R_2,B,R,SU,SI/00000004,C_1,C_2,C,C$DSEC,C$BSEC,C$VECT,D_1,D_2,D,P,W_1,W_2,W,L/0FFC00100,EXCEPTVECT/0FFFFFF80,RESETVECT/0FFFFFFFC
@@ -62,21 +68,21 @@ Renesas Optimizing Linker (W2.07.00 )             13-Oct-2017 13:10:11
 
 SECTION                            START      END         SIZE   ALIGN
 B_1
-                                  00000004  0000b84b      b848   1
+                                  00000004  00002c55      2c52   1
 R_1
-                                  0000b84c  0000b89b        50   1
+                                  00002c56  00002ca6        51   1
 B_2
-                                  0000b89c  0000b8a3         8   2
+                                  00002ca8  00002cc7        20   2
 R_2
-                                  0000b8a4  0000b8a4         0   1
+                                  00002cc8  00002cc8         0   1
 B
-                                  0000b8a4  0000c1d7       934   4
+                                  00002cc8  00003227       560   4
 R
-                                  0000c1d8  0000c333       15c   4
+                                  00003228  00003387       160   4
 SU
-                                  0000c334  0000d333      1000   4
+                                  00003388  0000338b         4   4
 SI
-                                  0000d334  0000d733       400   4
+                                  0000338c  0000378b       400   4
 $ADDR_C_120040
                                   00120040  00120043         4   1
 $ADDR_C_120048
@@ -84,33 +90,33 @@ $ADDR_C_120048
 $ADDR_C_120050
                                   00120050  0012006f        20   1
 C_1
-                                  ffc00100  ffc00114        15   1
+                                  ffc00100  ffc007b4       6b5   1
 C_2
-                                  ffc00116  ffc00133        1e   2
+                                  ffc007b6  ffc007e9        34   2
 C
-                                  ffc00134  ffc007af       67c   4
+                                  ffc007ec  ffc019cb      11e0   4
 C$DSEC
-                                  ffc007b0  ffc007d3        24   4
+                                  ffc019cc  ffc019ef        24   4
 C$BSEC
-                                  ffc007d4  ffc007eb        18   4
+                                  ffc019f0  ffc01a07        18   4
 C$VECT
-                                  ffc007ec  ffc00beb       400   4
+                                  ffc01a08  ffc01e07       400   4
 D_1
-                                  ffc00bec  ffc00c3b        50   1
+                                  ffc01e08  ffc01e58        51   1
 D_2
-                                  ffc00c3c  ffc00c3c         0   1
+                                  ffc01e59  ffc01e59         0   1
 D
-                                  ffc00c3c  ffc00d97       15c   4
+                                  ffc01e5c  ffc01fbb       160   4
 P
-                                  ffc00d98  ffc0acf3      9f5c   1
+                                  ffc01fbc  ffc0dcee      bd33   1
 W_1
-                                  ffc0acf4  ffc0acf4         0   1
+                                  ffc0dcef  ffc0dcef         0   1
 W_2
-                                  ffc0acf4  ffc0acf4         0   1
+                                  ffc0dcef  ffc0dcef         0   1
 W
-                                  ffc0acf4  ffc0acf4         0   1
+                                  ffc0dcef  ffc0dcef         0   1
 L
-                                  ffc0acf4  ffc0ad99        a6   4
+                                  ffc0dcf0  ffc0dda1        b2   4
 EXCEPTVECT
                                   ffffff80  fffffffb        7c   4
 RESETVECT

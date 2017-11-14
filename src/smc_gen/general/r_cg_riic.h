@@ -22,7 +22,7 @@
 * Version      : 1.2.0
 * Device(s)    : R5F564MLDxFP
 * Description  : General header file for RIIC peripheral.
-* Creation Date: 2017-10-13
+* Creation Date: 2017-10-22
 ***********************************************************************************************************************/
 
 #ifndef RIIC_H

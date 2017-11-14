@@ -52,7 +52,7 @@ typedef enum{
 	kAddReserved,
 	kAddControl1,
 	kAddControl2
-}Rx8025RegisterEnum;
+}Rx8025RegAddressEnum;
 
 //RX-8025NBレジスタ定義**************************
 typedef union{
@@ -67,7 +67,7 @@ typedef union{
 		uint8_t s40:1;
 		uint8_t :1;
 	}bit;
-}Seconds;
+}Rx8025Seconds;
 
 typedef union{
 	uint8_t byte;
@@ -81,7 +81,7 @@ typedef union{
 		uint8_t m40:1;
 		uint8_t :1;		
 	}bit;
-}Minutes;
+}Rx8025Minutes;
 
 typedef union{
 	uint8_t byte;
@@ -91,10 +91,10 @@ typedef union{
 		uint8_t h4:1;
 		uint8_t h8:1;
 		uint8_t h10:1;
-		uint8_t h20:1;
+		uint8_t h20_pa:1;
 		uint8_t :2;
 	}bit;
-}Hours;
+}Rx8025Hours;
 
 typedef union{
 	uint8_t byte;
@@ -104,7 +104,7 @@ typedef union{
 		uint8_t w4:1;
 		uint8_t :5;
 	}bit;
-}Weekdays;
+}Rx8025Weekdays;
 
 typedef union{
 	uint8_t byte;
@@ -117,7 +117,7 @@ typedef union{
 		uint8_t d20:1;
 		uint8_t :2;
 	}bit;
-}Days;
+}Rx8025Days;
 
 typedef union{
 	uint8_t byte;
@@ -131,7 +131,7 @@ typedef union{
 		uint8_t :2;
 		uint8_t c:1;
 	}bit;
-}Months;
+}Rx8025Months;
 
 typedef union{
 	uint8_t byte;
@@ -145,7 +145,7 @@ typedef union{
 		uint8_t y40:1;
 		uint8_t y80:1;
 	}bit;
-}Years;
+}Rx8025Years;
 
 typedef union{
 	uint8_t byte;
@@ -159,7 +159,7 @@ typedef union{
 		uint8_t f6:1;
 		uint8_t test:1;
 	}bit;
-}Digital_offsets;
+}Rx8025Digital_offsets;
 
 typedef union{
 	uint8_t byte;
@@ -173,7 +173,7 @@ typedef union{
 		uint8_t wm40:1;
 		uint8_t :1;
 	}bit;
-}AlarmWMinute;
+}Rx8025AlarmWMinute;
 
 typedef union{
 	uint8_t byte;
@@ -186,7 +186,7 @@ typedef union{
 		uint8_t wh20:1;
 		uint8_t :2;
 	}bit;
-}AlarmWHour;
+}Rx8025AlarmWHour;
 
 typedef union{
 	uint8_t byte;
@@ -200,7 +200,7 @@ typedef union{
 		uint8_t ww6:1;
 		uint8_t :1;
 	}bit;
-}AlarmWWeekday;
+}Rx8025AlarmWWeekday;
 
 typedef union{
 	uint8_t byte;
@@ -214,7 +214,7 @@ typedef union{
 		uint8_t dm40:1;
 		uint8_t :1;
 	}bit;
-}AlarmDMinute;
+}Rx8025AlarmDMinute;
 
 typedef union{
 	uint8_t byte;
@@ -227,21 +227,19 @@ typedef union{
 		uint8_t dh20:1;
 		uint8_t :2;
 	}bit;
-}AlarmDHour;
+}Rx8025AlarmDHour;
 
 typedef union{
 	uint8_t byte;
 	struct{
-		uint8_t ct0:1;
-		uint8_t ct1:1;
-		uint8_t ct2:1;
+		uint8_t ct:3;
 		uint8_t test:1;
 		uint8_t clen2:1;
 		uint8_t h12_24:1;
 		uint8_t dale:1;
 		uint8_t wale:1;
 	}bit;
-}Control1;
+}Rx8025Control1;
 
 typedef union{
 	uint8_t byte;
@@ -255,29 +253,29 @@ typedef union{
 		uint8_t vdet:1;
 		uint8_t vdsl:1;
 	}bit;
-}Control2;
+}Rx8025Control2;
 
 //RX-8025NB全レジスタ構造体*************************
 typedef union{
 	uint8_t  read_data[16];
 	struct
 	{
-		Seconds         seconds;
-		Minutes         minutes;
-		Hours           hours;
-		Weekdays        weekdays;
-		Days            days;
-		Months          months;
-		Years           years;
-		Digital_offsets digital_offsets;
-		AlarmWMinute    alarm_w_minute;
-		AlarmWHour      alarm_w_hour;
-		AlarmWWeekday   alarm_w_weekday;
-		AlarmDMinute    alarm_d_minute;
-		AlarmDHour      alarm_d_hour;
-		uint8_t         reserved;
-		Control1        control1;
-		Control2        control2;
+		Rx8025Seconds         seconds;
+		Rx8025Minutes         minutes;
+		Rx8025Hours           hours;
+		Rx8025Weekdays        weekdays;
+		Rx8025Days            days;
+		Rx8025Months          months;
+		Rx8025Years           years;
+		Rx8025Digital_offsets digital_offsets;
+		Rx8025AlarmWMinute    alarm_w_minute;
+		Rx8025AlarmWHour      alarm_w_hour;
+		Rx8025AlarmWWeekday   alarm_w_weekday;
+		Rx8025AlarmDMinute    alarm_d_minute;
+		Rx8025AlarmDHour      alarm_d_hour;
+		uint8_t               reserved;
+		Rx8025Control1        control1;
+		Rx8025Control2        control2;
 	}registers;
 }RtcRegisters;
 

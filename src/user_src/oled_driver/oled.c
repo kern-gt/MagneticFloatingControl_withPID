@@ -15,6 +15,8 @@
 #include "r_cg_macrodriver.h"
 #include "r_cg_userdefine.h"
 #include <stdint.h>
+/* 数学ライブラリ */
+#include <mathf.h>
 
 /* デバイス */
 #include "r_riic_rx_if.h"
@@ -23,10 +25,13 @@
 /* データ定義 */
 #include "draw_data.h"
 
+/* GUIアプリケーション */
+#include "disp_main.h"
+
 /* Kernel includes. */
-#include "FreeRTOS/FreeRTOS.h"
-#include "FreeRTOS/task.h"
-#include "FreeRTOS/queue.h"
+#include "FreeRTOS.h"
+#include "task.h"
+//#include "queue.h"
 
 /**----------------------------------------------------------------------------
 <<自ファイルのヘッダ>>
@@ -36,13 +41,10 @@
 /**----------------------------------------------------------------------------
 <<変数>>
 -----------------------------------------------------------------------------**/
-#define OLED_ADDR (SSD1306_ADDRESS)	//I2CAddress(コード生成APIはビットシフトが必要)
-static volatile int send_busy = FALSE; //I2C送信中フラグ
+#define OLED_ADDR (SSD1306_ADDRESS)	//I2CAddress
+extern xTaskHandle oled_tsk_id;
 
 static riic_info_t iic_info_0;  //i2c通信構造体
-
-//1バイトコマンド
-//static uint8_t disp_bytecommand[2] = {kCtrlCommands, kCommandDispOn};
 
 //グラフィックRAM構造体
 static OledScreenBuf gram;
@@ -55,27 +57,22 @@ static OledScreenBuf gram;
 ＊　戻り値　：
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+#if 0
 void DrawTask(void){
 
-	//vTaskDelay(200/portTICK_PERIOD_MS);
+	oled_tsk_id = xTaskGetCurrentTaskHandle();
 	InitOled();
-	//DrawWhite();
-	//RefreshDisplay();
+	RefreshDisplay();
 	
 	while(1){
-
-		DrawWhite();
-		RefreshDisplay();
-		//DisplayOn();
-		vTaskDelay(500/portTICK_PERIOD_MS);
-
-		DrawClear();
-		RefreshDisplay();
-		//DisplayOff();
-		vTaskDelay(500/portTICK_PERIOD_MS);
+		vTaskDelay((1000/DISP_FLAME_RATE_HZ)/portTICK_PERIOD_MS);
+		if(DisplayApli())
+		{
+			RefreshDisplay();
+		}
 	}
 }
-
+#endif
 
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：
@@ -100,9 +97,8 @@ void DisplayOn(void){
 	control_byte[0] = kCtrlCommands;
 	oled_command[0] = kCommandDispOn;
 	
-	send_busy = TRUE;
     ret = R_RIIC_MasterSend(&iic_info_0);
-    while(send_busy == TRUE);
+    vTaskSuspend(oled_tsk_id);
 }
 
 
@@ -129,13 +125,11 @@ void DisplayOff(void){
 	control_byte[0] = kCtrlCommands;
 	oled_command[0] = kCommandDispOff;
 
-	send_busy = TRUE;
     ret = R_RIIC_MasterSend(&iic_info_0);
-    while(send_busy == TRUE);
+    vTaskSuspend(oled_tsk_id);
 }
 
 
-/***非公開関数******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：
 ＊　機能　　：
@@ -143,7 +137,237 @@ void DisplayOff(void){
 ＊　戻り値　：
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-static void InitOled(void){
+void Bitblt(void){
+
+	SendImageData();
+	SendCommand();
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DrawClear(void){
+	int i, j;
+
+	for (i = 0; i < (OLED_PAGE_NUM); ++i)
+	{
+		for (j = 0; j < (OLED_ROW_SIZE); ++j)
+		{
+			gram.disp_buf[i][j] = 0x00;
+		}
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DrawWhite(void){
+	int i, j;
+
+	for (i = 0; i < (OLED_PAGE_NUM); ++i)
+	{
+		for (j = 0; j < (OLED_ROW_SIZE); ++j)
+		{
+			gram.disp_buf[i][j] = 0xff;
+		}
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DrawDot(uint16_t x, uint16_t y, uint8_t color){
+	uint8_t page_num, y_offset;
+
+	if(x < (OLED_ROW_SIZE) && y < (OLED_COLUMN_SIZE))
+	{
+		page_num = y / OLED_PAGE_NUM;
+		y_offset = y - (page_num * 8);
+
+		if(color)
+		{
+			gram.disp_buf[page_num][x] = gram.disp_buf[page_num][x] | (0x01 << y_offset);
+		}else{
+			gram.disp_buf[page_num][x] = gram.disp_buf[page_num][x] & ~(0x01 << y_offset);
+		}
+		
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DrawLine(uint16_t x_1, uint16_t y_1, uint16_t x_2, uint16_t y_2, uint8_t color){
+
+	if(x_1 < (OLED_ROW_SIZE) && x_2 < (OLED_ROW_SIZE))
+	{
+		if(y_1 < (OLED_COLUMN_SIZE) && y_2 < (OLED_COLUMN_SIZE))
+		{
+			if((x_1 != x_2) && (y_1 != y_2))
+			{
+				SlopeLine(x_1, y_1, x_2, y_2, color);
+			}else{
+				CrossLine(x_1, y_1, x_2, y_2, color);
+			}
+		}
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DrawRectangle(uint16_t x_rup, uint16_t y_rup, uint16_t x_ldwn, uint16_t y_ldwn, uint8_t color, uint8_t fill){
+	int16_t i;
+
+	if(x_rup < (OLED_ROW_SIZE - 1) && x_ldwn < (OLED_ROW_SIZE))
+	{
+		if(y_rup < (OLED_COLUMN_SIZE -1) && y_ldwn < (OLED_COLUMN_SIZE))
+		{
+			if((x_rup != x_ldwn) && (y_rup != y_ldwn))
+			{
+				if(fill == FALSE)
+				{
+					//上側
+					CrossLine(x_rup, y_rup, x_ldwn, y_rup, color);
+					//下側
+					CrossLine(x_rup, y_ldwn, x_ldwn, y_ldwn, color);
+					//右側
+					CrossLine(x_ldwn, y_rup, x_ldwn, y_ldwn, color);
+					//左側
+					CrossLine(x_rup, y_rup, x_rup, y_ldwn, color);
+				}else{
+					for(i = y_rup; i < y_ldwn; ++i)
+					{
+						CrossLine(x_rup, i, x_ldwn, i, color);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void DrawCircle(int16_t x, int16_t y, uint16_t r, uint8_t line_color, uint8_t fill){
+	uint16_t x_rup, y_rup, x_ldwn, y_ldwn, i, j;
+
+	if(r != 0)
+	{
+		x_rup  = ((x - r) < 0)? 0: x - r;
+		x_ldwn = (OLED_ROW_SIZE < (x + r))? OLED_ROW_SIZE: x + r;
+		y_rup  = ((y - r) < 0)? 0: y - r;
+		y_ldwn = (OLED_COLUMN_SIZE < (y + r))? OLED_COLUMN_SIZE: y + r;
+
+		if(fill == FALSE)
+		{
+			for(i = y_rup; i <= y_ldwn; ++i)
+			{
+				for(j = x_rup; j <= x_ldwn; ++j)
+				{
+					if(((int16_t)r - (int16_t)sqrtf((j-x)*(j-x) + (i-y)*(i-y))) == 0)
+					{
+						DrawDot(j, i, line_color);
+					}
+				}
+			}
+		}else{
+			for(i = y_rup; i <= y_ldwn; ++i)
+			{
+				for(j = x_rup; j <= x_ldwn; ++j)
+				{
+					if(((int16_t)r - (int16_t)sqrtf((j-x)*(j-x) + (i-y)*(i-y))) >= 0)
+					{
+						DrawDot(j, i, line_color);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void PasteImage1616(uint16_t x, uint16_t page_num, const uint8_t *data){
+	uint16_t i;
+
+	if(x < (OLED_ROW_SIZE) && page_num < (OLED_PAGE_NUM -1))
+	{
+		for(i = 0; i < 16; ++i)
+		{
+			if((x+i) > (OLED_ROW_SIZE-1))	break;
+			gram.disp_buf[page_num][x+i] |= data[i];
+		}
+
+		for(i = 0; i < 16; ++i)
+		{
+			if((x+i) > (OLED_ROW_SIZE-1)) break;
+			gram.disp_buf[page_num+1][x+i] |= data[16+i];
+		}
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void PrintNumber(uint16_t x, uint8_t page_num, uint8_t num){
+	
+	if(num < 10)
+	{
+		PasteImage1616(x,page_num,&number_font[num][0]);
+	}
+}
+
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+＊　関数名　：
+＊　機能　　：
+＊　引数　　：
+＊　戻り値　：
+＊　備考　　：
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
+void InitOled(void){
 	volatile riic_return_t ret;
 	uint8_t oled_address[1] = {OLED_ADDR};  //スレーブアドレス
 	/* SSD1306 I2C初期設定データ */
@@ -191,26 +415,12 @@ static void InitOled(void){
 	iic_info_0.p_data2nd = (uint8_t*)setup_data;
 	iic_info_0.p_slv_adr = oled_address;
 	//送信
-	send_busy = TRUE;	//送信終了時にFalseになる。
 	ret = R_RIIC_MasterSend(&iic_info_0);
-	while(send_busy == TRUE);	//送信終了するまでコールバックを待つ
+	vTaskSuspend(oled_tsk_id);
 
 	DrawClear();
 }
-
-
-/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-＊　関数名　：
-＊　機能　　：
-＊　引数　　：
-＊　戻り値　：
-＊　備考　　：
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-static void RefreshDisplay(void){
-
-	SendImageData();
-	SendCommand();
-}
+/***非公開関数******************************************************************/
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ＊　関数名　：SendImageData
 ＊　機能　　： ディスプレイを更新する。
@@ -238,9 +448,8 @@ static void SendImageData(void){
 
 	control_byte[0] = kCtrlCommands;
 
-	send_busy = TRUE;	//送信終了時にFalseになる。
 	ret = R_RIIC_MasterSend(&iic_info_0);
-	while(send_busy == TRUE);	//送信終了までコールバックを待つ
+	vTaskSuspend(oled_tsk_id);
 
 
 	//描画データ送信
@@ -252,9 +461,8 @@ static void SendImageData(void){
 
 	control_byte[0] = kCtrlData;
 
-	send_busy = TRUE;
 	ret = R_RIIC_MasterSend(&iic_info_0);
-	while(send_busy == TRUE);
+	vTaskSuspend(oled_tsk_id);
 }
 
 
@@ -277,15 +485,44 @@ static void SendCommand(void){
 ＊　戻り値　：
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-static void DrawClear(void){
-	int i, j;
+static void CrossLine(uint16_t x_l, uint16_t y_l, uint16_t x_h, uint16_t y_h, uint8_t color){
+	uint16_t i;
 
-	for (i = 0; i < (OLED_PAGE_NUM); ++i)
+	if(x_l == x_h && y_l == y_h)
 	{
-		for (j = 0; j < (OLED_ROW_SIZE); ++j)
+		DrawDot(x_l, y_l, color);
+	}else if(x_l == x_h)
+	{
+		if(y_h > y_l)
 		{
-			gram.disp_buf[i][j] = 0x00;
+			for(i = y_l; i <= y_h; ++i)
+			{
+				DrawDot(x_l, i, color);
+			}
+		}else
+		{
+			for(i = y_l; i >= y_h; --i)
+			{
+				DrawDot(x_l, i, color);
+			}
 		}
+	}else if(y_l == y_h)
+	{
+		if(x_h > x_l)
+		{
+			for(i = x_l; i <= x_h; ++i)
+			{
+				DrawDot(i, y_l, color);
+			}
+		}else
+		{
+			for(i = x_l; i >= x_h; --i)
+			{
+				DrawDot(i, y_l, color);
+			}
+		}
+	}else{
+		while(1);
 	}
 }
 
@@ -297,15 +534,84 @@ static void DrawClear(void){
 ＊　戻り値　：
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
-static void DrawWhite(void){
-	int i, j;
+static void SlopeLine(uint16_t x_l, uint16_t y_l, uint16_t x_h, uint16_t y_h, uint8_t color){
+	uint16_t i ,x, y;
+	float slope_gain;
 
-	for (i = 0; i < (OLED_PAGE_NUM); ++i)
+	slope_gain = ((float)(y_h - y_l))/((float)(x_h - x_l));
+
+	if(slope_gain > 0.0f)
 	{
-		for (j = 0; j < (OLED_ROW_SIZE); ++j)
+		if(slope_gain > 1.0f)
 		{
-			gram.disp_buf[i][j] = 0xff;
+			slope_gain = ((float)(x_h - x_l))/((float)(y_h - y_l));
+			if(y_h > y_l)
+			{
+				for (i = y_l; i <= y_h; ++i)
+				{
+					x = (uint16_t)(slope_gain * (float)(i - y_l) + (float)x_l);
+					DrawDot(x, i, color);
+				}
+			}else{
+				for (i = y_l; i >= y_h; --i)
+				{
+					x = (uint16_t)(slope_gain * (float)(i - y_l) + (float)x_l);
+					DrawDot(x, i, color);
+				}
+			}
+		}else{
+			if(x_h > x_l)
+			{
+				for(i = x_l; i <= x_h; ++i)
+				{
+					y = (uint16_t)(slope_gain * (float)(i - x_l) + (float)y_l);
+					DrawDot(i, y, color);
+				}
+			}else{
+				for(i = x_l; i >= x_h; --i)
+				{
+					y = (uint16_t)(slope_gain * (float)(i - x_l) + (float)y_l);
+					DrawDot(i, y, color);
+				}
+			}
 		}
+	}else if(slope_gain < 0.0f)
+	{
+		if (-1.0f <= slope_gain)
+		{
+			if(x_h > x_l)
+			{
+				for(i = x_l; i <= x_h; ++i)
+				{
+					y = (uint16_t)(slope_gain * (float)(i - x_l) + (float)y_l);
+					DrawDot(i, y, color);
+				}
+			}else{
+				for(i = x_l; i >= x_h; --i)
+				{
+					y = (uint16_t)(slope_gain * (float)(i - x_l) + (float)y_l);
+					DrawDot(i, y, color);
+				}
+			}
+		}else{
+			slope_gain = ((float)(x_h - x_l))/((float)(y_h - y_l));
+			if(y_h > y_l)
+			{
+				for (i = y_l; i <= y_h; ++i)
+				{
+					x = (uint16_t)(slope_gain * (float)(i - y_l) + (float)x_l);
+					DrawDot(x, i, color);
+				}
+			}else{
+				for (i = y_l; i >= y_h; --i)
+				{
+					x = (uint16_t)(slope_gain * (float)(i - y_l) + (float)x_l);
+					DrawDot(x, i, color);
+				}
+			}
+		}
+	}else{
+		while(1);
 	}
 }
 
@@ -319,7 +625,8 @@ static void DrawWhite(void){
 ＊　備考　　：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**/
 static void OledSendCallBack(void){
-	send_busy = FALSE;
+	//xTaskResumeFromISR(oled_tsk_id);
+	vTaskResume(oled_tsk_id);
 }
 
 
